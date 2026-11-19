@@ -938,9 +938,15 @@ def route(
             message, session, price_min, price_max, area_min, area_max, bed_min, bed_max,
         )
 
-    # Default: price without purpose defaults to sale
+    # Default: price intent without explicit purpose defaults to sale
+    # Covers both numeric price bounds AND sort-by-price intent ("cheap", "expensive")
+    has_price_intent = (
+        price_min is not None
+        or price_max is not None
+        or sort in (SortKey.price_asc, SortKey.price_desc)
+    )
     if (
-        (price_min is not None or price_max is not None)
+        has_price_intent
         and purpose is None
         and not (follow_up and "purpose" in carried_slots)
     ):

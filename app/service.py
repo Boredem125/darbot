@@ -84,12 +84,43 @@ from common.schemas import (
     Provider,
     Route,
     SearchFilters,
+    SortKey,
     StageTimings,
     TokenUsage,
 )
 from common.text import arabic_ratio, normalise_for_embedding
 
 logger = logging.getLogger("app.service")
+
+
+def _listings_to_cards(examples: tuple) -> list[Card]:
+    """Convert Listing examples from DuckDB to Cards for sorted lookup."""
+    from common.schemas import ChunkPayload, DocKind, Source
+
+    doc_hits: list[DocHit] = []
+    for ex in examples:
+        payload = ChunkPayload(
+            doc_id=ex.id,
+            kind=DocKind.listing,
+            source=Source.wasalt,
+            title=ex.title,
+            url=ex.url,
+            scraped_at=ex.scraped_at,
+            purpose=ex.purpose,
+            property_type=ex.property_type,
+            city=ex.city,
+            district=ex.district,
+            price_sar=ex.price_sar,
+            rent_period=ex.rent_period,
+            annual_rent_sar=ex.annual_rent_sar,
+            bedrooms=ex.bedrooms,
+            bathrooms=ex.bathrooms,
+            area_sqm=ex.area_sqm,
+            chunk_index=0,
+            text=ex.title,
+        )
+        doc_hits.append(DocHit(ex.id, 1.0, payload))
+    return to_cards(doc_hits)
 
 
 # ---------------------------------------------------------------------------
@@ -373,7 +404,52 @@ class ChatService:
                     ):
                         yield ev
                     return
-            else:
+            elif (
+                decision.route == Route.lookup
+                and decision.filters.sort != SortKey.relevance
+            ):
+                # Sorted lookup: use DuckDB for sorted results instead of relevance
+                try:
+                    t_s0 = time.perf_counter()
+                    sorted_result = await self._sql.aggregate(
+                        AggregateQuery(
+                            op=AggregateOp.count,
+                            filters=decision.filters,
+                            example_limit=TOP_K_DOCS,
+                        )
+                    )
+                    t_sql = (time.perf_counter() - t_s0) * 1000
+                    if sorted_result.examples:
+                        cards = _listings_to_cards(sorted_result.examples)
+                        context_texts = [
+                            render_card(card, mode="context", n=card.n, snippet=card.snippet)
+                            for card in cards
+                        ]
+                except StructuredQueryError:
+                    pass  # fall through to retrieval below
+
+                # If DuckDB returned cards, skip retrieval
+                if cards:
+                    # Still need embedding for the LLM prompt context (and cache key)
+                    if qe is None:
+                        try:
+                            t_e0 = time.perf_counter()
+                            qe = await self._embedder.embed_query(norm_query)
+                            t_e1 = time.perf_counter()
+                            w_ms = (t_e1 - t_e0) * 1000
+                            if qe.cached:
+                                cache_hits.append(InnerCacheTier.L3)
+                            else:
+                                t_sparse = qe.sparse_ms
+                                t_embed = max(w_ms - (qe.sparse_ms or 0), 0)
+                            dense_vec = qe.dense
+                        except EmbeddingError:
+                            pass  # proceed without embedding
+                else:
+                    # Fallback to normal retrieval if DuckDB returned nothing
+                    cards = []  # reset
+
+            if not cards and decision.route in (Route.lookup, Route.project_info):
                 # Lookup / project_info: embed + retrieve
                 # Get embedding if not already done
                 if qe is None:

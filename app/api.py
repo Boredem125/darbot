@@ -326,4 +326,18 @@ async def chat(request: Request):
 
 _static_dir = Path(__file__).parent / "static"
 if _static_dir.is_dir():
+
+    from starlette.middleware.base import BaseHTTPMiddleware
+
+    class _NoCacheStaticMiddleware(BaseHTTPMiddleware):
+        """Add Cache-Control: no-cache to static file responses."""
+
+        async def dispatch(self, request: Request, call_next):
+            response = await call_next(request)
+            path = request.url.path
+            if path == "/" or path.endswith((".js", ".css", ".html")):
+                response.headers["Cache-Control"] = "no-cache"
+            return response
+
+    app.add_middleware(_NoCacheStaticMiddleware)
     app.mount("/", StaticFiles(directory=str(_static_dir), html=True), name="static")

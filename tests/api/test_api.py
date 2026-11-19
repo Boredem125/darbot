@@ -103,3 +103,22 @@ class TestRateLimitXFF:
             api_mod._ready = old_ready
             api_mod._chat_service = old_svc
             api_mod._settings = old_settings
+
+
+# ---------------------------------------------------------------------------
+# Cache-Control on static files
+# ---------------------------------------------------------------------------
+
+
+class TestStaticCacheControl:
+    def test_root_has_no_cache(self):
+        client = TestClient(app, raise_server_exceptions=False)
+        resp = client.get("/")
+        if resp.status_code == 200:
+            assert resp.headers.get("cache-control") == "no-cache"
+
+    def test_app_js_has_no_cache(self):
+        client = TestClient(app, raise_server_exceptions=False)
+        resp = client.get("/app.js")
+        if resp.status_code == 200:
+            assert resp.headers.get("cache-control") == "no-cache"

@@ -37,6 +37,18 @@ jobs:
         run: |
           echo "FASTEMBED_CACHE_PATH=${{ github.workspace }}/.fastembed_cache" >> "$GITHUB_ENV"
           echo "HF_HOME=${{ github.workspace }}/.fastembed_cache" >> "$GITHUB_ENV"
+          echo "NLTK_DATA=${{ github.workspace }}/.nltk_data" >> "$GITHUB_ENV"
+
+      - name: Cache NLTK data
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.nltk_data
+          key: nltk-stopwords-punkt-v1
+
+      - name: Download NLTK resources
+        run: |
+          python -m nltk.downloader -d "$NLTK_DATA" stopwords punkt punkt_tab
+          chmod -R go-w "$NLTK_DATA"
 
       - name: Lint
         run: ruff check .

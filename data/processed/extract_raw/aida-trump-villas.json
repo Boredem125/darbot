@@ -1,0 +1,35 @@
+{
+  "name": "Trump Golf Villas",
+  "brand": "Trump",
+  "country": "Oman",
+  "city": "Muscat",
+  "location": "AIDA estate",
+  "status": "Construction is actively underway",
+  "handover": "December 2028",
+  "unit_types": [
+    "Villas",
+    "Luxury villas"
+  ],
+  "bedrooms_min": 5,
+  "bedrooms_max": 5,
+  "area_sqm_min": null,
+  "area_sqm_max": null,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "Trump International Golf Club Oman",
+    "gated community security",
+    "wellness centres",
+    "a fitness centre",
+    "plazas",
+    "cafes and restaurants",
+    "hiking trails",
+    "mountain biking routes",
+    "running trails",
+    "a viewing deck",
+    "parks and recreational spaces",
+    "luxury hotel neighbours",
+    "extensive outdoor landscaping"
+  ]
+}

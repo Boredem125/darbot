@@ -1,0 +1,33 @@
+{
+  "name": "La Collina",
+  "brand": null,
+  "country": "Saudi Arabia",
+  "city": "Jeddah",
+  "location": "Old Jeddah, Al Balad",
+  "status": "Ready",
+  "handover": null,
+  "unit_types": [],
+  "bedrooms_min": null,
+  "bedrooms_max": null,
+  "area_sqm_min": 863000,
+  "area_sqm_max": 863000,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "Co-working spaces",
+    "Office spaces",
+    "Retail stores",
+    "Plazas, Cafes & Restaurants",
+    "Fitness Center",
+    "Outdoor Landscapes",
+    "Promenades",
+    "Community & Retail Centre",
+    "Wellness Centres",
+    "Running Trail",
+    "Parks",
+    "Schools",
+    "Mosque",
+    "Health Centre"
+  ]
+}

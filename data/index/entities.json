@@ -1,0 +1,3539 @@
+{
+  "schema_version": 1,
+  "entities": [
+    {
+      "kind": "country",
+      "canonical": "Saudi Arabia",
+      "aliases": [
+        "المملكة العربية السعودية",
+        "ksa",
+        "saudi",
+        "kingdom of saudi arabia"
+      ],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Madinah",
+      "aliases": [
+        "madinah",
+        "المدينة",
+        "medina",
+        "al madinah",
+        "al-madinah"
+      ],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Haya Al Ranoona",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Khobar",
+      "aliases": [
+        "khobar",
+        "الخبر",
+        "al khobar",
+        "al-khobar"
+      ],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Lo'A Lo'A",
+      "aliases": [],
+      "parent": "Khobar",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Riyadh",
+      "aliases": [
+        "riyadh",
+        "الرياض",
+        "ar riyadh",
+        "ar-riyadh"
+      ],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Janadriyah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Dahrat Laban",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Quds",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Jeddah",
+      "aliases": [
+        "jeddah",
+        "جدة",
+        "jiddah",
+        "jedda",
+        "jidda"
+      ],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Nuzha",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Bader",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Mursalat",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "West An Naseem",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Okaz",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Mraykh",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Mahdiyah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Safa",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Naeem",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Zahrah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Dammam",
+      "aliases": [
+        "dammam",
+        "الدمام",
+        "aldammam",
+        "al dammam"
+      ],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Shooalah",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ar Rimal",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "An Narjis",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Difa'A",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Makkah",
+      "aliases": [
+        "makkah",
+        "مكة",
+        "mecca",
+        "makkah al mukarramah"
+      ],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alkhaldia",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Manar",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Aladl",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Rahmanyah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Yamamah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Thadiq",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Haya Al Malik Abdullah",
+      "aliases": [],
+      "parent": "Thadiq",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ar Rabwah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "As Sahafa",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Sawari",
+      "aliases": [],
+      "parent": "Khobar",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Abu Arish - 'Abu Earish",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ar Rawdah",
+      "aliases": [],
+      "parent": "Abu Arish - 'Abu Earish",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Jazan",
+      "aliases": [
+        "jazan",
+        "جازان",
+        "jizan"
+      ],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Rihab 1",
+      "aliases": [],
+      "parent": "Jazan",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Faysaleyyah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Salamah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Ruwase",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Rawdhah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Marwah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Hamrah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Swaryee",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Farasan - Farsan",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Hayer",
+      "aliases": [],
+      "parent": "Farasan - Farsan",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Qairawan",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Hitteen",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Diriyah",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Riyadh",
+      "aliases": [
+        "riyadh",
+        "الرياض",
+        "ar riyadh",
+        "ar-riyadh"
+      ],
+      "parent": "Diriyah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Yasmeen",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Mathar",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Almisialalgadeed",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alawaly",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alokayshia",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Jubail",
+      "aliases": [
+        "jubail",
+        "الجبيل",
+        "al jubail"
+      ],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Aziziyah  Al Jubail",
+      "aliases": [],
+      "parent": "Jubail",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Faiha|A",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Amwaj",
+      "aliases": [],
+      "parent": "Khobar",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Abha",
+      "aliases": [
+        "abha",
+        "أبها"
+      ],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Murooj",
+      "aliases": [],
+      "parent": "Abha",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Rawabi",
+      "aliases": [],
+      "parent": "Abha",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Marjan",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Bayan",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Ghadeer",
+      "aliases": [],
+      "parent": "Abha",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Almalekfahd",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alshawkia",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alsahil",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "An Nadheem",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Teebah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Rehab",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Rawabi",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Taif",
+      "aliases": [
+        "taif",
+        "الطائف",
+        "alttayif",
+        "al taif"
+      ],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Rayyadh",
+      "aliases": [],
+      "parent": "Taif",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Shorook",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alshamehalgadeed",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "An Nahdah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Teebh",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Rahab",
+      "aliases": [],
+      "parent": "Taif",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Har Awta",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Dirab",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "An Nafel",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alsharaea",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Basateen",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Rakah Al Jnubyah",
+      "aliases": [],
+      "parent": "Khobar",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Malqa",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Nuzha",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Marwah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Thoqbah",
+      "aliases": [],
+      "parent": "Khobar",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Hammraa",
+      "aliases": [],
+      "parent": "Khobar",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Khur",
+      "aliases": [],
+      "parent": "Khobar",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ad Dobbat",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Shouran",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Taybah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Wahah",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Qatif",
+      "aliases": [
+        "qatif",
+        "القطيف",
+        "al qatif"
+      ],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Naseef",
+      "aliases": [],
+      "parent": "Qatif",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Sheraa",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Zomorod",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Noor",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Twaeeq",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Al Ahsa",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Zahraa",
+      "aliases": [],
+      "parent": "Al Ahsa",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Seef",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Sukb",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Riyadh",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Dawadmi",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Diriyah",
+      "aliases": [],
+      "parent": "Dawadmi",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Ahad Rafidah",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Ma'Ala",
+      "aliases": [],
+      "parent": "Ahad Rafidah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Mohammed Ben Mas'Ood",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Hazm",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Hada",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Hadid Street",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Arid",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Arfaa Al Gharbiyah",
+      "aliases": [],
+      "parent": "Taif",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alghashashyaalgadeed",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Khamis Mushait",
+      "aliases": [
+        "khamis mushait",
+        "خميس مشيط"
+      ],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Wurud",
+      "aliases": [],
+      "parent": "Khamis Mushait",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ar Rayan",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "The Light",
+      "aliases": [],
+      "parent": "Jazan",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Khear",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Olaya",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Dammam",
+      "aliases": [
+        "dammam",
+        "الدمام",
+        "aldammam",
+        "al dammam"
+      ],
+      "parent": "Khamis Mushait",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Aqul",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Haya Nabla",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Um Asalam",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Nadwah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Khaleej",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Dahiat Namar",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Maizaliyah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Rayaan",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Aroobah",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Hayil",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "The Districts",
+      "aliases": [],
+      "parent": "Hayil",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Obhur Al Janoubeyyah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Forsaan",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Tasamuh",
+      "aliases": [],
+      "parent": "Khamis Mushait",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Nahdah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "As Saadah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Salam",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Wizarat",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Muanisiyah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Industrial City",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Naseem",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Hayy Al Wa'Irah",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "King Fahad Dist",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "The Beach",
+      "aliases": [],
+      "parent": "Jazan",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Shaqra",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Ward District",
+      "aliases": [],
+      "parent": "Shaqra",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ar Rahmaniyah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Aqeek",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Yarmuk",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Qurtubah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Uhod",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Badr",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Bawadi",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Naseeriya 4",
+      "aliases": [],
+      "parent": "Jazan",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Frosyah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Hay Al Qaswa",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "As Suwaidi Al Gharbi",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Az Zahra",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Sharafeyyah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Hamadhnyah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Sar District",
+      "aliases": [],
+      "parent": "Taif",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "The Airport",
+      "aliases": [],
+      "parent": "Abha",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ishbiliyah  Al Jubail",
+      "aliases": [],
+      "parent": "Jubail",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ishbiliyah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Woroud",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Tadamun",
+      "aliases": [],
+      "parent": "Khamis Mushait",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Jamea|Ah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Meshrefah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Wafaa",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Bisha",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ar Rayyan",
+      "aliases": [],
+      "parent": "Bisha",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Suwais 1",
+      "aliases": [],
+      "parent": "Jazan",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alhaglahalgadeed",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ar Rawdah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ohod",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Hamra",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Mohammadiyah 2",
+      "aliases": [],
+      "parent": "Jazan",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Bathaakorish",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Bawadi",
+      "aliases": [],
+      "parent": "Khamis Mushait",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Khobar Al Jnubyah",
+      "aliases": [],
+      "parent": "Khobar",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Wadi",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "As Sulaimanyah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Muraba",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Falah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ghubaira",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Andalus",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alfalaqalgadeed",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Sharafiya",
+      "aliases": [],
+      "parent": "Abha",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Asalah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "The Honor",
+      "aliases": [],
+      "parent": "Khamis Mushait",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Al Jubaylah",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Wadi District",
+      "aliases": [],
+      "parent": "Al Jubaylah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Algemeza",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Khobar Al Shamalyah",
+      "aliases": [],
+      "parent": "Khobar",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Qadisiyah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Yaqoot",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "As Sulai",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Hada",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Zahoor",
+      "aliases": [],
+      "parent": "Abha",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Bahr",
+      "aliases": [],
+      "parent": "Khobar",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Ulya",
+      "aliases": [],
+      "parent": "Khobar",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Amanah",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Buhayrah",
+      "aliases": [],
+      "parent": "Khobar",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Aqrabyah",
+      "aliases": [],
+      "parent": "Khobar",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Madynat Al Umal",
+      "aliases": [],
+      "parent": "Khobar",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Rakah Al Shamalyah",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Bandryah",
+      "aliases": [],
+      "parent": "Khobar",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Qryenah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Almuzahimih",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Yasmin",
+      "aliases": [],
+      "parent": "Almuzahimih",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "The Light",
+      "aliases": [],
+      "parent": "Khamis Mushait",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Wahah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Hawiyah",
+      "aliases": [],
+      "parent": "Taif",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Manarat",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Bashaer",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Faiha",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Manfuha",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Narjes",
+      "aliases": [],
+      "parent": "Qatif",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Hajer",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Rafaya 2",
+      "aliases": [],
+      "parent": "Jazan",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Samith",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Fahd",
+      "aliases": [],
+      "parent": "Samith",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Naeem",
+      "aliases": [],
+      "parent": "Jazan",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ar Rabie",
+      "aliases": [],
+      "parent": "Khamis Mushait",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Ferdaus",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "West Al Oraija",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Al Kharj",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Faisaliyah",
+      "aliases": [],
+      "parent": "Al Kharj",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ad Dar Al Baida",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Hafar Al-Batin",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Sulimaniyah",
+      "aliases": [],
+      "parent": "Hafar Al-Batin",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Fayhaa",
+      "aliases": [],
+      "parent": "Hafar Al-Batin",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Nabiah",
+      "aliases": [],
+      "parent": "Qatif",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Al Qaisumah",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Andalus",
+      "aliases": [],
+      "parent": "Al Qaisumah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Ezdihar",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Wizarat",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Khalidiya And Al Azizia",
+      "aliases": [],
+      "parent": "Bisha",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Alzahran",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Doohah Al Jnubyah",
+      "aliases": [],
+      "parent": "Alzahran",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "As Salam",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Alliyth",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "District 6",
+      "aliases": [],
+      "parent": "Alliyth",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Bariduh",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Musayyif",
+      "aliases": [],
+      "parent": "Bariduh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Sheraa",
+      "aliases": [],
+      "parent": "Khobar",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alazezya",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Aljameaa",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "King Fahd",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Andulus",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Awaly",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "As Safa",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "As Suwaidi",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Maseef",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Rabbwah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ar Rafeah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Namar",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ar Rabi",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "King Salman",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "North Al Mathar",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "An Nada",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Laban",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Khalidiyah",
+      "aliases": [],
+      "parent": "Al Kharj",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Nozhah",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Almaqam",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alqawther",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Malaz",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Murooj",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Aqiq",
+      "aliases": [],
+      "parent": "Khobar",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Mugharazat",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "At Taawun",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Taawun",
+      "aliases": [],
+      "parent": "Khamis Mushait",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Najran",
+      "aliases": [
+        "najran",
+        "نجران"
+      ],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Shurfa",
+      "aliases": [],
+      "parent": "Najran",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alsouqalsagheeralgadeed",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Jubail",
+      "aliases": [
+        "jubail",
+        "الجبيل",
+        "al jubail"
+      ],
+      "parent": "Taif",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Eastern Pole District",
+      "aliases": [],
+      "parent": "Taif",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Khaldyah Al Shmalyah",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Doohah Al Shamalyah",
+      "aliases": [],
+      "parent": "Alzahran",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Alghat",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ar Rihab",
+      "aliases": [],
+      "parent": "Alghat",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alghula'",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "The Airport",
+      "aliases": [],
+      "parent": "Jazan",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Samtah - Alqafl",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alqafl",
+      "aliases": [],
+      "parent": "Samtah - Alqafl",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Sultanah",
+      "aliases": [],
+      "parent": "Abha",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Muhayil",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Zahoor",
+      "aliases": [],
+      "parent": "Muhayil",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Almahdaj",
+      "aliases": [],
+      "parent": "Abu Arish - 'Abu Earish",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Salyhyah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Khaledeyyah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Aziziyah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "King Khalid Int.Airport",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "The Meadows",
+      "aliases": [],
+      "parent": "Jazan",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Wadi Muzahim",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Albohayrat",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ar Raed",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "East An Naseem",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Almouhamdeah",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "The Diriyah",
+      "aliases": [],
+      "parent": "Khamis Mushait",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Wadi Al Batah",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alhegrah",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Mishrif",
+      "aliases": [],
+      "parent": "Al Kharj",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Khalidiyah 5",
+      "aliases": [],
+      "parent": "Jazan",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Dhahrat Al Awda East",
+      "aliases": [],
+      "parent": "Diriyah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Nada",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Wurud",
+      "aliases": [],
+      "parent": "Al Kharj",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Haretalbabalgadeed",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Badee",
+      "aliases": [],
+      "parent": "Abha",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "The Robouh",
+      "aliases": [],
+      "parent": "Abha",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Wasat District",
+      "aliases": [],
+      "parent": "Taif",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Obhur Al Shamalyyah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alzahraa",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "West Umm Al Hamam",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Jabrah",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Adamah",
+      "aliases": [],
+      "parent": "Al Kharj",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Quds 1",
+      "aliases": [],
+      "parent": "Jazan",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Ahad Rifaydah - Al-Wadyin Station",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "The Castle",
+      "aliases": [],
+      "parent": "Ahad Rifaydah - Al-Wadyin Station",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Gourana",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Abqaiq",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ashbiliyah  Baqiq",
+      "aliases": [],
+      "parent": "Abqaiq",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Rughamah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Al Hayathem",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Supervisor",
+      "aliases": [],
+      "parent": "Al Hayathem",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Arijah",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Arijah",
+      "aliases": [],
+      "parent": "Arijah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Wurud",
+      "aliases": [],
+      "parent": "Almuzahimih",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "The Housing District",
+      "aliases": [],
+      "parent": "Taif",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Nakheel",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Irqah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "The First Education District",
+      "aliases": [],
+      "parent": "Al Ahsa",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Tuwaa",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Azizeyyah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Worood",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Ameer Abdoulmajjed",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Darih",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "The Meadows",
+      "aliases": [],
+      "parent": "Darih",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Al Aydabi",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Edabi",
+      "aliases": [],
+      "parent": "Al Aydabi",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Shaabameeralgadeed",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Alkawamiluh",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alkawamiluh",
+      "aliases": [],
+      "parent": "Alkawamiluh",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Alqunafdhuh",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Eastern",
+      "aliases": [],
+      "parent": "Alqunafdhuh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Mansoura",
+      "aliases": [],
+      "parent": "Khamis Mushait",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alnowaria",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "North Of Solidarity",
+      "aliases": [],
+      "parent": "Khamis Mushait",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Bared",
+      "aliases": [],
+      "parent": "Ahad Rafidah",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "King Abdullah Economic City",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "King Abdullah Economic",
+      "aliases": [],
+      "parent": "King Abdullah Economic City",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Farouk",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Rabigh",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "The Morganiyah",
+      "aliases": [],
+      "parent": "Rabigh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Fysalyah",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Tahi",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Tahi",
+      "aliases": [],
+      "parent": "Tahi",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Khozama",
+      "aliases": [],
+      "parent": "Khobar",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Safa",
+      "aliases": [],
+      "parent": "Jazan",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Malqa",
+      "aliases": [],
+      "parent": "Al Kharj",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ibn Taymiyyah",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Allakhabsia",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Allakhabsia",
+      "aliases": [],
+      "parent": "Allakhabsia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Quds 2",
+      "aliases": [],
+      "parent": "Jazan",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Joudiah",
+      "aliases": [],
+      "parent": "Taif",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Malahum",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Malham",
+      "aliases": [],
+      "parent": "Malahum",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ar Rayyan",
+      "aliases": [],
+      "parent": "Bariduh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Nada",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Hazm",
+      "aliases": [],
+      "parent": "Bariduh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Malak Fahd",
+      "aliases": [],
+      "parent": "Abu Arish - 'Abu Earish",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Tbwk",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Bawadi",
+      "aliases": [],
+      "parent": "Tbwk",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Faisaliyah",
+      "aliases": [],
+      "parent": "Diriyah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Haya Towaiq",
+      "aliases": [],
+      "parent": "Almuzahimih",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Nakhbah",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Buraiman",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Andalus 2",
+      "aliases": [],
+      "parent": "Jazan",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Zahra",
+      "aliases": [],
+      "parent": "Abha",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Katana",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Haya Al Zahra",
+      "aliases": [],
+      "parent": "Madinah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Diridi",
+      "aliases": [],
+      "parent": "Qatif",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Zohoor",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Ar Rass",
+      "aliases": [],
+      "parent": "Saudi Arabia",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Almatar",
+      "aliases": [],
+      "parent": "Ar Rass",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Reiahakheir",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Qiran",
+      "aliases": [],
+      "parent": "Khamis Mushait",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Mohammadeyyah",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Quba",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Shifa",
+      "aliases": [],
+      "parent": "Hayil",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Ash Shomaisi",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Trajji",
+      "aliases": [],
+      "parent": "Alzahran",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Middle Al Uraija",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Wisham",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Wisam",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Alkaakia",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Shatea 3",
+      "aliases": [],
+      "parent": "Alqunafdhuh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Eskan",
+      "aliases": [],
+      "parent": "Dammam",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Sanabel",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Al Sanaiyah",
+      "aliases": [],
+      "parent": "Abha",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Altakwa",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Beach 1",
+      "aliases": [],
+      "parent": "Alqunafdhuh",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "Aldeyafa",
+      "aliases": [],
+      "parent": "Makkah",
+      "doc_id": null
+    },
+    {
+      "kind": "district",
+      "canonical": "District (7)",
+      "aliases": [],
+      "parent": "Alliyth",
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "La Collina",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": "darglobal:project:La-Collina"
+    },
+    {
+      "kind": "country",
+      "canonical": "Oman",
+      "aliases": [
+        "عمان",
+        "sultanate of oman"
+      ],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "Sunrise Haven Villas",
+      "aliases": [],
+      "parent": null,
+      "doc_id": "darglobal:project:Sunrise-Haven-Luxury-Villas"
+    },
+    {
+      "kind": "city",
+      "canonical": "Muscat",
+      "aliases": [
+        "muscat",
+        "مسقط"
+      ],
+      "parent": "Oman",
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "AIDA 360°",
+      "aliases": [],
+      "parent": "Muscat",
+      "doc_id": "darglobal:project:aida-360"
+    },
+    {
+      "kind": "brand",
+      "canonical": "DarGlobal",
+      "aliases": [],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "Coastal Investment Villas",
+      "aliases": [],
+      "parent": "Muscat",
+      "doc_id": "darglobal:project:aida-coastal-investment-villas"
+    },
+    {
+      "kind": "project",
+      "canonical": "Trump Furnished Residences",
+      "aliases": [],
+      "parent": "Muscat",
+      "doc_id": "darglobal:project:aida-trump-international-apartments"
+    },
+    {
+      "kind": "brand",
+      "canonical": "Trump",
+      "aliases": [
+        "trump organization",
+        "ترامب"
+      ],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "Trump Cliff Villas",
+      "aliases": [],
+      "parent": "Muscat",
+      "doc_id": "darglobal:project:aida-trump-international-cliff-villas"
+    },
+    {
+      "kind": "project",
+      "canonical": "Trump International Hotel Oman",
+      "aliases": [
+        "Trump International Hotel"
+      ],
+      "parent": "Muscat",
+      "doc_id": "darglobal:project:aida-trump-international-hotel"
+    },
+    {
+      "kind": "project",
+      "canonical": "Trump Golf Villas",
+      "aliases": [],
+      "parent": "Muscat",
+      "doc_id": "darglobal:project:aida-trump-villas"
+    },
+    {
+      "kind": "project",
+      "canonical": "Amaya",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": "darglobal:project:amaya__amaya-plots"
+    },
+    {
+      "kind": "city",
+      "canonical": "Jeddah",
+      "aliases": [
+        "jeddah",
+        "جدة",
+        "jiddah",
+        "jedda",
+        "jidda"
+      ],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "Padel Living Residences",
+      "aliases": [],
+      "parent": "Jeddah",
+      "doc_id": "darglobal:project:amaya__padel-living"
+    },
+    {
+      "kind": "project",
+      "canonical": "Amour Sans Detour 2",
+      "aliases": [],
+      "parent": null,
+      "doc_id": "darglobal:project:amour-sans-detour-2"
+    },
+    {
+      "kind": "project",
+      "canonical": "Aston Martin Media",
+      "aliases": [],
+      "parent": null,
+      "doc_id": "darglobal:project:aston-martin-media"
+    },
+    {
+      "kind": "city",
+      "canonical": "Dubai",
+      "aliases": [
+        "dubai",
+        "دبي"
+      ],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "D-Villas",
+      "aliases": [],
+      "parent": "Dubai",
+      "doc_id": "darglobal:project:d-villas-at-jge"
+    },
+    {
+      "kind": "project",
+      "canonical": "Da Vinci Tower",
+      "aliases": [],
+      "parent": "Dubai",
+      "doc_id": "darglobal:project:davinci-tower-by-pagani"
+    },
+    {
+      "kind": "brand",
+      "canonical": "Pagani Automobili",
+      "aliases": [],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "DG1",
+      "aliases": [],
+      "parent": "Dubai",
+      "doc_id": "darglobal:project:dg1"
+    },
+    {
+      "kind": "project",
+      "canonical": "The Fairway Villas at AIDA Muscat",
+      "aliases": [
+        "Fairway Villas at AIDA Muscat",
+        "The Fairway Villas at AIDA"
+      ],
+      "parent": "Muscat",
+      "doc_id": "darglobal:project:fairway-villas-aida-oman"
+    },
+    {
+      "kind": "project",
+      "canonical": "AIDA",
+      "aliases": [],
+      "parent": "Muscat",
+      "doc_id": "darglobal:project:landing-page__aida"
+    },
+    {
+      "kind": "country",
+      "canonical": "Qatar",
+      "aliases": [
+        "قطر"
+      ],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Doha",
+      "aliases": [
+        "doha",
+        "الدوحة"
+      ],
+      "parent": "Qatar",
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "Les Vagues",
+      "aliases": [],
+      "parent": "Doha",
+      "doc_id": "darglobal:project:les-vagues"
+    },
+    {
+      "kind": "brand",
+      "canonical": "Elie Saab",
+      "aliases": [],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "country",
+      "canonical": "Spain",
+      "aliases": [],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Costa Del Sol",
+      "aliases": [],
+      "parent": "Spain",
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "Marea",
+      "aliases": [],
+      "parent": "Costa Del Sol",
+      "doc_id": "darglobal:project:marea"
+    },
+    {
+      "kind": "brand",
+      "canonical": "Missoni",
+      "aliases": [
+        "ميسوني"
+      ],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "Marriott Residences Aida, Oman",
+      "aliases": [
+        "Marriott Residences Aida",
+        "Marriott Residences"
+      ],
+      "parent": "Muscat",
+      "doc_id": "darglobal:project:marriott-residences-aida-oman"
+    },
+    {
+      "kind": "brand",
+      "canonical": "Marriott",
+      "aliases": [],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "Neptune, Interiors by Mouawad",
+      "aliases": [
+        "Neptune"
+      ],
+      "parent": "Riyadh",
+      "doc_id": "darglobal:project:neptune"
+    },
+    {
+      "kind": "brand",
+      "canonical": "Mouawad",
+      "aliases": [],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "London",
+      "aliases": [],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "Albert Hall Mansions",
+      "aliases": [],
+      "parent": "London",
+      "doc_id": "darglobal:project:one-of-one__THE-ALBERT-HALL-MANSION"
+    },
+    {
+      "kind": "project",
+      "canonical": "Azure Oceanfront Villas",
+      "aliases": [],
+      "parent": null,
+      "doc_id": "darglobal:project:one-of-one__fendi-casa-azure-oceanfront-villas"
+    },
+    {
+      "kind": "brand",
+      "canonical": "FENDI Casa",
+      "aliases": [],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "Unlisted",
+      "aliases": [],
+      "parent": "Dubai",
+      "doc_id": "darglobal:project:one-of-one__one-of-one-unlisted-by-pagani"
+    },
+    {
+      "kind": "brand",
+      "canonical": "Pagani",
+      "aliases": [
+        "باغاني"
+      ],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "country",
+      "canonical": "South of Spain",
+      "aliases": [],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Marbella",
+      "aliases": [],
+      "parent": "South of Spain",
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "The Painite Villas",
+      "aliases": [
+        "Painite Villas"
+      ],
+      "parent": "Marbella",
+      "doc_id": "darglobal:project:one-of-one__painite-villas-design-inspired-by-Automobili-Lamborghini"
+    },
+    {
+      "kind": "brand",
+      "canonical": "Automobili Lamborghini",
+      "aliases": [],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "Pagani Penthouse",
+      "aliases": [],
+      "parent": "Dubai",
+      "doc_id": "darglobal:project:one-of-one__project-pagani"
+    },
+    {
+      "kind": "project",
+      "canonical": "Top of the Astera",
+      "aliases": [],
+      "parent": null,
+      "doc_id": "darglobal:project:one-of-one__top-of-the-astera"
+    },
+    {
+      "kind": "brand",
+      "canonical": "Aston Martin",
+      "aliases": [
+        "أستون مارتن"
+      ],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "Trump International Hotel & Tower Dubai – Trump Penthouse",
+      "aliases": [
+        "Trump International Hotel & Tower"
+      ],
+      "parent": "Dubai",
+      "doc_id": "darglobal:project:one-of-one__trump-penthouse"
+    },
+    {
+      "kind": "project",
+      "canonical": "Projects",
+      "aliases": [],
+      "parent": null,
+      "doc_id": "darglobal:project:projects"
+    },
+    {
+      "kind": "project",
+      "canonical": "DarGlobal Mansions",
+      "aliases": [],
+      "parent": "Riyadh",
+      "doc_id": "darglobal:project:rayana__darglobal-mansions"
+    },
+    {
+      "kind": "project",
+      "canonical": "FENDI Casa Mansions",
+      "aliases": [],
+      "parent": "Diriyah",
+      "doc_id": "darglobal:project:rayana__darglobal-mansions-fendi-casa"
+    },
+    {
+      "kind": "brand",
+      "canonical": "FENDI",
+      "aliases": [],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Simaisma",
+      "aliases": [],
+      "parent": "Qatar",
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "Trump International Simaisma, Qatar",
+      "aliases": [
+        "Trump International Simaisma"
+      ],
+      "parent": "Simaisma",
+      "doc_id": "darglobal:project:rayana__trump-international-qatar"
+    },
+    {
+      "kind": "brand",
+      "canonical": "The Trump Organization",
+      "aliases": [],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "The Trump Mansions",
+      "aliases": [
+        "Trump Mansions"
+      ],
+      "parent": null,
+      "doc_id": "darglobal:project:rayana__trump-mansions"
+    },
+    {
+      "kind": "country",
+      "canonical": "UAE",
+      "aliases": [],
+      "parent": null,
+      "doc_id": null
+    },
+    {
+      "kind": "city",
+      "canonical": "Ras Al Khaimah",
+      "aliases": [],
+      "parent": "UAE",
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "The Astera, Interiors by Aston Martin",
+      "aliases": [
+        "The Astera",
+        "Astera"
+      ],
+      "parent": "Ras Al Khaimah",
+      "doc_id": "darglobal:project:the-astera"
+    },
+    {
+      "kind": "project",
+      "canonical": "The Great Escape",
+      "aliases": [
+        "Great Escape"
+      ],
+      "parent": "Muscat",
+      "doc_id": "darglobal:project:the-great-escape-1-aida-oman"
+    },
+    {
+      "kind": "project",
+      "canonical": "The Great Escape 2",
+      "aliases": [
+        "Great Escape 2"
+      ],
+      "parent": null,
+      "doc_id": "darglobal:project:the-great-escape-2-aida-oman"
+    },
+    {
+      "kind": "project",
+      "canonical": "Nº149 Old Park Lane",
+      "aliases": [],
+      "parent": "London",
+      "doc_id": "darglobal:project:the-mulliner"
+    },
+    {
+      "kind": "city",
+      "canonical": "Benahavís",
+      "aliases": [],
+      "parent": "Spain",
+      "doc_id": null
+    },
+    {
+      "kind": "project",
+      "canonical": "Tierra Viva",
+      "aliases": [],
+      "parent": "Benahavís",
+      "doc_id": "darglobal:project:tierra-viva"
+    },
+    {
+      "kind": "project",
+      "canonical": "Trump International Hotel & Tower Dubai",
+      "aliases": [
+        "Trump International Hotel & Tower"
+      ],
+      "parent": "Dubai",
+      "doc_id": "darglobal:project:trump-international-hotel-and-tower-dubai"
+    },
+    {
+      "kind": "project",
+      "canonical": "Trump Plaza Jeddah – Executive Residences",
+      "aliases": [
+        "Trump Plaza Jeddah",
+        "Trump Plaza"
+      ],
+      "parent": "Jeddah",
+      "doc_id": "darglobal:project:trump-plaza__executive-residences"
+    },
+    {
+      "kind": "project",
+      "canonical": "Trump Plaza Jeddah – Park Residences",
+      "aliases": [
+        "Trump Plaza Jeddah",
+        "Trump Plaza"
+      ],
+      "parent": "Jeddah",
+      "doc_id": "darglobal:project:trump-plaza__park-residences"
+    },
+    {
+      "kind": "project",
+      "canonical": "Trump Tower Jeddah",
+      "aliases": [
+        "برج ترامب جدة",
+        "trump jeddah",
+        "Trump Tower"
+      ],
+      "parent": "Jeddah",
+      "doc_id": "darglobal:project:trump-tower-jeddah"
+    },
+    {
+      "kind": "project",
+      "canonical": "Urban Oasis",
+      "aliases": [],
+      "parent": "Dubai",
+      "doc_id": "darglobal:project:urban-oasis-by-missoni"
+    },
+    {
+      "kind": "project",
+      "canonical": "W Residences Dubai – Downtown",
+      "aliases": [
+        "W Residences Dubai",
+        "W Residences"
+      ],
+      "parent": "Dubai",
+      "doc_id": "darglobal:project:w-residences"
+    },
+    {
+      "kind": "brand",
+      "canonical": "W Hotels",
+      "aliases": [],
+      "parent": null,
+      "doc_id": null
+    }
+  ]
+}

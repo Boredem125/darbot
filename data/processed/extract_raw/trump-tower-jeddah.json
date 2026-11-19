@@ -1,0 +1,33 @@
+{
+  "name": "Trump Tower Jeddah",
+  "brand": "Trump",
+  "country": "Saudi Arabia",
+  "city": "Jeddah",
+  "location": "Jeddah Corniche",
+  "status": "under development",
+  "handover": "December 2029",
+  "unit_types": [
+    "apartments",
+    "penthouses"
+  ],
+  "bedrooms_min": 1,
+  "bedrooms_max": 4,
+  "area_sqm_min": 70,
+  "area_sqm_max": 365,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "Trump Private Club",
+    "24/7 concierge",
+    "fine dining",
+    "cigar lounge",
+    "meeting rooms",
+    "gym",
+    "yoga zone",
+    "pool",
+    "kids' pool",
+    "jacuzzi",
+    "uninterrupted Red Sea views"
+  ]
+}

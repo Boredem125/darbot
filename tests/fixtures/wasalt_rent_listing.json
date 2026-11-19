@@ -1,0 +1,107 @@
+{
+  "props": {
+    "pageProps": {
+      "propertyDetailsV3": {
+        "id": 5840301,
+        "publishedAt": "2026-01-25T12:52:11.051Z",
+        "leadContactInfo": {
+          "ownerName": "REDACTED_NAME",
+          "enMessageTitle": "Login",
+          "enMessageBody": "REDACTED_BODY"
+        },
+        "propertyOwner": {
+          "companyName": "Rental Corp",
+          "enCmpName": "Rental Corp",
+          "arCmpName": "Rental Corp AR",
+          "regaAdvLicNo": "9876543210",
+          "userCapacity": "individual",
+          "isOwnerProperty": false,
+          "postedAs": 48,
+          "enUserRole": "Individual",
+          "arUserRole": "Individual AR",
+          "brand": null,
+          "falLicenseNumber": "1100009999",
+          "falLicenseUrl": "https://example.com/fal-ind",
+          "falExpiryDate": "24/01/2027",
+          "licenseExpired": false,
+          "managedBy": "REDACTED_INDIVIDUAL_NAME",
+          "resEmployee": "REDACTED_EMPLOYEE",
+          "ownerName": "REDACTED_OWNER",
+          "phoneNumber": "+966500000000",
+          "email": "redacted@example.com",
+          "cmpLogoUrl": "",
+          "showUserCallWhatsapp": true,
+          "showInterestCta": false
+        },
+        "regaVerifiedInfo": [
+          {
+            "key": "adLicense",
+            "order": 1,
+            "label": "Ad License",
+            "fields": [
+              {"key": "adLicenseNumber", "name": null, "value": "7100254548"},
+              {"key": "status", "name": null, "value": "Active"}
+            ]
+          },
+          {
+            "key": "responsibleEmployee",
+            "order": 2,
+            "label": "Responsible Employee",
+            "fields": [
+              {"key": "responsibleEmployeeName", "name": null, "value": "REDACTED_PERSON_NAME"},
+              {"key": "responsibleEmployeePhoneNumber", "name": null, "value": null}
+            ]
+          },
+          {
+            "key": "deedInfo",
+            "order": 5,
+            "label": "Deed Info",
+            "fields": [
+              {"key": "deedNumber", "name": null, "value": "7111273787300005"},
+              {"key": "isConstrained", "name": null, "value": "No"}
+            ]
+          }
+        ],
+        "location": {
+          "lat": "24.63285",
+          "lon": "46.61432"
+        },
+        "attributes": [
+          {"key": "noOfBedrooms", "name": "Bedrooms", "value": 4, "image": "noofbedrooms.png", "iconClass": "bedroom"},
+          {"key": "builtUpArea", "name": "Built-Up Area", "value": "400", "image": "builtuparea.png", "unit": "SQM", "iconClass": "builtup-area"},
+          {"key": "noOfBathrooms", "name": "Bathrooms", "value": 2, "image": "noofbathrooms.png", "iconClass": "bathroom"}
+        ],
+        "propertyInfo": {
+          "currencyType": "SAR",
+          "country": "Saudi Arabia",
+          "propertyMainType": "Residential",
+          "propertySubType": "Apartment",
+          "address": "Dahrat Laban, Riyadh",
+          "city": "Riyadh",
+          "district": "Dahrat Laban",
+          "title": "Apartment with 4 Bedrooms",
+          "description": "<p>Spacious apartment for rent in Dahrat Laban.</p><p>Well-maintained with modern finishes.</p>",
+          "slug": "apartment-with-4-bedrooms-5840301",
+          "propertyFor": "rent",
+          "salePrice": "",
+          "expectedRent": 35000,
+          "rentFreq": {
+            "yearly": {
+              "enCurrencyType": "SAR",
+              "default_freq": true,
+              "amount": 35000,
+              "arCurrencyType": "SAR",
+              "freq": "yearly"
+            }
+          },
+          "propertyName": "Apartment for Rent",
+          "zone": "Dahrat Laban",
+          "territory": "West Riyadh",
+          "tags": [{"name": "For Rent"}]
+        },
+        "isVerified": true,
+        "score": 70
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "Nº149 Old Park Lane",
+  "brand": null,
+  "country": null,
+  "city": "London",
+  "location": "corner of Old Park Lane and Piccadilly",
+  "status": "Completed and sold out",
+  "handover": null,
+  "unit_types": [
+    "5-Bedroom Apartment"
+  ],
+  "bedrooms_min": 5,
+  "bedrooms_max": 5,
+  "area_sqm_min": 485.22,
+  "area_sqm_max": 485.22,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "Concierge Services",
+    "Elevator",
+    "24-hour Porterage",
+    "Daikin AC",
+    "Underfloor heating",
+    "Loxone building management system",
+    "MVHR system",
+    "Lutron Lighting",
+    "Sonos Home Sound System",
+    "Bespoke Oak Kitchen with premium Gaggenau, Bertazonni, Miele, and Caple Appliances",
+    "Bathrooms with Gessi Sanitaryware, Italian Marble Vanity Tops, and Bespoke Vanity Units",
+    "Floor Finishes with Polished marble, traditional oak parquet, European oak herringbone timber, and luxurious wool carpets",
+    "Wall Finishes with Vinyl and hand-woven wallpapers, gold leaf detailing, and polished plaster",
+    "Staff Room",
+    "Historic Fireplaces",
+    "Temperature‑Controlled Wine Cabinet",
+    "24-hour security",
+    "SSAIB-approved alarm",
+    "CCTV",
+    "2N door entry system"
+  ]
+}

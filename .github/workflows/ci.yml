@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -e ".[dev,build]"
+
+      - name: Cache FastEmbed models
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.fastembed_cache
+          key: fastembed-0.9.1-${{ hashFiles('pyproject.toml') }}-paraphrase-multilingual-MiniLM-L12-v2-bm25-ms-marco-MiniLM-L-6-v2
+
+      - name: Set model cache paths
+        run: |
+          echo "FASTEMBED_CACHE_PATH=${{ github.workspace }}/.fastembed_cache" >> "$GITHUB_ENV"
+          echo "HF_HOME=${{ github.workspace }}/.fastembed_cache" >> "$GITHUB_ENV"
+
+      - name: Lint
+        run: ruff check .
+
+      - name: Test
+        run: pytest -q
+
+      - name: JS tests
+        if: hashFiles('tests/js/**') != ''
+        run: node --test "tests/js/*.mjs"
+
+      - name: No-LLM eval (baseline comparison)
+        if: hashFiles('eval/baseline_report.json') != ''
+        run: >
+          python scripts/eval.py
+          --split test
+          --no-llm
+          --rrf-k 60
+          --dense-weight 1.0
+          --sparse-weight 1.0
+          --list-size 20
+          --score-floor 0.52
+          --index-dir data/index
+          --compare eval/baseline_report.json

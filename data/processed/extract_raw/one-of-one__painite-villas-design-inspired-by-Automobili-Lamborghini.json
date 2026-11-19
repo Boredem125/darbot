@@ -1,0 +1,28 @@
+{
+  "name": "The Painite Villas",
+  "brand": "Automobili Lamborghini",
+  "country": "South of Spain",
+  "city": "Marbella",
+  "location": "Tierra Viva in Marbella",
+  "status": null,
+  "handover": null,
+  "unit_types": [
+    "Villas"
+  ],
+  "bedrooms_min": 6,
+  "bedrooms_max": 6,
+  "area_sqm_min": null,
+  "area_sqm_max": null,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "Sky Car Lift",
+    "private car elevator",
+    "protective glass dome",
+    "floor-to-ceiling windows",
+    "roof terraces",
+    "swimming pool",
+    "luxury gardens"
+  ]
+}

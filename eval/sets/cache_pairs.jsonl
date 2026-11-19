@@ -1,0 +1,30 @@
+{"id": "cp-001", "split": "dev", "a": "3 bed villas in Riyadh under 2M", "b": "three bedroom villas in Riyadh below 2 million SAR", "same_answer": true, "note": "paraphrase"}
+{"id": "cp-002", "split": "dev", "a": "apartments for rent in Jeddah", "b": "flats to rent in Jeddah", "same_answer": true, "note": "paraphrase"}
+{"id": "cp-003", "split": "dev", "a": "cheapest villa for sale in Khobar", "b": "what is the least expensive villa for sale in Khobar?", "same_answer": true, "note": "paraphrase"}
+{"id": "cp-004", "split": "dev", "a": "how many apartments are for sale in Riyadh?", "b": "number of apartments for sale in Riyadh", "same_answer": true, "note": "paraphrase"}
+{"id": "cp-005", "split": "dev", "a": "average price of villas for sale in Jeddah", "b": "what's the mean price of villas for sale in Jeddah?", "same_answer": true, "note": "paraphrase"}
+{"id": "cp-006", "split": "dev", "a": "When is Les Vagues completed?", "b": "What is the completion date of Les Vagues?", "same_answer": true, "note": "paraphrase"}
+{"id": "cp-007", "split": "dev", "a": "land for sale in Jeddah", "b": "plots of land for sale in Jeddah", "same_answer": true, "note": "paraphrase"}
+{"id": "cp-008", "split": "dev", "a": "most expensive apartment for sale in Riyadh", "b": "priciest apartment for sale in Riyadh", "same_answer": true, "note": "paraphrase"}
+{"id": "cp-009", "split": "dev", "a": "2-bed flats for sale in Dammam", "b": "two bedroom apartments for sale in Dammam", "same_answer": true, "note": "paraphrase"}
+{"id": "cp-010", "split": "test", "a": "villas to buy in Makkah", "b": "villas for sale in Makkah", "same_answer": true, "note": "paraphrase"}
+{"id": "cp-011", "split": "test", "a": "Where is Trump Tower Jeddah?", "b": "What is the location of Trump Tower Jeddah?", "same_answer": true, "note": "paraphrase"}
+{"id": "cp-012", "split": "test", "a": "apartments for sale in Jeddah under 1.5M", "b": "apartments for sale in Jeddah under 1,500,000 SAR", "same_answer": true, "note": "paraphrase"}
+{"id": "cp-013", "split": "test", "a": "كم عدد الفلل للبيع في الرياض؟", "b": "كم عدد فلل للبيع في الرياض", "same_answer": true, "note": "paraphrase"}
+{"id": "cp-014", "split": "test", "a": "شقق للإيجار في جدة", "b": "أبحث عن شقق للإيجار في جدة", "same_answer": true, "note": "paraphrase"}
+{"id": "cp-015", "split": "test", "a": "average yearly rent for apartments in Riyadh", "b": "what is the mean yearly rent of apartments in Riyadh?", "same_answer": true, "note": "paraphrase"}
+{"id": "cp-016", "split": "dev", "a": "villas for sale in Riyadh with a pool", "b": "villas for sale in Riyadh with a gym", "same_answer": false, "note": "same scope: amenity"}
+{"id": "cp-017", "split": "dev", "a": "furnished apartments for rent in Jeddah", "b": "unfurnished apartments for rent in Jeddah", "same_answer": false, "note": "same scope: amenity"}
+{"id": "cp-018", "split": "dev", "a": "apartments for sale in Jeddah with sea view", "b": "apartments for sale in Jeddah with park view", "same_answer": false, "note": "same scope: view"}
+{"id": "cp-019", "split": "dev", "a": "anything but villas in Riyadh", "b": "villas in Riyadh", "same_answer": false, "note": "same scope: negation without a cue word"}
+{"id": "cp-020", "split": "dev", "a": "What is the payment plan for Les Vagues?", "b": "When is the handover for Les Vagues?", "same_answer": false, "note": "same scope: project attribute"}
+{"id": "cp-021", "split": "dev", "a": "Does Marea have a gym?", "b": "Does Marea have a spa?", "same_answer": false, "note": "same scope: project attribute"}
+{"id": "cp-022", "split": "dev", "a": "newest apartments for sale in Riyadh", "b": "oldest apartments for sale in Riyadh", "same_answer": false, "note": "same scope: newest vs oldest"}
+{"id": "cp-023", "split": "test", "a": "villas for sale in Riyadh near a school", "b": "villas for sale in Riyadh near a mall", "same_answer": false, "note": "same scope: proximity"}
+{"id": "cp-024", "split": "test", "a": "apartments for rent in Riyadh with parking", "b": "apartments for rent in Riyadh with a balcony", "same_answer": false, "note": "same scope: amenity"}
+{"id": "cp-025", "split": "test", "a": "Who designed Urban Oasis?", "b": "Where is Urban Oasis located?", "same_answer": false, "note": "same scope: project attribute"}
+{"id": "cp-026", "split": "test", "a": "فلل للبيع في الرياض مع مسبح", "b": "فلل للبيع في الرياض مع حديقة", "same_answer": false, "note": "same scope: amenity (ar)"}
+{"id": "cp-027", "split": "dev", "a": "3 bed villas in Riyadh", "b": "4 bed villas in Riyadh", "same_answer": false, "note": "different scope: bedrooms"}
+{"id": "cp-028", "split": "dev", "a": "apartments for sale in Riyadh", "b": "apartments for sale in Jeddah", "same_answer": false, "note": "different scope: city"}
+{"id": "cp-029", "split": "test", "a": "villas for sale in Khobar", "b": "villas for rent in Khobar", "same_answer": false, "note": "different scope: purpose"}
+{"id": "cp-030", "split": "test", "a": "villas for sale in Riyadh under 2M", "b": "villas for sale in Riyadh under 3M", "same_answer": false, "note": "different scope: price bound"}

@@ -1,0 +1,36 @@
+{
+  "name": "The Fairway Villas at AIDA Muscat",
+  "brand": "Trump",
+  "country": "Oman",
+  "city": "Muscat",
+  "location": "Located in Muscat and just 25 minutes from the international airport, AIDA rises 130 metres above sea level as a city within a city, combining nature, hospitality, and a championship golf destination.",
+  "status": "Under Development",
+  "handover": null,
+  "unit_types": [
+    "Villa"
+  ],
+  "bedrooms_min": 4,
+  "bedrooms_max": 5,
+  "area_sqm_min": 288,
+  "area_sqm_max": 403,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "Personal Golf Cart",
+    "Trump International Golf Club Oman",
+    "Community Facilities",
+    "Plazas, Cafes & Restaurants",
+    "Wellness Centers",
+    "Fitness Center",
+    "Parks & Recreations",
+    "Hiking Trail",
+    "Gated Community",
+    "Mountain Bike",
+    "Luxury Hotels",
+    "Outdoor Landscapes",
+    "Running Trail",
+    "Viewing Deck",
+    "Clubhouse"
+  ]
+}

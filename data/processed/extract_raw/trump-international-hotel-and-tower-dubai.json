@@ -1,0 +1,32 @@
+{
+  "name": "Trump International Hotel & Tower Dubai",
+  "brand": "Trump",
+  "country": null,
+  "city": "Dubai",
+  "location": "Sheikh Zayed Road",
+  "status": "under development",
+  "handover": "December 2031",
+  "unit_types": [
+    "Apartments",
+    "Penthouses"
+  ],
+  "bedrooms_min": 1,
+  "bedrooms_max": 4,
+  "area_sqm_min": 109,
+  "area_sqm_max": 722,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "highest outdoor infinity pool",
+    "state-of-the-art gym",
+    "owners lounge",
+    "children's play area",
+    "signature bar",
+    "cigar lounge",
+    "golf simulator",
+    "spa treatment rooms",
+    "meeting rooms",
+    "dedicated pool"
+  ]
+}

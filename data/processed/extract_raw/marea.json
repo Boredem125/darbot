@@ -1,0 +1,34 @@
+{
+  "name": "Marea",
+  "brand": "Missoni",
+  "country": "Spain",
+  "city": "Costa Del Sol",
+  "location": "Finca Cortesin gated estate in Cortesin, Costa Del Sol",
+  "status": "under development",
+  "handover": "December 2027",
+  "unit_types": [
+    "Two-bedroom residences",
+    "Three-bedroom residences",
+    "Four-bedroom residences"
+  ],
+  "bedrooms_min": 2,
+  "bedrooms_max": 4,
+  "area_sqm_min": 223,
+  "area_sqm_max": 553,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "gated community with private entrance and 24/7 premium security",
+    "24-hour concierge",
+    "infinity pool",
+    "state-of-the-art gym",
+    "tennis courts",
+    "hanging observation deck",
+    "community garden",
+    "children's playground",
+    "children's swimming pool",
+    "children's splash area",
+    "dedicated parking and storage per unit"
+  ]
+}

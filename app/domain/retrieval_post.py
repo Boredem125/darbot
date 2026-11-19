@@ -1,0 +1,134 @@
+"""Post-retrieval processing: doc collapse, cards, score floor.
+
+Implements retrieval.md sections 3.5-3.6. Imports only common.* and stdlib (R4).
+"""
+
+from __future__ import annotations
+
+from common.schemas import Card, ChunkPayload
+
+# ---------------------------------------------------------------------------
+# Constants
+# ---------------------------------------------------------------------------
+
+TOP_K_DOCS = 5
+SCORE_FLOOR = 0.52  # B10: score-floor refusal threshold (tuning.md decision 2)
+TAU_DEFAULT = 0.93  # L2 semantic-cache tau (tuning.md decision 4; kept after B9, see report)
+
+
+# ---------------------------------------------------------------------------
+# DocHit: a collapsed document with its best chunk and optional extras
+# ---------------------------------------------------------------------------
+
+
+class DocHit:
+    """A document after collapse: best chunk + optional extra chunks."""
+
+    __slots__ = ("best_chunk", "best_score", "doc_id", "extra_chunks")
+
+    def __init__(
+        self,
+        doc_id: str,
+        best_score: float,
+        best_chunk: ChunkPayload,
+        extra_chunks: list[ChunkPayload] | None = None,
+    ) -> None:
+        self.doc_id = doc_id
+        self.best_score = best_score
+        self.best_chunk = best_chunk
+        self.extra_chunks = extra_chunks or []
+
+
+# ---------------------------------------------------------------------------
+# Public API
+# ---------------------------------------------------------------------------
+
+
+def collapse_to_docs(
+    hits: list[tuple[ChunkPayload, float]],
+    top_k: int = TOP_K_DOCS,
+    *,
+    project_id: str | None = None,
+) -> list[DocHit]:
+    """Group hits by doc_id, keep the best chunk per doc, order by score.
+
+    For project_info with a project_id: return one doc with up to 5 chunks.
+    """
+    if project_id:
+        # Single-doc mode: collect all chunks for the project
+        project_chunks: list[tuple[ChunkPayload, float]] = [
+            (payload, score) for payload, score in hits if payload.doc_id == project_id
+        ]
+        if not project_chunks:
+            return []
+        project_chunks.sort(key=lambda x: x[1], reverse=True)
+        best_payload, best_score = project_chunks[0]
+        extras = [p for p, _s in project_chunks[1:5]]
+        return [DocHit(project_id, best_score, best_payload, extras)]
+
+    # General case: group by doc_id, keep best chunk per doc
+    docs: dict[str, DocHit] = {}
+    for payload, score in hits:
+        did = payload.doc_id
+        if did not in docs or score > docs[did].best_score:
+            docs[did] = DocHit(did, score, payload)
+
+    # Sort by score descending, take top_k
+    sorted_docs = sorted(docs.values(), key=lambda d: d.best_score, reverse=True)
+    return sorted_docs[:top_k]
+
+
+def to_cards(doc_hits: list[DocHit]) -> list[Card]:
+    """Convert DocHits to numbered Cards (1..k)."""
+    cards: list[Card] = []
+    for i, dh in enumerate(doc_hits, start=1):
+        payload = dh.best_chunk
+        snippet = payload.text[:400] if payload.text else None
+        card = Card(
+            n=i,
+            score=dh.best_score,
+            snippet=snippet,
+            doc_id=payload.doc_id,
+            kind=payload.kind,
+            source=payload.source,
+            title=payload.title,
+            url=payload.url,
+            scraped_at=payload.scraped_at,
+            purpose=payload.purpose,
+            property_type=payload.property_type,
+            city=payload.city,
+            district=payload.district,
+            price_sar=payload.price_sar,
+            rent_period=payload.rent_period,
+            annual_rent_sar=payload.annual_rent_sar,
+            bedrooms=payload.bedrooms,
+            bathrooms=payload.bathrooms,
+            area_sqm=payload.area_sqm,
+            country=payload.country,
+            brand=payload.brand,
+            handover=payload.handover,
+            price_from_amount=payload.price_from_amount,
+            price_from_currency=payload.price_from_currency,
+            article_kind=payload.article_kind,
+            published_at=payload.published_at,
+        )
+        cards.append(card)
+    return cards
+
+
+def below_floor(
+    *,
+    n_hits: int,
+    filters_is_empty: bool,
+    top_dense_score: float | None,
+    floor: float = SCORE_FLOOR,
+) -> bool:
+    """Score-floor refusal check (retrieval.md section 3.6).
+
+    Returns True when the query should be refused:
+    - Zero hits
+    - Empty filters and (no dense score or dense score below floor)
+    """
+    if n_hits == 0:
+        return True
+    return filters_is_empty and (top_dense_score is None or top_dense_score < floor)

@@ -1,0 +1,27 @@
+{
+  "name": "D-Villas",
+  "brand": "DarGlobal",
+  "country": null,
+  "city": "Dubai",
+  "location": "Jumeirah Golf Estates",
+  "status": "Under Development",
+  "handover": null,
+  "unit_types": [
+    "Luxury Villas",
+    "Villas"
+  ],
+  "bedrooms_min": 4,
+  "bedrooms_max": 5,
+  "area_sqm_min": null,
+  "area_sqm_max": null,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "world-class golf courses",
+    "premium leisure facilities",
+    "world-class amenities",
+    "championship golf courses",
+    "beautifully landscaped parks"
+  ]
+}

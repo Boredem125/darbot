@@ -1,0 +1,27 @@
+{
+  "name": "Tierra Viva",
+  "brand": "Automobili Lamborghini",
+  "country": "Spain",
+  "city": "Benahavís",
+  "location": "Los Jaralillos, Benahavís",
+  "status": "under development",
+  "handover": "June 2028",
+  "unit_types": [
+    "Villas"
+  ],
+  "bedrooms_min": null,
+  "bedrooms_max": null,
+  "area_sqm_min": 700,
+  "area_sqm_max": 1450,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "24/7 premium security",
+    "exclusive residents' clubhouse",
+    "sauna",
+    "steam room",
+    "private pool areas",
+    "in-villa car lift"
+  ]
+}

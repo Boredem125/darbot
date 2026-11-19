@@ -1,0 +1,66 @@
+{
+  "props": {
+    "pageProps": {
+      "propertyDetailsV3": {
+        "id": 5839157,
+        "publishedAt": "2026-03-15T10:00:00.000Z",
+        "leadContactInfo": {
+          "ownerName": "REDACTED",
+          "enMessageBody": "REDACTED"
+        },
+        "propertyOwner": {
+          "companyName": "Furnished Living LLC",
+          "enCmpName": "Furnished Living LLC",
+          "regaAdvLicNo": "5555555555",
+          "userCapacity": "company",
+          "isOwnerProperty": false,
+          "resEmployee": "REDACTED_PERSON",
+          "phoneNumber": "+966511111111"
+        },
+        "location": {
+          "lat": "24.7136",
+          "lon": "46.6753"
+        },
+        "attributes": [
+          {"key": "noOfBedrooms", "name": "Bedrooms", "value": 2, "image": "noofbedrooms.png", "iconClass": "bedroom"},
+          {"key": "builtUpArea", "name": "Built-Up Area", "value": "120", "image": "builtuparea.png", "unit": "SQM", "iconClass": "builtup-area"}
+        ],
+        "propertyInfo": {
+          "currencyType": "SAR",
+          "country": "Saudi Arabia",
+          "propertyMainType": "Residential",
+          "propertySubType": "Apartment",
+          "address": "Al Olaya, Riyadh",
+          "city": "Riyadh",
+          "district": "Al Olaya",
+          "title": "Furnished Apartment with 2 Bedrooms",
+          "description": "",
+          "slug": "furnished-apartment-with-2-bedrooms-5839157",
+          "propertyFor": "rent",
+          "salePrice": "",
+          "expectedRent": 5000,
+          "rentFreq": {
+            "monthly": {
+              "enCurrencyType": "SAR",
+              "default_freq": true,
+              "amount": 5000,
+              "freq": "monthly"
+            },
+            "yearly": {
+              "enCurrencyType": "SAR",
+              "default_freq": false,
+              "amount": 55000,
+              "freq": "yearly"
+            }
+          },
+          "propertyName": "Furnished Apartment",
+          "furnishingType": "Furnished",
+          "zone": "Al Olaya",
+          "tags": [{"name": "For Rent"}]
+        },
+        "isVerified": false,
+        "score": 60
+      }
+    }
+  }
+}

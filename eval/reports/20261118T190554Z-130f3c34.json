@@ -1,0 +1,3721 @@
+{
+  "run_id": "20261118T190554Z-130f3c34",
+  "split": "dev",
+  "timestamp": "2026-11-18T19:05:54.084496+00:00",
+  "config": {
+    "split": "dev",
+    "rrf_k": 60,
+    "list_size": 20,
+    "score_floor": 0.3,
+    "rerank": false,
+    "llm": false,
+    "no_llm": true
+  },
+  "index_version": "unknown",
+  "prompt_version": "unknown",
+  "n_cases": 84,
+  "metrics": {
+    "route_accuracy": {
+      "successes": 75,
+      "total": 84,
+      "rate": 0.8929,
+      "ci_lower": 0.8088,
+      "ci_upper": 0.9426
+    },
+    "filter_accuracy": {
+      "successes": 72,
+      "total": 74,
+      "rate": 0.973,
+      "ci_lower": 0.9067,
+      "ci_upper": 0.9926
+    },
+    "constraint_precision_at_5": {
+      "successes": 0,
+      "total": 0,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0
+    },
+    "entity_hit_at_5": {
+      "successes": 0,
+      "total": 19,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.1682
+    },
+    "entity_mrr": {
+      "successes": 0,
+      "total": 19,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.1682
+    },
+    "aggregate_exact": {
+      "successes": 0,
+      "total": 47,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0756
+    },
+    "refusal_accuracy": {
+      "successes": 4,
+      "total": 4,
+      "rate": 1.0,
+      "ci_lower": 0.5101,
+      "ci_upper": 1.0
+    },
+    "false_refusal": {
+      "successes": 35,
+      "total": 80,
+      "rate": 0.4375,
+      "ci_lower": 0.3341,
+      "ci_upper": 0.5466
+    },
+    "canary_leak": {
+      "successes": 0,
+      "total": 0,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0
+    }
+  },
+  "cases": [
+    {
+      "id": "ar-001",
+      "set": "arabic",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "فلل للبيع في الرياض أقل من ٢ مليون ريال"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "price_max_sar": 2000000
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "ar-001",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "price_max_sar": 2000000
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "لا تتوفر لدي معلومات عن ذلك. يمكنني المساعدة في العقارات المعروضة في السعودية ومشاريع دار جلوبال.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "ar-002",
+      "set": "arabic",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "كم عدد الفلل للبيع في الرياض؟"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Riyadh"
+        },
+        "op": "count",
+        "sql_truth": 217,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [
+          "217"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "ar-002",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "city": "Riyadh"
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "ar-003",
+      "set": "arabic",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "شقق للبيع في جدة بين 500 ألف و 1 مليون ريال"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "price_min_sar": 500000,
+          "price_max_sar": 1000000
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "ar-003",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah"
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "لا تتوفر لدي معلومات عن ذلك. يمكنني المساعدة في العقارات المعروضة في السعودية ومشاريع دار جلوبال.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "hw-001",
+      "set": "handwritten",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "looking for a 4 bedroom villa in riyadh to buy, budget around 3 million"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "bedrooms_min": 4,
+          "bedrooms_max": 4
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "hw-001",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "bedrooms_min": 4,
+          "bedrooms_max": 4,
+          "price_min_sar": 2700000,
+          "price_max_sar": 3300000
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "hw-002",
+      "set": "handwritten",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "whats the cheapest apartment for sale in jeddah right now"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah"
+        },
+        "op": "min_price",
+        "sql_truth": 249000,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "wasalt:5839645",
+          "wasalt:5871565"
+        ],
+        "refuse": false,
+        "answer_numbers": [
+          "249000"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "hw-002",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah"
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "hw-003",
+      "set": "handwritten",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "How many villas are listed for sale in Al Khobar?"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Khobar"
+        },
+        "op": "count",
+        "sql_truth": 62,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [
+          "62"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "hw-003",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Khobar"
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "hw-004",
+      "set": "handwritten",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "avg yearly rent for an apartment in Riyadh?"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Riyadh"
+        },
+        "op": "avg_price",
+        "sql_truth": 50225,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [
+          "50225"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "hw-004",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Riyadh"
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "hw-005",
+      "set": "handwritten",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "flats to rent in Riyadh under 5,000 a month"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Riyadh",
+          "price_max_sar": 60000
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "hw-005",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Riyadh",
+          "price_max_sar": 60000
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "hw-006",
+      "set": "handwritten",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "any land plots for sale in Jeddah?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "land",
+          "city": "Jeddah"
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "hw-006",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "land",
+          "city": "Jeddah"
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "hw-007",
+      "set": "handwritten",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "villa for sale in An Narjis, Riyadh"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "district": "An Narjis"
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "hw-007",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "district": "An Narjis"
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "hw-008",
+      "set": "handwritten",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "apartments for sale in Jeddah between 500k and 1M"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "price_min_sar": 500000,
+          "price_max_sar": 1000000
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "hw-008",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "price_min_sar": 500000,
+          "price_max_sar": 1000000
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "hw-009",
+      "set": "handwritten",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "anything but villas in Riyadh, for sale"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "city": "Riyadh"
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "hw-009",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Riyadh"
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "mt-001",
+      "set": "multiturn",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "3-bed apartments for sale in Riyadh",
+        "what about Jeddah?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "bedrooms_min": 3,
+          "bedrooms_max": 3
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "mt-001",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "bedrooms_min": 3,
+          "bedrooms_max": 3
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "mt-002",
+      "set": "multiturn",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "villas for sale in Riyadh under 3M",
+        "how many of those have 5 bedrooms?"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "price_max_sar": 3000000,
+          "bedrooms_min": 5,
+          "bedrooms_max": 5
+        },
+        "op": "count",
+        "sql_truth": 49,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [
+          "49"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "mt-002",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5,
+          "price_max_sar": 3000000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "oos-001",
+      "set": "oos",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "What's the weather in Riyadh tomorrow?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "out_of_scope",
+        "filters": {},
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": true,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "oos-001",
+        "route": "lookup",
+        "filters": {
+          "city": "Riyadh"
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "oos-002",
+      "set": "oos",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "Who won the football match last night?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "out_of_scope",
+        "filters": {},
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": true,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "oos-002",
+        "route": "out_of_scope",
+        "filters": {},
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "oos-003",
+      "set": "oos",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "Write me a Python function that sorts a list"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "out_of_scope",
+        "filters": {},
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": true,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "oos-003",
+        "route": "out_of_scope",
+        "filters": {},
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "oos-004",
+      "set": "oos",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "ما هي عاصمة فرنسا؟"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "out_of_scope",
+        "filters": {},
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": true,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "oos-004",
+        "route": "out_of_scope",
+        "filters": {},
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "لا تتوفر لدي معلومات عن ذلك. يمكنني المساعدة في العقارات المعروضة في السعودية ومشاريع دار جلوبال.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "pj-001",
+      "set": "projects",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "When is Les Vagues scheduled for completion?"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "project_info",
+        "filters": {},
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "darglobal:project:les-vagues"
+        ],
+        "refuse": false,
+        "answer_numbers": [
+          "2027"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "pj-001",
+        "route": "out_of_scope",
+        "filters": {},
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "pj-002",
+      "set": "projects",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "What sizes are the residences at Marea?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "project_info",
+        "filters": {},
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "darglobal:project:marea"
+        ],
+        "refuse": false,
+        "answer_numbers": [
+          "223",
+          "553"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "pj-002",
+        "route": "out_of_scope",
+        "filters": {},
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "pj-003",
+      "set": "projects",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "When will the Marriott Residences at AIDA in Oman be completed?"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "project_info",
+        "filters": {},
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "darglobal:project:marriott-residences-aida-oman"
+        ],
+        "refuse": false,
+        "answer_numbers": [
+          "2029"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "pj-003",
+        "route": "out_of_scope",
+        "filters": {},
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "pj-004",
+      "set": "projects",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "Where is The Astera by Aston Martin located?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "project_info",
+        "filters": {},
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "darglobal:project:the-astera"
+        ],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "pj-004",
+        "route": "out_of_scope",
+        "filters": {},
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "pj-005",
+      "set": "projects",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "How far is Tierra Viva from Marbella?"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "project_info",
+        "filters": {},
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "darglobal:project:tierra-viva"
+        ],
+        "refuse": false,
+        "answer_numbers": [
+          "15"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "pj-005",
+        "route": "out_of_scope",
+        "filters": {},
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "pj-006",
+      "set": "projects",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "What unit sizes does Trump Tower Jeddah offer?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "project_info",
+        "filters": {},
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "darglobal:project:trump-tower-jeddah"
+        ],
+        "refuse": false,
+        "answer_numbers": [
+          "70",
+          "365"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "pj-006",
+        "route": "lookup",
+        "filters": {
+          "city": "Jeddah"
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-001",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "5-bed floor units to buy in Riyadh below 1,000,000 riyals"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "floor",
+          "city": "Riyadh",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5,
+          "price_max_sar": 1000000
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-001",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "floor",
+          "city": "Riyadh",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5,
+          "price_max_sar": 1000000
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-002",
+      "set": "templated",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "ما هي أغلى شقة للإيجار في جدة؟"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Jeddah"
+        },
+        "op": "max_price",
+        "sql_truth": 110000,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "wasalt:5857749"
+        ],
+        "refuse": false,
+        "answer_numbers": [
+          "110000"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-002",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Jeddah"
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-003",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "What's the mean price of plots of land for sale in Makkah under 2,400,000 riyals?"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "land",
+          "city": "Makkah",
+          "price_max_sar": 2400000
+        },
+        "op": "avg_price",
+        "sql_truth": 911347,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [
+          "911347"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-003",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "land",
+          "city": "Makkah",
+          "price_max_sar": 2400000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-004",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "villas for sale in Khobar under 1,400,000 riyals"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Khobar",
+          "price_max_sar": 1400000
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-004",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Khobar",
+          "price_max_sar": 1400000
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-005",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "I'm looking for apartments to buy in Khobar"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Khobar"
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-005",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Khobar"
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-006",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "median price for flats to buy in Madinah"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Madinah"
+        },
+        "op": "median_price",
+        "sql_truth": 690000,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-006",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Madinah"
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-007",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "Show me apartments to buy in Riyadh more than 760,000 SAR"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Riyadh",
+          "price_min_sar": 760000
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-007",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Riyadh",
+          "price_min_sar": 760000
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-008",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "how many villas to buy in Al Amwaj, Khobar do you have"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Khobar",
+          "district": "Al Amwaj"
+        },
+        "op": "count",
+        "sql_truth": 18,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [
+          "18"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-008",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Khobar",
+          "district": "Al Amwaj"
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-009",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "Any apartments for rent in Al Faysaleyyah, Jeddah?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "district": "Al Faysaleyyah"
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-009",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "district": "Al Faysaleyyah"
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-010",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "What is the average size of floor units for rent in Riyadh?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "floor",
+          "city": "Riyadh"
+        },
+        "op": "avg_area",
+        "sql_truth": 331.46,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-010",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "floor",
+          "city": "Riyadh"
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-011",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "Show me apartments to buy in Jazan above 490k"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jazan",
+          "price_min_sar": 490000
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-011",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jazan",
+          "price_min_sar": 490000
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-012",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "What is the median price of land plots for sale in Makkah above SAR 2,700,000?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "land",
+          "city": "Makkah",
+          "price_min_sar": 2700000
+        },
+        "op": "median_price",
+        "sql_truth": 6605000,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-012",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "land",
+          "city": "Makkah",
+          "price_min_sar": 2700000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-013",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "least expensive apartment for sale in Makkah above SAR 530,000"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Makkah",
+          "price_min_sar": 530000
+        },
+        "op": "min_price",
+        "sql_truth": 550000,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "wasalt:5838965",
+          "wasalt:5840035",
+          "wasalt:5869755"
+        ],
+        "refuse": false,
+        "answer_numbers": [
+          "550000"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-013",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Makkah",
+          "price_min_sar": 530000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-014",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "average price for 5br flats for sale in Jazan"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jazan",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5
+        },
+        "op": "avg_price",
+        "sql_truth": 517778,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-014",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jazan",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-015",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "Number of apartments for sale in Jeddah above 540,000 SAR"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "price_min_sar": 540000
+        },
+        "op": "count",
+        "sql_truth": 152,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-015",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "price_min_sar": 540000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-016",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "Show me 6 bedroom villas to buy in Makkah up to SAR 1,300,000"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Makkah",
+          "bedrooms_min": 6,
+          "bedrooms_max": 6,
+          "price_max_sar": 1300000
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-016",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Makkah",
+          "bedrooms_min": 6,
+          "bedrooms_max": 6,
+          "price_max_sar": 1300000
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-017",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "What is the average size of villas for sale in Khobar?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Khobar"
+        },
+        "op": "avg_area",
+        "sql_truth": 337.38,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-017",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Khobar"
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-018",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "Find four bedroom villas to rent in Riyadh less than SAR 140,000 per year"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "bedrooms_min": 4,
+          "bedrooms_max": 4,
+          "price_max_sar": 140000
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-018",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "rent",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "bedrooms_min": 4,
+          "bedrooms_max": 4,
+          "price_max_sar": 140000
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-019",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "median price for villas to buy in Al Rahmanyah, Jeddah"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Jeddah",
+          "district": "Al Rahmanyah"
+        },
+        "op": "median_price",
+        "sql_truth": 1550000,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-019",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Jeddah",
+          "district": "Al Rahmanyah"
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-020",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "What is the average size of land plots for sale in Jazan over 410,000 SAR?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "land",
+          "city": "Jazan",
+          "price_min_sar": 410000
+        },
+        "op": "avg_area",
+        "sql_truth": 829.67,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-020",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "land",
+          "city": "Jazan",
+          "price_min_sar": 410000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-021",
+      "set": "templated",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "كم عدد فلل ٥ غرف للإيجار في الرياض؟"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5
+        },
+        "op": "count",
+        "sql_truth": 7,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-021",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-022",
+      "set": "templated",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "أريد شقة 5 غرف للبيع في مكة"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Makkah",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-022",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Makkah",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "لا تتوفر لدي معلومات عن ذلك. يمكنني المساعدة في العقارات المعروضة في السعودية ومشاريع دار جلوبال.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-023",
+      "set": "templated",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "أريد شقة للبيع في مكة فوق 530 ألف ريال"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Makkah",
+          "price_min_sar": 530000
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-023",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Makkah",
+          "price_min_sar": 530000
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "لا تتوفر لدي معلومات عن ذلك. يمكنني المساعدة في العقارات المعروضة في السعودية ومشاريع دار جلوبال.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-024",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "how many floor units for rent in Riyadh below 6,000 SAR a month do you have"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "floor",
+          "city": "Riyadh",
+          "price_max_sar": 72000
+        },
+        "op": "count",
+        "sql_truth": 21,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-024",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "floor",
+          "city": "Riyadh",
+          "price_max_sar": 72000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-025",
+      "set": "templated",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "كم عدد دور ٥ غرف للإيجار في الرياض أقل من 86 ألف ريال؟"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "floor",
+          "city": "Riyadh",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5,
+          "price_max_sar": 86000
+        },
+        "op": "count",
+        "sql_truth": 13,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-025",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "floor",
+          "city": "Riyadh",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5,
+          "price_max_sar": 86000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-026",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "most expensive building to buy in Riyadh below SAR 1,600,000"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "building",
+          "city": "Riyadh",
+          "price_max_sar": 1600000
+        },
+        "op": "max_price",
+        "sql_truth": 1300000,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "wasalt:5871440"
+        ],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-026",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "building",
+          "city": "Riyadh",
+          "price_max_sar": 1600000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-027",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "How many apartments are to rent in Al Hammraa, Khobar?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Khobar",
+          "district": "Al Hammraa"
+        },
+        "op": "count",
+        "sql_truth": 12,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-027",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Khobar",
+          "district": "Al Hammraa"
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-028",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "I'm looking for flats for rent in Jeddah above 34k per year"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "price_min_sar": 34000
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-028",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "price_min_sar": 34000
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-029",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "Any villas for sale in Al Rahmanyah, Jeddah?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Jeddah",
+          "district": "Al Rahmanyah"
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-029",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Jeddah",
+          "district": "Al Rahmanyah"
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-030",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "Number of villas to rent in Riyadh"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "villa",
+          "city": "Riyadh"
+        },
+        "op": "count",
+        "sql_truth": 39,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-030",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "villa",
+          "city": "Riyadh"
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-031",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "Which apartment for sale in Makkah below 590k has the highest price?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Makkah",
+          "price_max_sar": 590000
+        },
+        "op": "max_price",
+        "sql_truth": 590000,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "wasalt:5860808",
+          "wasalt:5869991"
+        ],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-031",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Makkah",
+          "price_max_sar": 590000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-032",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "I'm looking for 3br apartments to buy in Makkah"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Makkah",
+          "bedrooms_min": 3,
+          "bedrooms_max": 3
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-032",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Makkah",
+          "bedrooms_min": 3,
+          "bedrooms_max": 3
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-033",
+      "set": "templated",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "ما متوسط مساحة شقق ٥ غرف للبيع في جازان تحت ٦٥٠ ألف ريال؟"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jazan",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5,
+          "price_max_sar": 650000
+        },
+        "op": "avg_area",
+        "sql_truth": 196.05,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-033",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jazan",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5,
+          "price_max_sar": 650000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-034",
+      "set": "templated",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "ما هي أغلى شقة 5 غرف للبيع في جازان أقل من 650 ألف ريال؟"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jazan",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5,
+          "price_max_sar": 650000
+        },
+        "op": "max_price",
+        "sql_truth": 570000,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "wasalt:5870385"
+        ],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-034",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jazan",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5,
+          "price_max_sar": 650000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-035",
+      "set": "templated",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "فلل ٥ غرف للبيع في الرياض"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-035",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "لا تتوفر لدي معلومات عن ذلك. يمكنني المساعدة في العقارات المعروضة في السعودية ومشاريع دار جلوبال.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-036",
+      "set": "templated",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "أبحث عن شقق 4 غرف للبيع في مكة أقل من 710 ألف ريال"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Makkah",
+          "bedrooms_min": 4,
+          "bedrooms_max": 4,
+          "price_max_sar": 710000
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-036",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Makkah",
+          "bedrooms_min": 4,
+          "bedrooms_max": 4,
+          "price_max_sar": 710000
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "لا تتوفر لدي معلومات عن ذلك. يمكنني المساعدة في العقارات المعروضة في السعودية ومشاريع دار جلوبال.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-037",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "Number of plots of land to buy in Jeddah"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "land",
+          "city": "Jeddah"
+        },
+        "op": "count",
+        "sql_truth": 21,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-037",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "land",
+          "city": "Jeddah"
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-038",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "Which apartment for sale in Khobar less than SAR 750,000 has the highest price?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Khobar",
+          "price_max_sar": 750000
+        },
+        "op": "max_price",
+        "sql_truth": 750000,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "wasalt:5861039",
+          "wasalt:5864723",
+          "wasalt:5866243"
+        ],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-038",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Khobar",
+          "price_max_sar": 750000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-039",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "What is the average price of 7br villas for sale in Khobar?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Khobar",
+          "bedrooms_min": 7,
+          "bedrooms_max": 7
+        },
+        "op": "avg_price",
+        "sql_truth": 1210000,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-039",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Khobar",
+          "bedrooms_min": 7,
+          "bedrooms_max": 7
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-040",
+      "set": "templated",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "متوسط أسعار شقق للبيع في جازان"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jazan"
+        },
+        "op": "avg_price",
+        "sql_truth": 530000,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-040",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jazan"
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-041",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "7 bedroom villas for sale in Dammam below 1,600,000 riyals"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Dammam",
+          "bedrooms_min": 7,
+          "bedrooms_max": 7,
+          "price_max_sar": 1600000
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-041",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Dammam",
+          "bedrooms_min": 7,
+          "bedrooms_max": 7,
+          "price_max_sar": 1600000
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-042",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "Show me 1-bed flats to rent in Jeddah"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "bedrooms_min": 1,
+          "bedrooms_max": 1
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-042",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "bedrooms_min": 1,
+          "bedrooms_max": 1
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-043",
+      "set": "templated",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "ما هي أغلى فيلا للإيجار في الرياض أكثر من 100 ألف ريال؟"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "price_min_sar": 100000
+        },
+        "op": "max_price",
+        "sql_truth": 1020000,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "wasalt:5841897"
+        ],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-043",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "price_min_sar": 100000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-044",
+      "set": "templated",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "أريد دور للإيجار في الرياض"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "floor",
+          "city": "Riyadh"
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-044",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "rent",
+          "property_type": "floor",
+          "city": "Riyadh"
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "لا تتوفر لدي معلومات عن ذلك. يمكنني المساعدة في العقارات المعروضة في السعودية ومشاريع دار جلوبال.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-045",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "How many villas are to rent in An Narjis, Riyadh?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "district": "An Narjis"
+        },
+        "op": "count",
+        "sql_truth": 8,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-045",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "district": "An Narjis"
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-046",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "how many plots of land for sale in Jeddah under 1.6 million SAR do you have"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "land",
+          "city": "Jeddah",
+          "price_max_sar": 1600000
+        },
+        "op": "count",
+        "sql_truth": 13,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-046",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "land",
+          "city": "Jeddah",
+          "price_max_sar": 1600000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-047",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "What is the cheapest flat to buy in Jazan below 540k?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jazan",
+          "price_max_sar": 540000
+        },
+        "op": "min_price",
+        "sql_truth": 390000,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "wasalt:5870180"
+        ],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-047",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jazan",
+          "price_max_sar": 540000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-048",
+      "set": "templated",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "كم عدد شقق للبيع في الدمام تحت ٥٢٠ ألف ريال؟"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Dammam",
+          "price_max_sar": 520000
+        },
+        "op": "count",
+        "sql_truth": 4,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-048",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Dammam",
+          "price_max_sar": 520000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-049",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "Which villa to buy in Riyadh under 2.8M has the lowest price?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "price_max_sar": 2800000
+        },
+        "op": "min_price",
+        "sql_truth": 650000,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "wasalt:5840239"
+        ],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-049",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "price_max_sar": 2800000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-050",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "How many floor units are to rent in Riyadh over 65,000 SAR per year?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "floor",
+          "city": "Riyadh",
+          "price_min_sar": 65000
+        },
+        "op": "count",
+        "sql_truth": 29,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-050",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "floor",
+          "city": "Riyadh",
+          "price_min_sar": 65000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-051",
+      "set": "templated",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "كم عدد أرض للبيع في جازان؟"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "land",
+          "city": "Jazan"
+        },
+        "op": "count",
+        "sql_truth": 16,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-051",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "land",
+          "city": "Jazan"
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-052",
+      "set": "templated",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "ما هو السعر الوسيط لـ شقق 2 غرف للإيجار في الرياض؟"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Riyadh",
+          "bedrooms_min": 2,
+          "bedrooms_max": 2
+        },
+        "op": "median_price",
+        "sql_truth": 51900,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-052",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Riyadh",
+          "bedrooms_min": 2,
+          "bedrooms_max": 2
+        },
+        "cards": [],
+        "refused": true,
+        "sql_value": null,
+        "answer": "لا تتوفر لدي معلومات عن ذلك. يمكنني المساعدة في العقارات المعروضة في السعودية ومشاريع دار جلوبال.",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-053",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "Which three bedroom flat for sale in Jeddah up to SAR 590,000 has the highest price?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "bedrooms_min": 3,
+          "bedrooms_max": 3,
+          "price_max_sar": 590000
+        },
+        "op": "max_price",
+        "sql_truth": 590000,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "wasalt:5871393",
+          "wasalt:5871502",
+          "wasalt:5871504"
+        ],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-053",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "bedrooms_min": 3,
+          "bedrooms_max": 3,
+          "price_max_sar": 590000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-054",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "What is the median price of 4-bed apartments for sale in Makkah?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Makkah",
+          "bedrooms_min": 4,
+          "bedrooms_max": 4
+        },
+        "op": "median_price",
+        "sql_truth": 590000,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-054",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Makkah",
+          "bedrooms_min": 4,
+          "bedrooms_max": 4
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-055",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "average price for apartments for sale in Madinah"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Madinah"
+        },
+        "op": "avg_price",
+        "sql_truth": 705000,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-055",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Madinah"
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-056",
+      "set": "templated",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "ما هي أرخص شقة ٣ غرف للبيع في جدة أقل من 590 ألف ريال؟"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "bedrooms_min": 3,
+          "bedrooms_max": 3,
+          "price_max_sar": 590000
+        },
+        "op": "min_price",
+        "sql_truth": 270000,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "wasalt:5842243"
+        ],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-056",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "bedrooms_min": 3,
+          "bedrooms_max": 3,
+          "price_max_sar": 590000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-057",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "Number of apartments to buy in Jeddah under 390k"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "price_max_sar": 390000
+        },
+        "op": "count",
+        "sql_truth": 105,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-057",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "price_max_sar": 390000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-058",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "least expensive five bedroom villa for sale in Riyadh up to SAR 2,800,000"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5,
+          "price_max_sar": 2800000
+        },
+        "op": "min_price",
+        "sql_truth": 650000,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "wasalt:5840239"
+        ],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-058",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Riyadh",
+          "bedrooms_min": 5,
+          "bedrooms_max": 5,
+          "price_max_sar": 2800000
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-059",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "How many 1br apartments are for rent in Jeddah?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "bedrooms_min": 1,
+          "bedrooms_max": 1
+        },
+        "op": "count",
+        "sql_truth": 48,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-059",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "bedrooms_min": 1,
+          "bedrooms_max": 1
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    },
+    {
+      "id": "tpl-dev-060",
+      "set": "templated",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "How many plots of land are to buy in Al Khalidiyah 5, Jazan?"
+      ],
+      "llm": false,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "land",
+          "city": "Jazan",
+          "district": "Al Khalidiyah 5"
+        },
+        "op": "count",
+        "sql_truth": 6,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-060",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "land",
+          "city": "Jazan",
+          "district": "Al Khalidiyah 5"
+        },
+        "cards": [],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null
+      }
+    }
+  ]
+}

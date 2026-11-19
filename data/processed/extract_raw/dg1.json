@@ -1,0 +1,20 @@
+{
+  "name": "DG1",
+  "brand": null,
+  "country": null,
+  "city": "Dubai",
+  "location": "directly by the Dubai Canal in the heart of Business Bay",
+  "status": null,
+  "handover": null,
+  "unit_types": [],
+  "bedrooms_min": null,
+  "bedrooms_max": null,
+  "area_sqm_min": null,
+  "area_sqm_max": null,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "Leisure spaces"
+  ]
+}

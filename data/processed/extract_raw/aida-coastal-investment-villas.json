@@ -1,0 +1,36 @@
+{
+  "name": "Coastal Investment Villas",
+  "brand": null,
+  "country": "Oman",
+  "city": "Muscat",
+  "location": "AIDA",
+  "status": "Under Development",
+  "handover": null,
+  "unit_types": [
+    "Villa"
+  ],
+  "bedrooms_min": 3,
+  "bedrooms_max": 3,
+  "area_sqm_min": 125,
+  "area_sqm_max": 224,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "Trump International Golf Club Oman – 18hole golf course",
+    "Club House",
+    "Plazas, Cafes & restaurants",
+    "Luxury hotels",
+    "Wellness centers",
+    "Outdoor landscape",
+    "Fitness center",
+    "Promenades",
+    "Hiking trails",
+    "Mountains bike trails",
+    "Children’s splash areas",
+    "Parks",
+    "Running trails",
+    "Viewing decks",
+    "Swimming pools"
+  ]
+}

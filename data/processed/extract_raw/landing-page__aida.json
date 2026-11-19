@@ -1,0 +1,32 @@
+{
+  "name": "AIDA",
+  "brand": null,
+  "country": "Oman",
+  "city": "Muscat",
+  "location": "AIDA, an exclusive gated community and renowned golfing destination, perched 130 meters above Muscat Bay",
+  "status": null,
+  "handover": null,
+  "unit_types": [
+    "apartments",
+    "luxury villas",
+    "hotel residences",
+    "branded residences",
+    "non-branded residences"
+  ],
+  "bedrooms_min": 3,
+  "bedrooms_max": 5,
+  "area_sqm_min": null,
+  "area_sqm_max": null,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": "structured payment plans, typically linked to construction milestones",
+  "amenities": [
+    "swimming pools",
+    "parks",
+    "wellness and fitness centers",
+    "restaurants",
+    "kids’ play areas",
+    "outdoor cinemas",
+    "adventure zones"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "Trump International Hotel & Tower Dubai",
+  "brand": "Trump",
+  "country": null,
+  "city": "Dubai",
+  "location": "Sheikh Zayed Road, at the edge of Downtown",
+  "status": null,
+  "handover": null,
+  "unit_types": [
+    "Penthouses"
+  ],
+  "bedrooms_min": null,
+  "bedrooms_max": null,
+  "area_sqm_min": null,
+  "area_sqm_max": null,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "private pools",
+    "Rooftop pool—the highest outdoor pool in the world",
+    "Trump Members only club",
+    "Dining, bar, and lounge",
+    "private elevator"
+  ]
+}

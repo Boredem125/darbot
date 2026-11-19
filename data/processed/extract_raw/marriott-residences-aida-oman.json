@@ -1,0 +1,41 @@
+{
+  "name": "Marriott Residences Aida, Oman",
+  "brand": "Marriott",
+  "country": "Oman",
+  "city": "Muscat",
+  "location": "AIDA, Muscat",
+  "status": "under construction",
+  "handover": "September 2029",
+  "unit_types": [
+    "Apartments"
+  ],
+  "bedrooms_min": 1,
+  "bedrooms_max": 3,
+  "area_sqm_min": 60,
+  "area_sqm_max": 194,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "swimming pools",
+    "fine dining",
+    "concierge",
+    "reception desk",
+    "doorman",
+    "lobby",
+    "valet",
+    "championship golf course",
+    "private beach enclave",
+    "children's splash areas",
+    "wellness centres",
+    "fitness centre",
+    "plazas",
+    "cafes and restaurants",
+    "hiking trails",
+    "mountain bike trails",
+    "running trail",
+    "promenades",
+    "viewing decks",
+    "parks"
+  ]
+}

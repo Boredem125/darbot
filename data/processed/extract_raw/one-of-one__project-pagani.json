@@ -1,0 +1,27 @@
+{
+  "name": "Pagani Penthouse",
+  "brand": "Pagani",
+  "country": null,
+  "city": "Dubai",
+  "location": "The DaVinci Tower",
+  "status": null,
+  "handover": null,
+  "unit_types": [
+    "Penthouse"
+  ],
+  "bedrooms_min": null,
+  "bedrooms_max": null,
+  "area_sqm_min": null,
+  "area_sqm_max": null,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "personal elevator",
+    "advanced domotics",
+    "sphere",
+    "geometric glass panes",
+    "heritage leather",
+    "luxurious fabrics"
+  ]
+}

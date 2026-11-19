@@ -1,0 +1,37 @@
+{
+  "name": "Trump International Hotel Oman",
+  "brand": "Trump",
+  "country": "Oman",
+  "city": "Muscat",
+  "location": "AIDA, Muscat",
+  "status": "Under development",
+  "handover": "December 2028",
+  "unit_types": [
+    "rooms",
+    "junior suites",
+    "suites"
+  ],
+  "bedrooms_min": null,
+  "bedrooms_max": null,
+  "area_sqm_min": 43,
+  "area_sqm_max": 138,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "Trump International Golf Club",
+    "Trump Member Club",
+    "Cliff Night Club",
+    "AIDA Beach",
+    "hanging suites",
+    "sky bar",
+    "all-day dining",
+    "swimming pools",
+    "wellness and fitness centres",
+    "hiking and mountain bike trails",
+    "viewing deck",
+    "children's splash areas",
+    "parks",
+    "promenades"
+  ]
+}

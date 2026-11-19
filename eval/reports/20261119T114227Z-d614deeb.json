@@ -1,0 +1,755 @@
+{
+  "run_id": "20261119T114227Z-d614deeb",
+  "split": "test",
+  "timestamp": "2026-11-19T11:42:27.441913+00:00",
+  "config": {
+    "split": "test",
+    "rrf_k": 60,
+    "list_size": 20,
+    "score_floor": 0.52,
+    "rerank": false,
+    "llm": true,
+    "no_llm": false,
+    "dense_weight": 1.0,
+    "sparse_weight": 1.0,
+    "index_dir": "data/index",
+    "fakes": false
+  },
+  "index_version": "77284224a04cf674",
+  "prompt_version": "unknown",
+  "n_cases": 5,
+  "metrics": {
+    "route_accuracy": {
+      "successes": 4,
+      "total": 5,
+      "rate": 0.8,
+      "ci_lower": 0.3755,
+      "ci_upper": 0.9638
+    },
+    "filter_accuracy": {
+      "successes": 3,
+      "total": 3,
+      "rate": 1.0,
+      "ci_lower": 0.4385,
+      "ci_upper": 1.0
+    },
+    "constraint_precision_at_5": {
+      "successes": 11,
+      "total": 11,
+      "rate": 1.0,
+      "ci_lower": 0.7412,
+      "ci_upper": 1.0
+    },
+    "entity_hit_at_5": {
+      "successes": 1,
+      "total": 1,
+      "rate": 1.0,
+      "ci_lower": 0.2065,
+      "ci_upper": 1.0
+    },
+    "entity_mrr": {
+      "kind": "mrr",
+      "value": 1.0,
+      "total": 1,
+      "rate": 1.0
+    },
+    "aggregate_exact": {
+      "successes": 2,
+      "total": 2,
+      "rate": 1.0,
+      "ci_lower": 0.3424,
+      "ci_upper": 1.0
+    },
+    "refusal_accuracy": {
+      "successes": 0,
+      "total": 1,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.7935
+    },
+    "false_refusal": {
+      "successes": 0,
+      "total": 4,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.4899
+    },
+    "canary_leak": {
+      "successes": 0,
+      "total": 0,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0
+    },
+    "numeric_grounding": {
+      "successes": 0,
+      "total": 3,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.5615
+    },
+    "entity_grounding": {
+      "successes": 4,
+      "total": 4,
+      "rate": 1.0,
+      "ci_lower": 0.5101,
+      "ci_upper": 1.0
+    }
+  },
+  "cases": [
+    {
+      "id": "ps-001",
+      "set": "provider_subset",
+      "split": "test",
+      "lang": "en",
+      "turns": [
+        "2 bedroom flats for sale in Jeddah under 1.5M"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "bedrooms_min": 2,
+          "bedrooms_max": 2,
+          "price_max_sar": 1500000
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": "lookup",
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "ps-001",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah",
+          "bedrooms_min": 2,
+          "bedrooms_max": 2,
+          "price_max_sar": 1500000
+        },
+        "cards": [
+          {
+            "doc_id": "wasalt:5869439",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment 500 SQM with 2 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-500-sqm-with-2-bedrooms-5869439",
+            "scraped_at": "2026-11-18 10:46:56.690492+00:00",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Jeddah",
+            "district": "Al Naeem",
+            "price_sar": 377000,
+            "bedrooms": 2,
+            "area_sqm": 500.0,
+            "n": 1,
+            "score": 0.02821939586645469,
+            "snippet": "Apartment for sale in Al Naeem, Jeddah. 2 bedrooms, 500 sqm. Price SAR 377,000. Apartment for Sale in Al Naeem, Jeddah Built up Area: 500 SQM Apartment is located on 1 street The property has 2 bedrooms Apartment has electricity and water Connections Building year: 2026 Price: 377000 SAR"
+          },
+          {
+            "doc_id": "wasalt:5870934",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment with 2 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-with-2-bedrooms-5870934",
+            "scraped_at": "2026-11-18 10:33:11.168742+00:00",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Jeddah",
+            "district": "Al Nuzha",
+            "price_sar": 295000,
+            "bedrooms": 2,
+            "bathrooms": 2,
+            "area_sqm": 147.0,
+            "n": 2,
+            "score": 0.02821939586645469,
+            "snippet": "Apartment for sale in Al Nuzha, Jeddah. 2 bedrooms, 2 bathrooms, 147 sqm. Price SAR 295,000. Apartment for Sale in Al Nuzha, Jeddah Built up Area: 147 SQM Property Floor : 2 The property has 5 floors, 2 bedrooms, 2 bathrooms, 1 living room, 1 guest room Apartment has electricity and water Connections Building year: 2026 Property amenities: &nbsp; - &nbsp; Park &nbsp; - &nbsp; School &nbsp; - &nbsp"
+          },
+          {
+            "doc_id": "wasalt:5870946",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment with 2 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-with-2-bedrooms-5870946",
+            "scraped_at": "2026-11-18 10:33:09.144789+00:00",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Jeddah",
+            "district": "Al Nuzha",
+            "price_sar": 295000,
+            "bedrooms": 2,
+            "bathrooms": 2,
+            "area_sqm": 750.0,
+            "n": 3,
+            "score": 0.02819138376017471,
+            "snippet": "Apartment for sale in Al Nuzha, Jeddah. 2 bedrooms, 2 bathrooms, 750 sqm. Price SAR 295,000. Apartment for Sale in Al Nuzha, Jeddah Built up Area: 750 SQM Property Floor : 2 The property has 5 floors, 2 bedrooms, 2 bathrooms, 1 living room, 1 guest room Apartment has electricity and water Connections Building year: 2026 Property amenities: &nbsp; - &nbsp; Park &nbsp; - &nbsp; School &nbsp; - &nbsp"
+          },
+          {
+            "doc_id": "wasalt:5869443",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment 500 SQM with 2 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-500-sqm-with-2-bedrooms-5869443",
+            "scraped_at": "2026-11-18 10:47:04.385763+00:00",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Jeddah",
+            "district": "Al Naeem",
+            "price_sar": 357000,
+            "bedrooms": 2,
+            "area_sqm": 500.0,
+            "n": 4,
+            "score": 0.02782608695652174,
+            "snippet": "Apartment for sale in Al Naeem, Jeddah. 2 bedrooms, 500 sqm. Price SAR 357,000. Apartment for Sale in Al Naeem, Jeddah Built up Area: 500 SQM Apartment is located on 1 street The property has 2 bedrooms Apartment has electricity and water Connections Building year: 2026 Price: 357000 SAR"
+          },
+          {
+            "doc_id": "wasalt:5870872",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment 440 SQM with 2 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-440-sqm-with-2-bedrooms-5870872",
+            "scraped_at": "2026-11-18 10:35:11.010744+00:00",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Jeddah",
+            "district": "Al Rawdhah",
+            "price_sar": 419000,
+            "bedrooms": 2,
+            "area_sqm": 440.0,
+            "n": 5,
+            "score": 0.027272727272727275,
+            "snippet": "Apartment for sale in Al Rawdhah, Jeddah. 2 bedrooms, 440 sqm. Price SAR 419,000. Apartment for Sale in Al Rawdhah, Jeddah Built up Area: 440 SQM Apartment is located on 1 street The property has 2 bedrooms Apartment has electricity and water Connections Building year: 2026 Price: 419000 SAR"
+          }
+        ],
+        "refused": false,
+        "sql_value": null,
+        "answer": "- Apartment, 2 bedrooms, Al Naeem, Jeddah – SAR 377,000, 500 sqm【1】  \n- Apartment, 2 bedrooms, Al Nuzha, Jeddah – SAR 295,000, 147 sqm【2】  \n- Apartment, 2 bedrooms, Al Nuzha, Jeddah – SAR 295,000, 750 sqm【3】  \n- Apartment, 2 bedrooms, Al Naeem, Jeddah – SAR 357,000, 500 sqm【4】  \n- Apartment, 2 bedrooms, Al Rawdhah, Jeddah – SAR 419,000, 440 sqm【5】",
+        "grounding": {
+          "numbers_ok": true,
+          "entities_ok": true,
+          "citations_ok": false,
+          "failures": [
+            "answer contains numbers but no citations"
+          ]
+        },
+        "_prices": [
+          377000,
+          295000,
+          295000,
+          357000,
+          419000
+        ],
+        "_areas": [
+          500.0,
+          147.0,
+          750.0,
+          500.0,
+          440.0
+        ],
+        "llm_runs": [
+          {
+            "answer": "- Apartment, 2 bedrooms, Al Naeem, Jeddah – SAR 377,000, 500 sqm【1】  \n- Apartment, 2 bedrooms, Al Nuzha, Jeddah – SAR 295,000, 147 sqm【2】  \n- Apartment, 2 bedrooms, Al Nuzha, Jeddah – SAR 295,000, 750 sqm【3】  \n- Apartment, 2 bedrooms, Al Naeem, Jeddah – SAR 357,000, 500 sqm【4】  \n- Apartment, 2 bedrooms, Al Rawdhah, Jeddah – SAR 419,000, 440 sqm【5】",
+            "grounding": {
+              "numbers_ok": true,
+              "entities_ok": true,
+              "citations_ok": false,
+              "failures": [
+                "answer contains numbers but no citations"
+              ]
+            },
+            "entry_id": "groq:openai/gpt-oss-120b",
+            "ttft_ms": 969.0000000409782,
+            "total_ms": 1313.0000000237487,
+            "finish_reason": "stop",
+            "prompt_tokens": 638,
+            "completion_tokens": 201,
+            "est_prompt_tokens": 714,
+            "attempts": [],
+            "skipped_budget": false,
+            "llm_unavailable": false,
+            "run_index": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "ps-002",
+      "set": "provider_subset",
+      "split": "test",
+      "lang": "en",
+      "turns": [
+        "What's the average price of villas for sale in Dammam?"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Dammam"
+        },
+        "op": "avg_price",
+        "sql_truth": 1388056,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [
+          "1388056"
+        ],
+        "kind": "aggregate",
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "ps-002",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Dammam"
+        },
+        "cards": [
+          {
+            "doc_id": "wasalt:5835126",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Villa 492 SQM Facing South West on 15m Width Street",
+            "url": "https://wasalt.sa/en/property/sale/villa-492-sqm-facing-south-west-on-15m-width-street-5835126",
+            "scraped_at": "2026-11-18 15:30:46.396291+05:30",
+            "purpose": "sale",
+            "property_type": "villa",
+            "city": "Dammam",
+            "district": "Al Shooalah",
+            "price_sar": 2100000,
+            "bedrooms": 9,
+            "area_sqm": 492.0,
+            "n": 1,
+            "score": 1.0,
+            "snippet": "Villa 492 SQM Facing South West on 15m Width Street"
+          },
+          {
+            "doc_id": "wasalt:5838952",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Villa 400 SQM Facing East on 15m Width Street",
+            "url": "https://wasalt.sa/en/property/sale/villa-400-sqm-facing-east-on-15m-width-street-5838952",
+            "scraped_at": "2026-11-18 15:44:54.842105+05:30",
+            "purpose": "sale",
+            "property_type": "villa",
+            "city": "Dammam",
+            "district": "Teebh",
+            "price_sar": 1030000,
+            "bedrooms": 7,
+            "area_sqm": 400.0,
+            "n": 2,
+            "score": 1.0,
+            "snippet": "Villa 400 SQM Facing East on 15m Width Street"
+          },
+          {
+            "doc_id": "wasalt:5839262",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Villa 375 SQM Facing North on 60m Width Street",
+            "url": "https://wasalt.sa/en/property/sale/villa-375-sqm-facing-north-on-60m-width-street-5839262",
+            "scraped_at": "2026-11-18 15:53:08.531590+05:30",
+            "purpose": "sale",
+            "property_type": "villa",
+            "city": "Dammam",
+            "district": "Al Seef",
+            "price_sar": 1950000,
+            "bedrooms": 6,
+            "area_sqm": 375.0,
+            "n": 3,
+            "score": 1.0,
+            "snippet": "Villa 375 SQM Facing North on 60m Width Street"
+          }
+        ],
+        "refused": false,
+        "sql_value": 1388056,
+        "answer": "The average price of the listed villas for sale in Dammam is **SAR 1,693,333**【1】【2】【3】.",
+        "grounding": {
+          "numbers_ok": false,
+          "entities_ok": true,
+          "citations_ok": false,
+          "failures": [
+            "number 1693333 not in sources",
+            "answer contains numbers but no citations"
+          ]
+        },
+        "llm_runs": [
+          {
+            "answer": "The average price of the listed villas for sale in Dammam is **SAR 1,693,333**【1】【2】【3】.",
+            "grounding": {
+              "numbers_ok": false,
+              "entities_ok": true,
+              "citations_ok": false,
+              "failures": [
+                "number 1693333 not in sources",
+                "answer contains numbers but no citations"
+              ]
+            },
+            "entry_id": "groq:openai/gpt-oss-120b",
+            "ttft_ms": 733.9999999967404,
+            "total_ms": 1016.0000000032596,
+            "finish_reason": "stop",
+            "prompt_tokens": 560,
+            "completion_tokens": 136,
+            "est_prompt_tokens": 638,
+            "attempts": [],
+            "skipped_budget": false,
+            "llm_unavailable": false,
+            "run_index": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "ps-003",
+      "set": "provider_subset",
+      "split": "test",
+      "lang": "en",
+      "turns": [
+        "What bedroom options does Les Vagues have, and when is it finished?"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "project_info",
+        "filters": {},
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "darglobal:project:les-vagues"
+        ],
+        "refuse": false,
+        "answer_numbers": [
+          "2027"
+        ],
+        "kind": "project",
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "ps-003",
+        "route": "project_info",
+        "filters": {
+          "kinds": [
+            "project",
+            "article"
+          ],
+          "project_id": "darglobal:project:les-vagues"
+        },
+        "cards": [
+          {
+            "doc_id": "darglobal:project:les-vagues",
+            "kind": "project",
+            "source": "darglobal",
+            "title": "Les Vagues",
+            "url": "https://darglobal.co.uk/les-vagues",
+            "scraped_at": "2026-11-18 17:45:21.680888+00:00",
+            "city": "Doha",
+            "country": "Qatar",
+            "brand": "Elie Saab",
+            "handover": "December 2027",
+            "n": 1,
+            "score": 0.03306010928961749,
+            "snippet": "Les Vagues (Doha, Qatar). Les Vagues offers one-, two-, and three-bedroom residences ranging from 86 to 389 sqm on Qetaifan Island North. Units are served by four personal elevators per building including a service elevator, and sit within a gated seafront complex with an infinity pool and landscaped sea-view courtyard. Les Vagues is under development with completion scheduled for December 2027."
+          }
+        ],
+        "refused": false,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": {
+          "numbers_ok": null,
+          "entities_ok": null,
+          "citations_ok": null,
+          "failures": []
+        },
+        "_prices": [],
+        "_areas": [],
+        "llm_runs": [
+          {
+            "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+            "grounding": {
+              "numbers_ok": null,
+              "entities_ok": null,
+              "citations_ok": null,
+              "failures": []
+            },
+            "entry_id": "groq:openai/gpt-oss-120b",
+            "ttft_ms": 592.9999999934807,
+            "total_ms": 670.9999999729916,
+            "finish_reason": "stop",
+            "prompt_tokens": 435,
+            "completion_tokens": 66,
+            "est_prompt_tokens": 530,
+            "attempts": [],
+            "skipped_budget": false,
+            "llm_unavailable": false,
+            "run_index": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "ps-004",
+      "set": "provider_subset",
+      "split": "test",
+      "lang": "ar",
+      "turns": [
+        "كم عدد الشقق للإيجار في الرياض؟"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Riyadh"
+        },
+        "op": "count",
+        "sql_truth": 391,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [
+          "391"
+        ],
+        "kind": "arabic",
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "ps-004",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Riyadh"
+        },
+        "cards": [
+          {
+            "doc_id": "wasalt:5835799",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment with 2 Bedrooms",
+            "url": "https://wasalt.sa/en/property/rent/apartment-with-2-bedrooms-5835799",
+            "scraped_at": "2026-11-18 16:40:02.295458+05:30",
+            "purpose": "rent",
+            "property_type": "apartment",
+            "city": "Riyadh",
+            "district": "As Sahafa",
+            "price_sar": 170000,
+            "rent_period": "yearly",
+            "annual_rent_sar": 170000,
+            "bedrooms": 2,
+            "area_sqm": 143.0,
+            "n": 1,
+            "score": 1.0,
+            "snippet": "Apartment with 2 Bedrooms"
+          },
+          {
+            "doc_id": "wasalt:5838288",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment with 3 Bedrooms",
+            "url": "https://wasalt.sa/en/property/rent/apartment-with-3-bedrooms-5838288",
+            "scraped_at": "2026-11-18 16:46:56.099088+05:30",
+            "purpose": "rent",
+            "property_type": "apartment",
+            "city": "Riyadh",
+            "district": "Hitteen",
+            "price_sar": 150000,
+            "rent_period": "yearly",
+            "annual_rent_sar": 150000,
+            "bedrooms": 3,
+            "area_sqm": 116.0,
+            "n": 2,
+            "score": 1.0,
+            "snippet": "Apartment with 3 Bedrooms"
+          },
+          {
+            "doc_id": "wasalt:5838345",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment with 2 Bedrooms",
+            "url": "https://wasalt.sa/en/property/rent/apartment-with-2-bedrooms-5838345",
+            "scraped_at": "2026-11-18 16:47:03.867577+05:30",
+            "purpose": "rent",
+            "property_type": "apartment",
+            "city": "Riyadh",
+            "district": "Al Mathar",
+            "price_sar": 75000,
+            "rent_period": "yearly",
+            "annual_rent_sar": 75000,
+            "bedrooms": 2,
+            "area_sqm": 90.0,
+            "n": 3,
+            "score": 1.0,
+            "snippet": "Apartment with 2 Bedrooms"
+          }
+        ],
+        "refused": false,
+        "sql_value": 391,
+        "answer": "عدد الشقق المتاحة للإيجار في الرياض هو 3 شقة. [1][2][3]",
+        "grounding": {
+          "numbers_ok": true,
+          "entities_ok": true,
+          "citations_ok": true,
+          "failures": []
+        },
+        "llm_runs": [
+          {
+            "answer": "عدد الشقق المتاحة للإيجار في الرياض هو 3 شقة. [1][2][3]",
+            "grounding": {
+              "numbers_ok": true,
+              "entities_ok": true,
+              "citations_ok": true,
+              "failures": []
+            },
+            "entry_id": "groq:openai/gpt-oss-120b",
+            "ttft_ms": 563.0000000237487,
+            "total_ms": 718.9999999827705,
+            "finish_reason": "stop",
+            "prompt_tokens": 545,
+            "completion_tokens": 63,
+            "est_prompt_tokens": 643,
+            "attempts": [],
+            "skipped_budget": false,
+            "llm_unavailable": false,
+            "run_index": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "ps-005",
+      "set": "provider_subset",
+      "split": "test",
+      "lang": "en",
+      "turns": [
+        "Can you book me a flight to Dubai next week?"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "out_of_scope",
+        "filters": {},
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": true,
+        "answer_numbers": [],
+        "kind": "refusal",
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "ps-005",
+        "route": "lookup",
+        "filters": {
+          "city": "Dubai"
+        },
+        "cards": [
+          {
+            "doc_id": "darglobal:project:urban-oasis-by-missoni",
+            "kind": "project",
+            "source": "darglobal",
+            "title": "Urban Oasis",
+            "url": "https://darglobal.co.uk/urban-oasis-by-missoni",
+            "scraped_at": "2026-11-18 17:46:48.669837+00:00",
+            "city": "Dubai",
+            "brand": "Missoni",
+            "handover": "fully handed over",
+            "n": 1,
+            "score": 0.03205128205128205,
+            "snippet": "Urban Oasis (Dubai, ). The project is fully completed and delivered. Buyers interested in current DarGlobal projects or potential resale units can contact DarGlobal directly through darglobal.co.uk. The tower sits directly on the Dubai Canal, placing it 5 minutes from Downtown Dubai and Dubai Mall, 7 minutes from Jumeirah Beach, and 17 minutes from both Dubai International Airport and Dubai Marina"
+          },
+          {
+            "doc_id": "darglobal:project:w-residences",
+            "kind": "project",
+            "source": "darglobal",
+            "title": "W Residences Dubai – Downtown",
+            "url": "https://darglobal.co.uk/w-residences",
+            "scraped_at": "2026-11-18 17:45:52.690780+00:00",
+            "city": "Dubai",
+            "brand": "W Hotels",
+            "n": 2,
+            "score": 0.031024531024531024,
+            "snippet": "W Residences Dubai – Downtown (Dubai, ). W Residences is in Downtown Dubai, strategically positioned by Business Bay. Key distances from the entry data: Burj Khalifa 5 minutes, Dubai Fountain 4 minutes, Dubai Canal 3 minutes, Dubai Mall 6 minutes, Dubai Opera 6 minutes. The Burj Khalifa and Dancing Fountains are visible directly from the tower."
+          },
+          {
+            "doc_id": "darglobal:project:trump-international-hotel-and-tower-dubai",
+            "kind": "project",
+            "source": "darglobal",
+            "title": "Trump International Hotel & Tower Dubai",
+            "url": "https://darglobal.co.uk/trump-international-hotel-and-tower-dubai",
+            "scraped_at": "2026-11-18 17:46:25.905545+00:00",
+            "city": "Dubai",
+            "brand": "Trump",
+            "handover": "December 2031",
+            "n": 3,
+            "score": 0.029857397504456328,
+            "snippet": "Trump International Hotel & Tower Dubai (Dubai, ). Located on Sheikh zayed road, right at the entrance of downtown, you are connected to it all without the congestion. Giving you direct access to Downtown, Dubai Mall, and the Dubai Fountains. Trump International Hotel & Tower Dubai is the first and only Trump-branded development in the Middle East, delivered by DarGlobal."
+          },
+          {
+            "doc_id": "darglobal:project:dg1",
+            "kind": "project",
+            "source": "darglobal",
+            "title": "DG1",
+            "url": "https://darglobal.co.uk/dg1",
+            "scraped_at": "2026-11-18 17:46:13.116928+00:00",
+            "city": "Dubai",
+            "n": 4,
+            "score": 0.02797339593114241,
+            "snippet": "DG1 (Dubai, ). DG1 is located directly by the Dubai Canal in the heart of Business Bay. Offering residents stunning views of the city and in unbelievable proximity to all that matters. Spaces for leisure offer a sanctuary for relaxation and enjoyment. DG1, situated at the very heart of Business Bay Dubai and nestled directly along the Dubai Canal, boasts an extraordinary location."
+          },
+          {
+            "doc_id": "darglobal:project:davinci-tower-by-pagani",
+            "kind": "project",
+            "source": "darglobal",
+            "title": "Da Vinci Tower",
+            "url": "https://darglobal.co.uk/davinci-tower-by-pagani",
+            "scraped_at": "2026-11-18 17:46:03.517512+00:00",
+            "city": "Dubai",
+            "brand": "Pagani Automobili",
+            "n": 5,
+            "score": 0.027313266443701224,
+            "snippet": "Da Vinci Tower (Dubai, ). The tower rises 19 floors above the Dubai Canal, with three basement levels and a grand ground floor. The Dubai Mall and Fountains are about 9 minutes away, and Dubai Marina is around 20 minutes away. Buyers investing AED 2 million or more qualify for the UAE 10-year Golden Visa, and Dubai applies 0% income tax and 0% property tax."
+          }
+        ],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null,
+        "_prices": [],
+        "_areas": [],
+        "llm_runs": [
+          {
+            "answer": "",
+            "grounding": null,
+            "entry_id": null,
+            "ttft_ms": 0.0,
+            "total_ms": 0.0,
+            "finish_reason": "",
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "est_prompt_tokens": 0,
+            "attempts": [],
+            "skipped_budget": true,
+            "llm_unavailable": false,
+            "run_index": 0
+          }
+        ]
+      }
+    }
+  ]
+}

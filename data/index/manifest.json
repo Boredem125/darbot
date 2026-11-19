@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "index_version": "77284224a04cf674",
+  "built_at": "2026-11-19T07:49:25.505561Z",
+  "embed_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "dim": 384,
+  "sparse_model": "Qdrant/bm25",
+  "distance": "cosine",
+  "vector_dtype": "float16",
+  "counts": {
+    "listings_sale": 1398,
+    "listings_rent": 631,
+    "projects": 44,
+    "articles": 174,
+    "points": 3623
+  },
+  "scraped_at_min": "2026-11-18T09:40:36.074551Z",
+  "scraped_at_max": "2026-11-18T18:21:15.686673Z",
+  "git_sha": "unknown",
+  "prompt_version": null,
+  "files": [
+    {
+      "path": "listings.parquet",
+      "sha256": "b139e5efa433eb1062429c82ee71ba4743d414fd4ea907748b3c413997efd3c2",
+      "size_bytes": 325581,
+      "rows": 2029
+    },
+    {
+      "path": "entities.json",
+      "sha256": "b592ff2d7dfae0b6f81546e64b99d533eb15314ea4ae2e6caa42e0f9ad6ff279",
+      "size_bytes": 76400,
+      "rows": null
+    },
+    {
+      "path": "points_000.parquet",
+      "sha256": "6dd1a9add17ce1d7c01390f4d7a04ec4f403ea4634821836a784c8b09153b6c3",
+      "size_bytes": 3926999,
+      "rows": 3623
+    }
+  ]
+}

@@ -1,0 +1,229 @@
+{
+  "run_id": "20261119T113945Z-2206b8f5",
+  "split": "dev",
+  "timestamp": "2026-11-19T11:39:45.708889+00:00",
+  "config": {
+    "split": "dev",
+    "rrf_k": 60,
+    "list_size": 20,
+    "score_floor": 0.52,
+    "rerank": false,
+    "llm": true,
+    "no_llm": false,
+    "dense_weight": 1.0,
+    "sparse_weight": 1.0,
+    "index_dir": "data/index",
+    "fakes": false
+  },
+  "index_version": "77284224a04cf674",
+  "prompt_version": "unknown",
+  "n_cases": 1,
+  "metrics": {
+    "route_accuracy": {
+      "successes": 1,
+      "total": 1,
+      "rate": 1.0,
+      "ci_lower": 0.2065,
+      "ci_upper": 1.0
+    },
+    "filter_accuracy": {
+      "successes": 1,
+      "total": 1,
+      "rate": 1.0,
+      "ci_lower": 0.2065,
+      "ci_upper": 1.0
+    },
+    "constraint_precision_at_5": {
+      "successes": 3,
+      "total": 3,
+      "rate": 1.0,
+      "ci_lower": 0.4385,
+      "ci_upper": 1.0
+    },
+    "entity_hit_at_5": {
+      "successes": 1,
+      "total": 1,
+      "rate": 1.0,
+      "ci_lower": 0.2065,
+      "ci_upper": 1.0
+    },
+    "entity_mrr": {
+      "kind": "mrr",
+      "value": 1.0,
+      "total": 1,
+      "rate": 1.0
+    },
+    "aggregate_exact": {
+      "successes": 1,
+      "total": 1,
+      "rate": 1.0,
+      "ci_lower": 0.2065,
+      "ci_upper": 1.0
+    },
+    "refusal_accuracy": {
+      "successes": 0,
+      "total": 0,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0
+    },
+    "false_refusal": {
+      "successes": 0,
+      "total": 1,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.7935
+    },
+    "canary_leak": {
+      "successes": 0,
+      "total": 0,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0
+    },
+    "numeric_grounding": {
+      "successes": 0,
+      "total": 1,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.7935
+    },
+    "entity_grounding": {
+      "successes": 1,
+      "total": 1,
+      "rate": 1.0,
+      "ci_lower": 0.2065,
+      "ci_upper": 1.0
+    }
+  },
+  "cases": [
+    {
+      "id": "hw-002",
+      "set": "handwritten",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "whats the cheapest apartment for sale in jeddah right now"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah"
+        },
+        "op": "min_price",
+        "sql_truth": 249000,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "wasalt:5839645",
+          "wasalt:5871565"
+        ],
+        "refuse": false,
+        "answer_numbers": [
+          "249000"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "hw-002",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah"
+        },
+        "cards": [
+          {
+            "doc_id": "wasalt:5839645",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment with 2 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-with-2-bedrooms-5839645",
+            "scraped_at": "2026-11-18 15:45:54.668256+05:30",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Jeddah",
+            "district": "Al Faiha|A",
+            "price_sar": 249000,
+            "bedrooms": 2,
+            "area_sqm": 750.0,
+            "n": 1,
+            "score": 1.0,
+            "snippet": "Apartment with 2 Bedrooms"
+          },
+          {
+            "doc_id": "wasalt:5871565",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment with 2 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-with-2-bedrooms-5871565",
+            "scraped_at": "2026-11-18 16:15:23.437262+05:30",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Jeddah",
+            "district": "Al Wisam",
+            "price_sar": 249000,
+            "bedrooms": 2,
+            "bathrooms": 2,
+            "area_sqm": 111.43,
+            "n": 2,
+            "score": 1.0,
+            "snippet": "Apartment with 2 Bedrooms"
+          },
+          {
+            "doc_id": "wasalt:5869455",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment 695 SQM with 2 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-695-sqm-with-2-bedrooms-5869455",
+            "scraped_at": "2026-11-18 16:16:41.850124+05:30",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Jeddah",
+            "district": "Al Rabbwah",
+            "price_sar": 265000,
+            "bedrooms": 2,
+            "area_sqm": 695.5,
+            "n": 3,
+            "score": 1.0,
+            "snippet": "Apartment 695 SQM with 2 Bedrooms"
+          }
+        ],
+        "refused": false,
+        "sql_value": 249000,
+        "answer": "أرخص الشقق المعروضة للبيع في جدة حالياً هي priced at **SAR 249,000**:\n\n- **الفيحاء | أ، جدة** [1]\n- **الوسام، جدة** [2]\n\nكلاهما معروضان بسعر 249,000 ريال سعودي.",
+        "grounding": {
+          "numbers_ok": true,
+          "entities_ok": true,
+          "citations_ok": true,
+          "failures": []
+        },
+        "llm_runs": [
+          {
+            "answer": "أرخص الشقق المعروضة للبيع في جدة حالياً هي priced at **SAR 249,000**:\n\n- **الفيحاء | أ، جدة** [1]\n- **الوسام، جدة** [2]\n\nكلاهما معروضان بسعر 249,000 ريال سعودي.",
+            "grounding": {
+              "numbers_ok": true,
+              "entities_ok": true,
+              "citations_ok": true,
+              "failures": []
+            },
+            "entry_id": "openrouter:openrouter/free",
+            "ttft_ms": 6515.00000001397,
+            "total_ms": 6906.0000000172295,
+            "finish_reason": "stop",
+            "prompt_tokens": 460,
+            "completion_tokens": 492,
+            "est_prompt_tokens": 627,
+            "attempts": [],
+            "skipped_budget": false,
+            "llm_unavailable": false,
+            "run_index": 0
+          }
+        ]
+      }
+    }
+  ]
+}

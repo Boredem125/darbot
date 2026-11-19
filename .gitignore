@@ -1,0 +1,12 @@
+.venv/
+.env
+.env.*
+!.env.example
+.orchestration/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+data/raw/
+*.html.tmp
+.DS_Store

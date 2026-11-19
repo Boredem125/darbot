@@ -1,0 +1,433 @@
+{
+  "run_id": "20261119T114314Z-e0e47e93",
+  "split": "test",
+  "timestamp": "2026-11-19T11:43:14.562664+00:00",
+  "config": {
+    "split": "test",
+    "rrf_k": 60,
+    "list_size": 20,
+    "score_floor": 0.52,
+    "rerank": false,
+    "llm": true,
+    "no_llm": false,
+    "dense_weight": 1.0,
+    "sparse_weight": 1.0,
+    "index_dir": "data/index",
+    "fakes": false
+  },
+  "index_version": "77284224a04cf674",
+  "prompt_version": "unknown",
+  "n_cases": 3,
+  "metrics": {
+    "route_accuracy": {
+      "successes": 3,
+      "total": 3,
+      "rate": 1.0,
+      "ci_lower": 0.4385,
+      "ci_upper": 1.0
+    },
+    "filter_accuracy": {
+      "successes": 2,
+      "total": 2,
+      "rate": 1.0,
+      "ci_lower": 0.3424,
+      "ci_upper": 1.0
+    },
+    "constraint_precision_at_5": {
+      "successes": 6,
+      "total": 6,
+      "rate": 1.0,
+      "ci_lower": 0.6097,
+      "ci_upper": 1.0
+    },
+    "entity_hit_at_5": {
+      "successes": 1,
+      "total": 1,
+      "rate": 1.0,
+      "ci_lower": 0.2065,
+      "ci_upper": 1.0
+    },
+    "entity_mrr": {
+      "kind": "mrr",
+      "value": 1.0,
+      "total": 1,
+      "rate": 1.0
+    },
+    "aggregate_exact": {
+      "successes": 2,
+      "total": 2,
+      "rate": 1.0,
+      "ci_lower": 0.3424,
+      "ci_upper": 1.0
+    },
+    "refusal_accuracy": {
+      "successes": 0,
+      "total": 0,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0
+    },
+    "false_refusal": {
+      "successes": 0,
+      "total": 3,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.5615
+    },
+    "canary_leak": {
+      "successes": 0,
+      "total": 0,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0
+    },
+    "numeric_grounding": {
+      "successes": 0,
+      "total": 0,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0
+    },
+    "entity_grounding": {
+      "successes": 0,
+      "total": 0,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0
+    }
+  },
+  "cases": [
+    {
+      "id": "ps-002",
+      "set": "provider_subset",
+      "split": "test",
+      "lang": "en",
+      "turns": [
+        "What's the average price of villas for sale in Dammam?"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Dammam"
+        },
+        "op": "avg_price",
+        "sql_truth": 1388056,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [
+          "1388056"
+        ],
+        "kind": "aggregate",
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "ps-002",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Dammam"
+        },
+        "cards": [
+          {
+            "doc_id": "wasalt:5835126",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Villa 492 SQM Facing South West on 15m Width Street",
+            "url": "https://wasalt.sa/en/property/sale/villa-492-sqm-facing-south-west-on-15m-width-street-5835126",
+            "scraped_at": "2026-11-18 15:30:46.396291+05:30",
+            "purpose": "sale",
+            "property_type": "villa",
+            "city": "Dammam",
+            "district": "Al Shooalah",
+            "price_sar": 2100000,
+            "bedrooms": 9,
+            "area_sqm": 492.0,
+            "n": 1,
+            "score": 1.0,
+            "snippet": "Villa 492 SQM Facing South West on 15m Width Street"
+          },
+          {
+            "doc_id": "wasalt:5838952",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Villa 400 SQM Facing East on 15m Width Street",
+            "url": "https://wasalt.sa/en/property/sale/villa-400-sqm-facing-east-on-15m-width-street-5838952",
+            "scraped_at": "2026-11-18 15:44:54.842105+05:30",
+            "purpose": "sale",
+            "property_type": "villa",
+            "city": "Dammam",
+            "district": "Teebh",
+            "price_sar": 1030000,
+            "bedrooms": 7,
+            "area_sqm": 400.0,
+            "n": 2,
+            "score": 1.0,
+            "snippet": "Villa 400 SQM Facing East on 15m Width Street"
+          },
+          {
+            "doc_id": "wasalt:5839262",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Villa 375 SQM Facing North on 60m Width Street",
+            "url": "https://wasalt.sa/en/property/sale/villa-375-sqm-facing-north-on-60m-width-street-5839262",
+            "scraped_at": "2026-11-18 15:53:08.531590+05:30",
+            "purpose": "sale",
+            "property_type": "villa",
+            "city": "Dammam",
+            "district": "Al Seef",
+            "price_sar": 1950000,
+            "bedrooms": 6,
+            "area_sqm": 375.0,
+            "n": 3,
+            "score": 1.0,
+            "snippet": "Villa 375 SQM Facing North on 60m Width Street"
+          }
+        ],
+        "refused": false,
+        "sql_value": 1388056,
+        "answer": "",
+        "grounding": null,
+        "llm_runs": [
+          {
+            "answer": "",
+            "grounding": null,
+            "entry_id": null,
+            "ttft_ms": 0.0,
+            "total_ms": 0.0,
+            "finish_reason": "",
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "est_prompt_tokens": 638,
+            "attempts": [
+              {
+                "provider": "openrouter",
+                "model": "openrouter/free",
+                "code": "provider_timeout",
+                "detail": "no content in stream"
+              }
+            ],
+            "skipped_budget": false,
+            "llm_unavailable": true,
+            "run_index": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "ps-003",
+      "set": "provider_subset",
+      "split": "test",
+      "lang": "en",
+      "turns": [
+        "What bedroom options does Les Vagues have, and when is it finished?"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "project_info",
+        "filters": {},
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "darglobal:project:les-vagues"
+        ],
+        "refuse": false,
+        "answer_numbers": [
+          "2027"
+        ],
+        "kind": "project",
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "ps-003",
+        "route": "project_info",
+        "filters": {
+          "kinds": [
+            "project",
+            "article"
+          ],
+          "project_id": "darglobal:project:les-vagues"
+        },
+        "cards": [
+          {
+            "doc_id": "darglobal:project:les-vagues",
+            "kind": "project",
+            "source": "darglobal",
+            "title": "Les Vagues",
+            "url": "https://darglobal.co.uk/les-vagues",
+            "scraped_at": "2026-11-18 17:45:21.680888+00:00",
+            "city": "Doha",
+            "country": "Qatar",
+            "brand": "Elie Saab",
+            "handover": "December 2027",
+            "n": 1,
+            "score": 0.03306010928961749,
+            "snippet": "Les Vagues (Doha, Qatar). Les Vagues offers one-, two-, and three-bedroom residences ranging from 86 to 389 sqm on Qetaifan Island North. Units are served by four personal elevators per building including a service elevator, and sit within a gated seafront complex with an infinity pool and landscaped sea-view courtyard. Les Vagues is under development with completion scheduled for December 2027."
+          }
+        ],
+        "refused": false,
+        "sql_value": null,
+        "answer": "",
+        "grounding": null,
+        "_prices": [],
+        "_areas": [],
+        "llm_runs": [
+          {
+            "answer": "",
+            "grounding": null,
+            "entry_id": null,
+            "ttft_ms": 0.0,
+            "total_ms": 0.0,
+            "finish_reason": "",
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "est_prompt_tokens": 530,
+            "attempts": [
+              {
+                "provider": "openrouter",
+                "model": "openrouter/free",
+                "code": "provider_skipped",
+                "detail": "breaker_cooldown"
+              }
+            ],
+            "skipped_budget": false,
+            "llm_unavailable": true,
+            "run_index": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "ps-004",
+      "set": "provider_subset",
+      "split": "test",
+      "lang": "ar",
+      "turns": [
+        "كم عدد الشقق للإيجار في الرياض؟"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Riyadh"
+        },
+        "op": "count",
+        "sql_truth": 391,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [
+          "391"
+        ],
+        "kind": "arabic",
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "ps-004",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Riyadh"
+        },
+        "cards": [
+          {
+            "doc_id": "wasalt:5835799",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment with 2 Bedrooms",
+            "url": "https://wasalt.sa/en/property/rent/apartment-with-2-bedrooms-5835799",
+            "scraped_at": "2026-11-18 16:40:02.295458+05:30",
+            "purpose": "rent",
+            "property_type": "apartment",
+            "city": "Riyadh",
+            "district": "As Sahafa",
+            "price_sar": 170000,
+            "rent_period": "yearly",
+            "annual_rent_sar": 170000,
+            "bedrooms": 2,
+            "area_sqm": 143.0,
+            "n": 1,
+            "score": 1.0,
+            "snippet": "Apartment with 2 Bedrooms"
+          },
+          {
+            "doc_id": "wasalt:5838288",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment with 3 Bedrooms",
+            "url": "https://wasalt.sa/en/property/rent/apartment-with-3-bedrooms-5838288",
+            "scraped_at": "2026-11-18 16:46:56.099088+05:30",
+            "purpose": "rent",
+            "property_type": "apartment",
+            "city": "Riyadh",
+            "district": "Hitteen",
+            "price_sar": 150000,
+            "rent_period": "yearly",
+            "annual_rent_sar": 150000,
+            "bedrooms": 3,
+            "area_sqm": 116.0,
+            "n": 2,
+            "score": 1.0,
+            "snippet": "Apartment with 3 Bedrooms"
+          },
+          {
+            "doc_id": "wasalt:5838345",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment with 2 Bedrooms",
+            "url": "https://wasalt.sa/en/property/rent/apartment-with-2-bedrooms-5838345",
+            "scraped_at": "2026-11-18 16:47:03.867577+05:30",
+            "purpose": "rent",
+            "property_type": "apartment",
+            "city": "Riyadh",
+            "district": "Al Mathar",
+            "price_sar": 75000,
+            "rent_period": "yearly",
+            "annual_rent_sar": 75000,
+            "bedrooms": 2,
+            "area_sqm": 90.0,
+            "n": 3,
+            "score": 1.0,
+            "snippet": "Apartment with 2 Bedrooms"
+          }
+        ],
+        "refused": false,
+        "sql_value": 391,
+        "answer": "",
+        "grounding": null,
+        "llm_runs": [
+          {
+            "answer": "",
+            "grounding": null,
+            "entry_id": null,
+            "ttft_ms": 0.0,
+            "total_ms": 0.0,
+            "finish_reason": "",
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "est_prompt_tokens": 643,
+            "attempts": [
+              {
+                "provider": "openrouter",
+                "model": "openrouter/free",
+                "code": "provider_skipped",
+                "detail": "breaker_cooldown"
+              }
+            ],
+            "skipped_budget": false,
+            "llm_unavailable": true,
+            "run_index": 0
+          }
+        ]
+      }
+    }
+  ]
+}

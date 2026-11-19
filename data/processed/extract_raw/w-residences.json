@@ -1,0 +1,36 @@
+{
+  "name": "W Residences Dubai – Downtown",
+  "brand": "W Hotels",
+  "country": null,
+  "city": "Dubai",
+  "location": "Downtown Dubai",
+  "status": "Sold out and fully completed",
+  "handover": null,
+  "unit_types": [
+    "branded apartments"
+  ],
+  "bedrooms_min": 1,
+  "bedrooms_max": 3,
+  "area_sqm_min": null,
+  "area_sqm_max": null,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "W Lounge",
+    "infinity outdoor pool",
+    "clubhouse",
+    "cutting-edge fitness centre",
+    "private cinema",
+    "co-working spaces",
+    "meeting rooms",
+    "game room",
+    "complimentary guest suites",
+    "terrace with a dining area and walk track",
+    "lobby",
+    "amenity spaces",
+    "communications space",
+    "co-working offices",
+    "chill-out area"
+  ]
+}

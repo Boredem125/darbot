@@ -1,0 +1,37 @@
+{
+  "name": "Les Vagues",
+  "brand": "Elie Saab",
+  "country": "Qatar",
+  "city": "Doha",
+  "location": "Qetaifan Island North",
+  "status": "under development",
+  "handover": "December 2027",
+  "unit_types": [
+    "Apartments"
+  ],
+  "bedrooms_min": 1,
+  "bedrooms_max": 3,
+  "area_sqm_min": 86,
+  "area_sqm_max": 389,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "Infinity swimming pool",
+    "State-of-the-art fitness centre",
+    "Four personal elevators per unit including a service elevator",
+    "24-hour reception",
+    "Luxury retail",
+    "Covered parking for all units",
+    "Landscaped community courtyard with sea views",
+    "Lobby and lounge furniture designed by Elie Saab",
+    "Private beaches",
+    "Marina",
+    "World-class boating facilities",
+    "Boutique shopping",
+    "Water park",
+    "Winter garden",
+    "Signature 18-hole golf course and clubhouse",
+    "5-star hotels"
+  ]
+}

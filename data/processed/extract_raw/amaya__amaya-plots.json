@@ -1,0 +1,30 @@
+{
+  "name": "Amaya",
+  "brand": "Trump",
+  "country": "Saudi Arabia",
+  "city": "Jeddah",
+  "location": "King Abdulaziz Road",
+  "status": null,
+  "handover": null,
+  "unit_types": [
+    "villas",
+    "land plots",
+    "townhouses",
+    "mid-to-high-rise residential",
+    "commercial plots",
+    "branded or serviced residences"
+  ],
+  "bedrooms_min": null,
+  "bedrooms_max": null,
+  "area_sqm_min": 1000000,
+  "area_sqm_max": 1000000,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "700-meter central parkland",
+    "shaded green walking trails",
+    "integrated retail courtyards",
+    "4,000-square-meter members-only Vitality Club"
+  ]
+}

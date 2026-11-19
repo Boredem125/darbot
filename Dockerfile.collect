@@ -1,0 +1,33 @@
+# Dockerfile.collect — scraper image (local only, never deployed)
+# Based on the Playwright image which ships browsers but not the pip package.
+# See PLAN section 10. No API keys needed; Groq extraction runs in organize/ on the host.
+
+FROM mcr.microsoft.com/playwright/python:v1.65.2-noble
+
+# PEP 668 applies on noble; --break-system-packages is required.
+# Pin every package to pyproject.toml versions.
+RUN pip install --no-cache-dir --break-system-packages \
+    playwright==1.65.2 \
+    pydantic==2.14.3 \
+    httpx==0.28.1 \
+    trafilatura==2.3.1
+
+WORKDIR /work
+
+# Copy only common/, collect/, and pyproject.toml (context filtered by
+# Dockerfile.collect.dockerignore)
+COPY common/ ./common/
+COPY collect/ ./collect/
+COPY pyproject.toml ./pyproject.toml
+
+# data/raw arrives as a bind mount, never baked in.
+# Ensure the mount point exists and is writable by the non-root user.
+RUN mkdir -p /work/data/raw && chown -R pwuser:pwuser /work/data/raw
+
+# Run as the image's existing non-root user
+USER pwuser
+
+ENTRYPOINT ["python", "-m"]
+# Default: run the wasalt collector module. If no CLI is available yet,
+# this will show the module's help or fail harmlessly.
+CMD ["collect.run_wasalt_collect", "--help"]

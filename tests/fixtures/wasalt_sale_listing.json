@@ -1,0 +1,126 @@
+{
+  "props": {
+    "pageProps": {
+      "propertyDetailsV3": {
+        "id": 5841671,
+        "publishedAt": "2026-11-10T08:30:00.000Z",
+        "leadContactInfo": {
+          "arMessageBody": "REDACTED_MSG",
+          "ownerName": "REDACTED_OWNER_NAME",
+          "enMessageTitle": "Login to your account",
+          "enMessageBody": "To contact REDACTED"
+        },
+        "propertyOwner": {
+          "arCmpName": "Test Company AR",
+          "companyName": "Test Realty Co",
+          "enCmpName": "Test Realty Co",
+          "regaAdvLicNo": "1234567890",
+          "userCapacity": "company",
+          "isOwnerProperty": false,
+          "postedAs": 49,
+          "enUserRole": "Company",
+          "arUserRole": "Company AR",
+          "brand": "Test Realty Brand",
+          "falLicenseNumber": "1100001111",
+          "falLicenseUrl": "https://example.com/license",
+          "falExpiryDate": "22/01/2027",
+          "licenseExpired": false,
+          "managedBy": "REDACTED_PERSON_NAME",
+          "resEmployee": "REDACTED_EMPLOYEE_NAME",
+          "ownerName": "REDACTED_OWNER_NAME",
+          "phoneNumber": "REDACTED_PHONE",
+          "email": "REDACTED_EMAIL",
+          "cmpLogoUrl": "https://example.com/logo.jpg",
+          "showUserCallWhatsapp": true,
+          "showInterestCta": false,
+          "poaNumber": null,
+          "regaAuthorizationNumber": null,
+          "regaAdvertiserNumber": null
+        },
+        "regaVerifiedInfo": [
+          {
+            "key": "adLicense",
+            "order": 1,
+            "label": "Ad License",
+            "fields": [
+              {"key": "adLicenseNumber", "name": null, "value": "7200848722"},
+              {"key": "status", "name": null, "value": "Active"},
+              {"key": "creationDate", "name": null, "value": "22/01/2026"},
+              {"key": "endDate", "name": null, "value": "22/01/2027"},
+              {"key": "adLicenseUrl", "name": null, "value": "https://example.com/ad-license"}
+            ]
+          },
+          {
+            "key": "responsibleEmployee",
+            "order": 2,
+            "label": "Responsible Employee",
+            "fields": [
+              {"key": "responsibleEmployeeName", "name": null, "value": "REDACTED_EMPLOYEE_FULL_NAME"},
+              {"key": "responsibleEmployeePhoneNumber", "name": null, "value": "+966500000000"}
+            ]
+          },
+          {
+            "key": "propertyLocation",
+            "order": 3,
+            "label": "Property Location",
+            "fields": [
+              {"key": "location.region", "name": null, "value": "Riyadh Region"},
+              {"key": "location.city", "name": null, "value": "Riyadh"},
+              {"key": "location.district", "name": null, "value": "Al-Mahdiyah"}
+            ]
+          },
+          {
+            "key": "propertyDetails",
+            "order": 4,
+            "label": "Property Details",
+            "fields": [
+              {"key": "propertyArea", "name": null, "value": "333"},
+              {"key": "propertyType", "name": null, "value": "Villa"}
+            ]
+          },
+          {
+            "key": "deedInfo",
+            "order": 5,
+            "label": "Deed Info",
+            "fields": [
+              {"key": "deedNumber", "name": null, "value": "440108011874"},
+              {"key": "isConstrained", "name": null, "value": "No"},
+              {"key": "isPawned", "name": null, "value": "No"}
+            ]
+          }
+        ],
+        "location": {
+          "lat": "24.66779188741904",
+          "lon": "46.535773958723155"
+        },
+        "attributes": [
+          {"key": "noOfBedrooms", "name": "Bedrooms", "value": 5, "image": "noofbedrooms.png", "iconClass": "bedroom"},
+          {"key": "carpetArea", "name": "Land Area", "value": "333", "image": "carpetarea.png", "unit": "SQM", "iconClass": "plot-area"},
+          {"key": "noOfBathrooms", "name": "Bathrooms", "value": 3, "image": "noofbathrooms.png", "iconClass": "bathroom"}
+        ],
+        "propertyInfo": {
+          "currencyType": "SAR",
+          "country": "Saudi Arabia",
+          "propertyMainType": "Residential",
+          "propertySubType": "Villa",
+          "address": "Al-Mahdiyah, West Riyadh, Riyadh",
+          "city": "Riyadh",
+          "district": "Al-Mahdiyah",
+          "title": "Villa 333 SQM Facing East on 20m Width Street",
+          "description": "<p>Villa for Sale in Al-Mahdiyah, Riyadh</p><p>Land Area: 333 SQM</p>",
+          "slug": "villa-333-sqm-facing-east-on-20m-width-street-5841671",
+          "propertyFor": "sale",
+          "salePrice": 1600000,
+          "expectedRent": "",
+          "rentFreq": "",
+          "propertyName": "Villa for Sale",
+          "zone": "Al-Mahdiyah",
+          "territory": "West Riyadh",
+          "tags": [{"name": "For Sale"}]
+        },
+        "isVerified": true,
+        "score": 85
+      }
+    }
+  }
+}

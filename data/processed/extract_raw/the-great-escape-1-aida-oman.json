@@ -1,0 +1,38 @@
+{
+  "name": "The Great Escape",
+  "brand": null,
+  "country": "Oman",
+  "city": "Muscat",
+  "location": "AIDA",
+  "status": "Sold Out",
+  "handover": null,
+  "unit_types": [
+    "Unfurnished apartments"
+  ],
+  "bedrooms_min": 1,
+  "bedrooms_max": 3,
+  "area_sqm_min": 65,
+  "area_sqm_max": 192,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "Infinity pool",
+    "State-of-the-art gym",
+    "Children's swimming pool",
+    "Kids play area",
+    "Promenades",
+    "Hiking Trail",
+    "Mountain Bike Trail",
+    "Outdoor Landscape",
+    "Running Trail",
+    "Viewing Deck",
+    "Changing Facilities",
+    "Trump International Golf Club Oman",
+    "Clubhouse",
+    "Gated Community",
+    "Luxury Hotels",
+    "Parks and Recreations",
+    "Community Facilities"
+  ]
+}

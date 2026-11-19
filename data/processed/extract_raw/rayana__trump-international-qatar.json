@@ -1,0 +1,35 @@
+{
+  "name": "Trump International Simaisma, Qatar",
+  "brand": "The Trump Organization",
+  "country": "Qatar",
+  "city": "Simaisma",
+  "location": "Simaisma, Qatar",
+  "status": "Under Development",
+  "handover": null,
+  "unit_types": [
+    "3 - 5 Bedroom Villas"
+  ],
+  "bedrooms_min": 3,
+  "bedrooms_max": 5,
+  "area_sqm_min": 199,
+  "area_sqm_max": 451,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "Members-only Club",
+    "18-Hole Championship Golf Course",
+    "Community Centre",
+    "Beach Club",
+    "Parks & Water Features",
+    "Yacht Marina",
+    "Resort & Hospitality Areas",
+    "Land of Legends Qatar",
+    "Dining & Retail",
+    "SWIMMING POOL & CHILDREN’S POOL",
+    "GOLF & MEMBER SERVICES",
+    "WELLNESS & FITNESS CENTRE",
+    "PADEL and TENNIS COURTS",
+    "CHILDREN’S PLAY AREA"
+  ]
+}

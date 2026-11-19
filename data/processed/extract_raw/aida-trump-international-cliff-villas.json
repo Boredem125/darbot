@@ -1,0 +1,39 @@
+{
+  "name": "Trump Cliff Villas",
+  "brand": "Trump",
+  "country": "Oman",
+  "city": "Muscat",
+  "location": "AIDA, Muscat",
+  "status": "Construction is underway",
+  "handover": "December 2028",
+  "unit_types": [
+    "Villas"
+  ],
+  "bedrooms_min": 3,
+  "bedrooms_max": 3,
+  "area_sqm_min": 128,
+  "area_sqm_max": 166,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "Trump International Golf Club Oman (18-hole championship course)",
+    "Trump Members Only Club",
+    "The SHFT Night Club",
+    "5-star dining and culinary facilities",
+    "AIDA Beach",
+    "Trump Hotels Hanging Suites",
+    "Trump International Hotel lobby",
+    "community and retail centres",
+    "plazas",
+    "cafes and restaurants",
+    "wellness centres",
+    "fitness centre",
+    "promenades",
+    "hiking trails",
+    "mountain bike trails",
+    "running trail",
+    "viewing decks",
+    "outdoor landscapes"
+  ]
+}

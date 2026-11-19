@@ -1,0 +1,365 @@
+{
+  "run_id": "20261119T113537Z-4c2bdd65",
+  "split": "dev",
+  "timestamp": "2026-11-19T11:35:37.361025+00:00",
+  "config": {
+    "split": "dev",
+    "rrf_k": 60,
+    "list_size": 20,
+    "score_floor": 0.52,
+    "rerank": false,
+    "llm": true,
+    "no_llm": false,
+    "dense_weight": 1.0,
+    "sparse_weight": 1.0,
+    "index_dir": "data/index",
+    "fakes": false
+  },
+  "index_version": "77284224a04cf674",
+  "prompt_version": "unknown",
+  "n_cases": 2,
+  "metrics": {
+    "route_accuracy": {
+      "successes": 2,
+      "total": 2,
+      "rate": 1.0,
+      "ci_lower": 0.3424,
+      "ci_upper": 1.0
+    },
+    "filter_accuracy": {
+      "successes": 2,
+      "total": 2,
+      "rate": 1.0,
+      "ci_lower": 0.3424,
+      "ci_upper": 1.0
+    },
+    "constraint_precision_at_5": {
+      "successes": 6,
+      "total": 6,
+      "rate": 1.0,
+      "ci_lower": 0.6097,
+      "ci_upper": 1.0
+    },
+    "entity_hit_at_5": {
+      "successes": 2,
+      "total": 2,
+      "rate": 1.0,
+      "ci_lower": 0.3424,
+      "ci_upper": 1.0
+    },
+    "entity_mrr": {
+      "kind": "mrr",
+      "value": 1.0,
+      "total": 2,
+      "rate": 1.0
+    },
+    "aggregate_exact": {
+      "successes": 2,
+      "total": 2,
+      "rate": 1.0,
+      "ci_lower": 0.3424,
+      "ci_upper": 1.0
+    },
+    "refusal_accuracy": {
+      "successes": 0,
+      "total": 0,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0
+    },
+    "false_refusal": {
+      "successes": 0,
+      "total": 2,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.6576
+    },
+    "canary_leak": {
+      "successes": 0,
+      "total": 0,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0
+    },
+    "numeric_grounding": {
+      "successes": 0,
+      "total": 2,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.6576
+    },
+    "entity_grounding": {
+      "successes": 2,
+      "total": 2,
+      "rate": 1.0,
+      "ci_lower": 0.3424,
+      "ci_upper": 1.0
+    }
+  },
+  "cases": [
+    {
+      "id": "hw-002",
+      "set": "handwritten",
+      "split": "dev",
+      "lang": "en",
+      "turns": [
+        "whats the cheapest apartment for sale in jeddah right now"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah"
+        },
+        "op": "min_price",
+        "sql_truth": 249000,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "wasalt:5839645",
+          "wasalt:5871565"
+        ],
+        "refuse": false,
+        "answer_numbers": [
+          "249000"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "hw-002",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah"
+        },
+        "cards": [
+          {
+            "doc_id": "wasalt:5839645",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment with 2 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-with-2-bedrooms-5839645",
+            "scraped_at": "2026-11-18 15:45:54.668256+05:30",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Jeddah",
+            "district": "Al Faiha|A",
+            "price_sar": 249000,
+            "bedrooms": 2,
+            "area_sqm": 750.0,
+            "n": 1,
+            "score": 1.0,
+            "snippet": "Apartment with 2 Bedrooms"
+          },
+          {
+            "doc_id": "wasalt:5871565",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment with 2 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-with-2-bedrooms-5871565",
+            "scraped_at": "2026-11-18 16:15:23.437262+05:30",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Jeddah",
+            "district": "Al Wisam",
+            "price_sar": 249000,
+            "bedrooms": 2,
+            "bathrooms": 2,
+            "area_sqm": 111.43,
+            "n": 2,
+            "score": 1.0,
+            "snippet": "Apartment with 2 Bedrooms"
+          },
+          {
+            "doc_id": "wasalt:5869455",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment 695 SQM with 2 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-695-sqm-with-2-bedrooms-5869455",
+            "scraped_at": "2026-11-18 16:16:41.850124+05:30",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Jeddah",
+            "district": "Al Rabbwah",
+            "price_sar": 265000,
+            "bedrooms": 2,
+            "area_sqm": 695.5,
+            "n": 3,
+            "score": 1.0,
+            "snippet": "Apartment 695 SQM with 2 Bedrooms"
+          }
+        ],
+        "refused": false,
+        "sql_value": 249000,
+        "answer": "- **Al Faiha, Jeddah** – 2‑bedroom apartment, SAR 249,000, 750 sqm [1]  \n- **Al Wisam, Jeddah** – 2‑bedroom, 2‑bathroom apartment, SAR 249,000, 111.43 sqm [2]  \n\nBoth are the cheapest apartments for sale in Jeddah based on the provided listings.",
+        "grounding": {
+          "numbers_ok": true,
+          "entities_ok": true,
+          "citations_ok": true,
+          "failures": []
+        },
+        "llm_runs": [
+          {
+            "answer": "- **Al Faiha, Jeddah** – 2‑bedroom apartment, SAR 249,000, 750 sqm [1]  \n- **Al Wisam, Jeddah** – 2‑bedroom, 2‑bathroom apartment, SAR 249,000, 111.43 sqm [2]  \n\nBoth are the cheapest apartments for sale in Jeddah based on the provided listings.",
+            "grounding": {
+              "numbers_ok": true,
+              "entities_ok": true,
+              "citations_ok": true,
+              "failures": []
+            },
+            "entry_id": "groq:openai/gpt-oss-120b",
+            "ttft_ms": 1045.9999999729916,
+            "total_ms": 1250.0,
+            "finish_reason": "stop",
+            "prompt_tokens": 538,
+            "completion_tokens": 155,
+            "est_prompt_tokens": 627,
+            "attempts": [],
+            "skipped_budget": false,
+            "llm_unavailable": false,
+            "run_index": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "tpl-dev-002",
+      "set": "templated",
+      "split": "dev",
+      "lang": "ar",
+      "turns": [
+        "ما هي أغلى شقة للإيجار في جدة؟"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Jeddah"
+        },
+        "op": "max_price",
+        "sql_truth": 110000,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "wasalt:5857749"
+        ],
+        "refuse": false,
+        "answer_numbers": [
+          "110000"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "tpl-dev-002",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "rent",
+          "property_type": "apartment",
+          "city": "Jeddah"
+        },
+        "cards": [
+          {
+            "doc_id": "wasalt:5857749",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment 153 SQM with 4 Bedrooms",
+            "url": "https://wasalt.sa/en/property/rent/apartment-153-sqm-with-4-bedrooms-5857749",
+            "scraped_at": "2026-11-18 17:19:10.086608+05:30",
+            "purpose": "rent",
+            "property_type": "apartment",
+            "city": "Jeddah",
+            "district": "Al Nahdah",
+            "price_sar": 110000,
+            "rent_period": "yearly",
+            "annual_rent_sar": 110000,
+            "bedrooms": 4,
+            "area_sqm": 153.0,
+            "n": 1,
+            "score": 1.0,
+            "snippet": "Apartment 153 SQM with 4 Bedrooms"
+          },
+          {
+            "doc_id": "wasalt:5866054",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment 153 SQM with 4 Bedrooms",
+            "url": "https://wasalt.sa/en/property/rent/apartment-153-sqm-with-4-bedrooms-5866054",
+            "scraped_at": "2026-11-18 17:11:53.431279+05:30",
+            "purpose": "rent",
+            "property_type": "apartment",
+            "city": "Jeddah",
+            "district": "Al Nahdah",
+            "price_sar": 85000,
+            "rent_period": "yearly",
+            "annual_rent_sar": 85000,
+            "bedrooms": 4,
+            "area_sqm": 153.0,
+            "n": 2,
+            "score": 1.0,
+            "snippet": "Apartment 153 SQM with 4 Bedrooms"
+          },
+          {
+            "doc_id": "wasalt:5870207",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment 140 SQM with 3 Bedrooms",
+            "url": "https://wasalt.sa/en/property/rent/apartment-140-sqm-with-3-bedrooms-5870207",
+            "scraped_at": "2026-11-18 16:54:41.911342+05:30",
+            "purpose": "rent",
+            "property_type": "apartment",
+            "city": "Jeddah",
+            "district": "Al Zahrah",
+            "price_sar": 64000,
+            "rent_period": "yearly",
+            "annual_rent_sar": 64000,
+            "bedrooms": 3,
+            "area_sqm": 140.0,
+            "n": 3,
+            "score": 1.0,
+            "snippet": "Apartment 140 SQM with 3 Bedrooms"
+          }
+        ],
+        "refused": false,
+        "sql_value": 110000,
+        "answer": "أغلى شقة للإيجار في جدة هي شقة بمساحة 153 م² في حي النهدة، تتضمن 4 غرف نوم، وإيجارها السنوي SAR 110,000【1】.",
+        "grounding": {
+          "numbers_ok": true,
+          "entities_ok": true,
+          "citations_ok": false,
+          "failures": [
+            "answer contains numbers but no citations"
+          ]
+        },
+        "llm_runs": [
+          {
+            "answer": "أغلى شقة للإيجار في جدة هي شقة بمساحة 153 م² في حي النهدة، تتضمن 4 غرف نوم، وإيجارها السنوي SAR 110,000【1】.",
+            "grounding": {
+              "numbers_ok": true,
+              "entities_ok": true,
+              "citations_ok": false,
+              "failures": [
+                "answer contains numbers but no citations"
+              ]
+            },
+            "entry_id": "groq:openai/gpt-oss-120b",
+            "ttft_ms": 545.9999999729916,
+            "total_ms": 640.0000000139698,
+            "finish_reason": "stop",
+            "prompt_tokens": 565,
+            "completion_tokens": 102,
+            "est_prompt_tokens": 650,
+            "attempts": [],
+            "skipped_budget": false,
+            "llm_unavailable": false,
+            "run_index": 0
+          }
+        ]
+      }
+    }
+  ]
+}

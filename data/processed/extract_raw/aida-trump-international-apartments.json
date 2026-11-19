@@ -1,0 +1,39 @@
+{
+  "name": "Trump Furnished Residences",
+  "brand": "Trump",
+  "country": "Oman",
+  "city": "Muscat",
+  "location": "Aida",
+  "status": null,
+  "handover": null,
+  "unit_types": [
+    "Villas",
+    "Residences"
+  ],
+  "bedrooms_min": null,
+  "bedrooms_max": null,
+  "area_sqm_min": null,
+  "area_sqm_max": null,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "CHAMPIONSHIP GOLF COURSE",
+    "THE MEMBERS ONLY CLUB",
+    "THE HANGING SUITES",
+    "THE HANGING CLUB",
+    "AIDA BEACH",
+    "Trump International Golf Club, Oman",
+    "Community & Retail Centre",
+    "Plazas, Cafes & Restaurants",
+    "Wellness Centres",
+    "Fitness Center",
+    "Promenades",
+    "Hiking Trail",
+    "Mountain Bike",
+    "Luxury Hotels",
+    "Outdoor Landscapes",
+    "Running Trail",
+    "Viewing Deck"
+  ]
+}

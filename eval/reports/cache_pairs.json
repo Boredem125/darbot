@@ -1,0 +1,72 @@
+[
+  {
+    "tau": 0.88,
+    "true_hits": 6,
+    "false_hits": 3
+  },
+  {
+    "tau": 0.89,
+    "true_hits": 6,
+    "false_hits": 2
+  },
+  {
+    "tau": 0.9,
+    "true_hits": 5,
+    "false_hits": 2
+  },
+  {
+    "tau": 0.91,
+    "true_hits": 4,
+    "false_hits": 2
+  },
+  {
+    "tau": 0.92,
+    "true_hits": 4,
+    "false_hits": 1
+  },
+  {
+    "tau": 0.93,
+    "true_hits": 2,
+    "false_hits": 1
+  },
+  {
+    "tau": 0.94,
+    "true_hits": 2,
+    "false_hits": 0
+  },
+  {
+    "tau": 0.88,
+    "true_hits_scope": 6,
+    "false_hits_scope": 1
+  },
+  {
+    "tau": 0.89,
+    "true_hits_scope": 6,
+    "false_hits_scope": 1
+  },
+  {
+    "tau": 0.9,
+    "true_hits_scope": 5,
+    "false_hits_scope": 1
+  },
+  {
+    "tau": 0.91,
+    "true_hits_scope": 4,
+    "false_hits_scope": 1
+  },
+  {
+    "tau": 0.92,
+    "true_hits_scope": 4,
+    "false_hits_scope": 0
+  },
+  {
+    "tau": 0.93,
+    "true_hits_scope": 2,
+    "false_hits_scope": 0
+  },
+  {
+    "tau": 0.94,
+    "true_hits_scope": 2,
+    "false_hits_scope": 0
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "name": "The Astera, Interiors by Aston Martin",
+  "brand": "Aston Martin",
+  "country": "UAE",
+  "city": "Ras Al Khaimah",
+  "location": "Al Marjan Island",
+  "status": "under development",
+  "handover": "December 2028",
+  "unit_types": [
+    "residences",
+    "beach villas"
+  ],
+  "bedrooms_min": 1,
+  "bedrooms_max": 3,
+  "area_sqm_min": 61,
+  "area_sqm_max": 265,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "direct beach access",
+    "infinity pool",
+    "spa",
+    "sauna",
+    "pool bar",
+    "fitness centre",
+    "indoor cinema",
+    "yoga lawn",
+    "multipurpose hall",
+    "children's play area",
+    "premium 24/7 security"
+  ]
+}

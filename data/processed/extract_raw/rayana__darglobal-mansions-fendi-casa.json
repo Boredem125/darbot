@@ -1,0 +1,34 @@
+{
+  "name": "FENDI Casa Mansions",
+  "brand": "FENDI",
+  "country": "Saudi Arabia",
+  "city": "Diriyah",
+  "location": "Rayana, Wadi Safar",
+  "status": "Under Development",
+  "handover": null,
+  "unit_types": [
+    "Mansions"
+  ],
+  "bedrooms_min": null,
+  "bedrooms_max": null,
+  "area_sqm_min": 2192,
+  "area_sqm_max": 4406,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "Private gated living",
+    "landscaped parks",
+    "wellness and leisure facilities",
+    "Italian craftsmanship",
+    "Refined materials and distinctive interiors",
+    "Dining and Leisure Experiences",
+    "Walking, Running and Cycling track",
+    "Parks and Activity Areas",
+    "Kids Play Areas",
+    "Trump International Golf Club",
+    "Organic Farming and Community Gardens",
+    "Wellness-Oriented Retail",
+    "Private Gated Entrances"
+  ]
+}

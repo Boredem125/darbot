@@ -1,0 +1,26 @@
+{
+  "name": "Unlisted",
+  "brand": "Pagani",
+  "country": null,
+  "city": "Dubai",
+  "location": "Dubai Canal",
+  "status": null,
+  "handover": null,
+  "unit_types": [
+    "Villas"
+  ],
+  "bedrooms_min": null,
+  "bedrooms_max": null,
+  "area_sqm_min": null,
+  "area_sqm_max": null,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "private pool",
+    "terrace",
+    "elevator",
+    "private entrance",
+    "lobby"
+  ]
+}

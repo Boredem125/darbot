@@ -1,0 +1,32 @@
+{
+  "name": "Neptune, Interiors by Mouawad",
+  "brand": "Mouawad",
+  "country": "Saudi Arabia",
+  "city": "Riyadh",
+  "location": "northern Riyadh",
+  "status": "under development",
+  "handover": "December 2027",
+  "unit_types": [
+    "Villas"
+  ],
+  "bedrooms_min": 5,
+  "bedrooms_max": 5,
+  "area_sqm_min": 300,
+  "area_sqm_max": 420,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "schools",
+    "community centre",
+    "sports hub",
+    "restaurants and cafes",
+    "public parks",
+    "entertainment centres",
+    "early childhood centres",
+    "retail and grocery",
+    "playgrounds",
+    "mosques",
+    "healthcare clinics"
+  ]
+}

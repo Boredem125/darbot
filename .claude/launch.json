@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mock-sse",
+      "runtimeExecutable": "E:\\aiengineer\\.venv\\Scripts\\python.exe",
+      "runtimeArgs": ["scripts/mock_sse.py", "--port", "7861"],
+      "port": 7861
+    }
+  ]
+}

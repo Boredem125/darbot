@@ -1,0 +1,199 @@
+{
+  "token_count": 671,
+  "estimated_cost": null,
+  "model": "default",
+  "clarity_score": 23,
+  "structure_score": 65,
+  "issues": [
+    {
+      "type": "redundancy",
+      "line": 7,
+      "text": "string or null",
+      "message": "Phrase repeated from line 6",
+      "context": "\"brand\": string or null,"
+    },
+    {
+      "type": "redundancy",
+      "line": 8,
+      "text": "string or null",
+      "message": "Phrase repeated from line 6",
+      "context": "\"country\": string or null,"
+    },
+    {
+      "type": "redundancy",
+      "line": 9,
+      "text": "string or null",
+      "message": "Phrase repeated from line 6",
+      "context": "\"city\": string or null,"
+    },
+    {
+      "type": "redundancy",
+      "line": 10,
+      "text": "string or null",
+      "message": "Phrase repeated from line 6",
+      "context": "\"location\": string or null,"
+    },
+    {
+      "type": "redundancy",
+      "line": 11,
+      "text": "string or null",
+      "message": "Phrase repeated from line 6",
+      "context": "\"status\": string or null,"
+    },
+    {
+      "type": "redundancy",
+      "line": 12,
+      "text": "string or null",
+      "message": "Phrase repeated from line 6",
+      "context": "\"handover\": string or null,"
+    },
+    {
+      "type": "redundancy",
+      "line": 15,
+      "text": "integer or null",
+      "message": "Phrase repeated from line 14",
+      "context": "\"bedrooms_max\": integer or null,"
+    },
+    {
+      "type": "redundancy",
+      "line": 17,
+      "text": "number or null",
+      "message": "Phrase repeated from line 16",
+      "context": "\"area_sqm_max\": number or null,"
+    },
+    {
+      "type": "redundancy",
+      "line": 18,
+      "text": "integer or null",
+      "message": "Phrase repeated from line 14",
+      "context": "\"price_from_amount\": integer or null,"
+    },
+    {
+      "type": "redundancy",
+      "line": 19,
+      "text": "string or null",
+      "message": "Phrase repeated from line 6",
+      "context": "\"price_from_currency\": string or null,"
+    },
+    {
+      "type": "redundancy",
+      "line": 20,
+      "text": "string or null",
+      "message": "Phrase repeated from line 6",
+      "context": "\"payment_plan\": string or null,"
+    },
+    {
+      "type": "redundancy",
+      "line": 21,
+      "text": "array of strings",
+      "message": "Phrase repeated from line 13",
+      "context": "\"amenities\": array of strings"
+    },
+    {
+      "type": "redundancy",
+      "line": 29,
+      "text": "on the page",
+      "message": "Phrase repeated from line 25",
+      "context": "- country, city: as written on the page."
+    },
+    {
+      "type": "redundancy",
+      "line": 32,
+      "text": "as written for",
+      "message": "Phrase repeated from line 31",
+      "context": "- handover: the completion or handover date, as written (for example \"Q4 2027\")."
+    },
+    {
+      "type": "redundancy",
+      "line": 32,
+      "text": "written for example",
+      "message": "Phrase repeated from line 31",
+      "context": "- handover: the completion or handover date, as written (for example \"Q4 2027\")."
+    },
+    {
+      "type": "redundancy",
+      "line": 33,
+      "text": "text as written",
+      "message": "Phrase repeated from line 30",
+      "context": "- payment_plan: the payment plan text, as written, at most 200 characters."
+    },
+    {
+      "type": "redundancy",
+      "line": 34,
+      "text": "the page lists",
+      "message": "Phrase repeated from line 34",
+      "context": "3. unit_types: the unit types the page lists (for example \"Apartments\", \"Penthou"
+    },
+    {
+      "type": "redundancy",
+      "line": 34,
+      "text": "each as written",
+      "message": "Phrase repeated from line 34",
+      "context": "3. unit_types: the unit types the page lists (for example \"Apartments\", \"Penthou"
+    },
+    {
+      "type": "redundancy",
+      "line": 34,
+      "text": "as written at",
+      "message": "Phrase repeated from line 33",
+      "context": "3. unit_types: the unit types the page lists (for example \"Apartments\", \"Penthou"
+    },
+    {
+      "type": "redundancy",
+      "line": 34,
+      "text": "written at most",
+      "message": "Phrase repeated from line 33",
+      "context": "3. unit_types: the unit types the page lists (for example \"Apartments\", \"Penthou"
+    },
+    {
+      "type": "redundancy",
+      "line": 36,
+      "text": "stated on the",
+      "message": "Phrase repeated from line 25",
+      "context": "- bedrooms_min, bedrooms_max: the bedroom range stated on the page. \"Studio\" cou"
+    },
+    {
+      "type": "redundancy",
+      "line": 36,
+      "text": "on the page",
+      "message": "Phrase repeated from line 25",
+      "context": "- bedrooms_min, bedrooms_max: the bedroom range stated on the page. \"Studio\" cou"
+    },
+    {
+      "type": "redundancy",
+      "line": 41,
+      "text": "if the page",
+      "message": "Phrase repeated from line 40",
+      "context": "6. min must not exceed max. If the page states them the other way round, use nul"
+    },
+    {
+      "type": "redundancy",
+      "line": 41,
+      "text": "the page states",
+      "message": "Phrase repeated from line 37",
+      "context": "6. min must not exceed max. If the page states them the other way round, use nul"
+    }
+  ],
+  "suggestions": [
+    "Add explicit output format: \"Respond in JSON with keys: ...\"",
+    "Consider adding 2-3 few-shot examples for consistent outputs",
+    "Improve clarity: replace vague terms with specific instructions",
+    "Consider adding role context: \"You are an expert...\"",
+    "Add explicit output format specification (e.g., \"Respond in JSON with keys: ...\")"
+  ],
+  "sections": [
+    {
+      "name": "Introduction",
+      "lines": "1-23"
+    },
+    {
+      "name": "Rules",
+      "lines": "24-42"
+    }
+  ],
+  "has_examples": false,
+  "example_count": 0,
+  "has_output_format": false,
+  "word_count": 431,
+  "line_count": 42
+}

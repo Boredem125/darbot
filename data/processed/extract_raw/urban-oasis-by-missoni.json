@@ -1,0 +1,28 @@
+{
+  "name": "Urban Oasis",
+  "brand": "Missoni",
+  "country": null,
+  "city": "Dubai",
+  "location": "Dubai Canal",
+  "status": "sold out",
+  "handover": "fully handed over",
+  "unit_types": [
+    "apartments",
+    "penthouses"
+  ],
+  "bedrooms_min": 1,
+  "bedrooms_max": 3,
+  "area_sqm_min": null,
+  "area_sqm_max": null,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "infinity pool",
+    "cutting-edge gym",
+    "grand entrance lobby",
+    "ground-floor retail",
+    "covered parking",
+    "24/7 concierge services"
+  ]
+}

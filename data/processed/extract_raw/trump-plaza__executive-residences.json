@@ -1,0 +1,23 @@
+{
+  "name": "Trump Plaza Jeddah",
+  "brand": "Trump",
+  "country": null,
+  "city": "Jeddah",
+  "location": "King Abdulaziz Road within Amaya. Al-Amal Avenue, the development’s central axis, connects the historic Old City of Jeddah to King Abdulaziz Road, with a planned tunnel beneath the road providing direct access to the Al Shatea area.",
+  "status": "Under Development",
+  "handover": null,
+  "unit_types": [
+    "1,2,3-Bedroom Residences"
+  ],
+  "bedrooms_min": 1,
+  "bedrooms_max": 3,
+  "area_sqm_min": 69,
+  "area_sqm_max": 176,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "Optional Property Management and A La Carte Services",
+    "A members-only club performance and wellness destination with training, recovery, spa, pools, and more"
+  ]
+}

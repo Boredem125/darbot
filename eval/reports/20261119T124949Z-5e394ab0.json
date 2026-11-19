@@ -1,0 +1,662 @@
+{
+  "run_id": "20261119T124949Z-5e394ab0",
+  "split": "test",
+  "timestamp": "2026-11-19T12:49:49.197290+00:00",
+  "config": {
+    "split": "test",
+    "rrf_k": 60,
+    "list_size": 20,
+    "score_floor": 0.52,
+    "rerank": false,
+    "llm": true,
+    "no_llm": false,
+    "dense_weight": 1.0,
+    "sparse_weight": 1.0,
+    "index_dir": "data/index",
+    "fakes": false
+  },
+  "index_version": "77284224a04cf674",
+  "prompt_version": "unknown",
+  "n_cases": 4,
+  "metrics": {
+    "route_accuracy": {
+      "successes": 4,
+      "total": 4,
+      "rate": 1.0,
+      "ci_lower": 0.5101,
+      "ci_upper": 1.0
+    },
+    "filter_accuracy": {
+      "successes": 3,
+      "total": 3,
+      "rate": 1.0,
+      "ci_lower": 0.4385,
+      "ci_upper": 1.0
+    },
+    "constraint_precision_at_5": {
+      "successes": 11,
+      "total": 11,
+      "rate": 1.0,
+      "ci_lower": 0.7412,
+      "ci_upper": 1.0
+    },
+    "entity_hit_at_5": {
+      "successes": 0,
+      "total": 1,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.7935
+    },
+    "entity_mrr": {
+      "kind": "mrr",
+      "value": 0.0,
+      "total": 1,
+      "rate": 0.0
+    },
+    "aggregate_exact": {
+      "successes": 2,
+      "total": 2,
+      "rate": 1.0,
+      "ci_lower": 0.3424,
+      "ci_upper": 1.0
+    },
+    "refusal_accuracy": {
+      "successes": 0,
+      "total": 0,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0
+    },
+    "false_refusal": {
+      "successes": 0,
+      "total": 4,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.4899
+    },
+    "canary_leak": {
+      "successes": 0,
+      "total": 0,
+      "rate": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0
+    },
+    "numeric_grounding": {
+      "successes": 1,
+      "total": 3,
+      "rate": 0.3333,
+      "ci_lower": 0.0615,
+      "ci_upper": 0.7923
+    },
+    "entity_grounding": {
+      "successes": 4,
+      "total": 4,
+      "rate": 1.0,
+      "ci_lower": 0.5101,
+      "ci_upper": 1.0
+    }
+  },
+  "cases": [
+    {
+      "id": "ar-004",
+      "set": "arabic",
+      "split": "test",
+      "lang": "ar",
+      "turns": [
+        "ما متوسط سعر الشقق للبيع في جدة؟"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah"
+        },
+        "op": "avg_price",
+        "sql_truth": 575897,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [
+          "575897"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "ar-004",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Jeddah"
+        },
+        "cards": [
+          {
+            "doc_id": "wasalt:5835046",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment with 2 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-with-2-bedrooms-5835046",
+            "scraped_at": "2026-11-18 15:30:56.956071+05:30",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Jeddah",
+            "district": "Al Nuzha",
+            "price_sar": 395000,
+            "bedrooms": 2,
+            "area_sqm": 95.0,
+            "n": 1,
+            "score": 1.0,
+            "snippet": "Apartment with 2 Bedrooms"
+          },
+          {
+            "doc_id": "wasalt:5835061",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment with 4 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-with-4-bedrooms-5835061",
+            "scraped_at": "2026-11-18 15:29:02.081134+05:30",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Jeddah",
+            "district": "Mraykh",
+            "price_sar": 600000,
+            "bedrooms": 4,
+            "area_sqm": 141.63,
+            "n": 2,
+            "score": 1.0,
+            "snippet": "Apartment with 4 Bedrooms"
+          },
+          {
+            "doc_id": "wasalt:5835093",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment with 3 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-with-3-bedrooms-5835093",
+            "scraped_at": "2026-11-18 15:29:55.553543+05:30",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Jeddah",
+            "district": "Al Safa",
+            "price_sar": 450000,
+            "bedrooms": 3,
+            "area_sqm": 107.0,
+            "n": 3,
+            "score": 1.0,
+            "snippet": "Apartment with 3 Bedrooms"
+          }
+        ],
+        "refused": false,
+        "sql_value": 575897,
+        "answer": "متوسط سعر الشقق المعروضة للبيع في جدة هو SAR 575,897 (مستند إلى 351 عقارًا)【4】",
+        "grounding": {
+          "numbers_ok": true,
+          "entities_ok": true,
+          "citations_ok": true,
+          "failures": []
+        },
+        "_sql_result": "SqlResult(op=<AggregateOp.avg_price: 'avg_price'>, value=575897, unit='SAR', n_matched=351, examples=(Listing(id='wasalt:5835046', source='wasalt', source_id='5835046', url='https://wasalt.sa/en/property/sale/apartment-with-2-bedrooms-5835046', title='Apartment with 2 Bedrooms', description='Apartment for Sale in Al Nuzha, Jeddah The property has 2 bedrooms Apartment has electricity and water Connections Building year: 2026 Price: 395000 SAR', purpose=<Purpose.sale: 'sale'>, property_type=<PropertyType.apartment: 'apartment'>, property_type_raw=None, city='Jeddah', district='Al Nuzha', price_sar=395000, rent_period=None, annual_rent_sar=None, bedrooms=2, bathrooms=None, area_sqm=95.0, lat=21.628867680489446, lon=39.164635513348564, amenities=[], published_at=datetime.datetime(2026, 1, 11, 15, 10, 33, 255000, tzinfo=<DstTzInfo 'Asia/Calcutta' IST+5:30:00 STD>), scraped_at=datetime.datetime(2026, 11, 18, 15, 30, 56, 956071, tzinfo=<DstTzInfo 'Asia/Calcutta' IST+5:30:00 STD>)), Listing(id='wasalt:5835061', source='wasalt', source_id='5835061', url='https://wasalt.sa/en/property/sale/apartment-with-4-bedrooms-5835061', title='Apartment with 4 Bedrooms', description='Apartment for Sale in Mraykh, Jeddah Apartment is located on 1 street The property has 4 bedrooms Apartment has electricity and water Connections Building year: 2026 Price: 600000 SAR', purpose=<Purpose.sale: 'sale'>, property_type=<PropertyType.apartment: 'apartment'>, property_type_raw=None, city='Jeddah', district='Mraykh', price_sar=600000, rent_period=None, annual_rent_sar=None, bedrooms=4, bathrooms=None, area_sqm=141.63, lat=21.545652363995746, lon=39.29035602735662, amenities=[], published_at=datetime.datetime(2026, 1, 11, 17, 3, 8, 647000, tzinfo=<DstTzInfo 'Asia/Calcutta' IST+5:30:00 STD>), scraped_at=datetime.datetime(2026, 11, 18, 15, 29, 2, 81134, tzinfo=<DstTzInfo 'Asia/Calcutta' IST+5:30:00 STD>)), Listing(id='wasalt:5835093', source='wasalt', source_id='5835093', url='https://wasalt.sa/en/property/sale/apartment-with-3-bedrooms-5835093', title='Apartment with 3 Bedrooms', description='شقة للبيع في حي الصفاء٬ جدة يحدها 1 شارع: مكونة من: 3 غرف واصل كهرباء واصل مياه سنة البناء: 2026 سعرها 450000 ر.س وكما يوجد لدينا ثلاث غرف اماميه&nbsp; وسعرها 470000 الف', purpose=<Purpose.sale: 'sale'>, property_type=<PropertyType.apartment: 'apartment'>, property_type_raw=None, city='Jeddah', district='Al Safa', price_sar=450000, rent_period=None, annual_rent_sar=None, bedrooms=3, bathrooms=None, area_sqm=107.0, lat=21.594475847786203, lon=39.21515928197546, amenities=[], published_at=datetime.datetime(2026, 1, 11, 21, 26, 35, 456000, tzinfo=<DstTzInfo 'Asia/Calcutta' IST+5:30:00 STD>), scraped_at=datetime.datetime(2026, 11, 18, 15, 29, 55, 553543, tzinfo=<DstTzInfo 'Asia/Calcutta' IST+5:30:00 STD>))))",
+        "llm_runs": [
+          {
+            "answer": "متوسط سعر الشقق المعروضة للبيع في جدة هو SAR 575,897 (مستند إلى 351 عقارًا)【4】",
+            "grounding": {
+              "numbers_ok": true,
+              "entities_ok": true,
+              "citations_ok": true,
+              "failures": []
+            },
+            "entry_id": "groq:openai/gpt-oss-120b",
+            "ttft_ms": 983.9999999967404,
+            "total_ms": 1062.000000034459,
+            "finish_reason": "stop",
+            "prompt_tokens": 663,
+            "completion_tokens": 62,
+            "est_prompt_tokens": 751,
+            "attempts": [],
+            "skipped_budget": false,
+            "llm_unavailable": false,
+            "run_index": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw-012",
+      "set": "handwritten",
+      "split": "test",
+      "lang": "en",
+      "turns": [
+        "what's the median price of villas for sale in jeddah"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Jeddah"
+        },
+        "op": "median_price",
+        "sql_truth": 1550000,
+        "tolerance_pct": 0.5,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [
+          "1550000"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "hw-012",
+        "route": "aggregate",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "villa",
+          "city": "Jeddah"
+        },
+        "cards": [
+          {
+            "doc_id": "wasalt:5835505",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Villa 300 SQM Facing North on 16m Width Street",
+            "url": "https://wasalt.sa/en/property/sale/villa-300-sqm-facing-north-on-16m-width-street-5835505",
+            "scraped_at": "2026-11-18 15:30:35.661547+05:30",
+            "purpose": "sale",
+            "property_type": "villa",
+            "city": "Jeddah",
+            "district": "Al Rahmanyah",
+            "price_sar": 1750000,
+            "bedrooms": 7,
+            "area_sqm": 300.0,
+            "n": 1,
+            "score": 1.0,
+            "snippet": "Villa 300 SQM Facing North on 16m Width Street"
+          },
+          {
+            "doc_id": "wasalt:5838874",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Villa 287 SQM Facing North on 25m Width Street",
+            "url": "https://wasalt.sa/en/property/sale/villa-287-sqm-facing-north-on-25m-width-street-5838874",
+            "scraped_at": "2026-11-18 15:45:20.592919+05:30",
+            "purpose": "sale",
+            "property_type": "villa",
+            "city": "Jeddah",
+            "district": "Alsahil",
+            "price_sar": 870000,
+            "bedrooms": 5,
+            "area_sqm": 287.0,
+            "n": 2,
+            "score": 1.0,
+            "snippet": "Villa 287 SQM Facing North on 25m Width Street"
+          },
+          {
+            "doc_id": "wasalt:5838881",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Villa 287 SQM Facing North on 25m Width Street",
+            "url": "https://wasalt.sa/en/property/sale/villa-287-sqm-facing-north-on-25m-width-street-5838881",
+            "scraped_at": "2026-11-18 15:44:16.984973+05:30",
+            "purpose": "sale",
+            "property_type": "villa",
+            "city": "Jeddah",
+            "district": "Alsahil",
+            "price_sar": 870000,
+            "bedrooms": 5,
+            "area_sqm": 287.0,
+            "n": 3,
+            "score": 1.0,
+            "snippet": "Villa 287 SQM Facing North on 25m Width Street"
+          }
+        ],
+        "refused": false,
+        "sql_value": 1550000,
+        "answer": "The median price of villas for sale in Jeddah is **SAR 1,550,000**【4】.",
+        "grounding": {
+          "numbers_ok": false,
+          "entities_ok": true,
+          "citations_ok": true,
+          "failures": [
+            "number 4 not in sources"
+          ]
+        },
+        "_sql_result": "SqlResult(op=<AggregateOp.median_price: 'median_price'>, value=1550000, unit='SAR', n_matched=51, examples=(Listing(id='wasalt:5835505', source='wasalt', source_id='5835505', url='https://wasalt.sa/en/property/sale/villa-300-sqm-facing-north-on-16m-width-street-5835505', title='Villa 300 SQM Facing North on 16m Width Street', description='Villa for Sale in Al Rahmanyah, Jeddah Land Area: 300 SQM Villa is located on 1 street, North with 16 m width The property has 7 bedrooms Villa has electricity and water Connections Building year: 2026 Price: 1750000 SAR', purpose=<Purpose.sale: 'sale'>, property_type=<PropertyType.villa: 'villa'>, property_type_raw=None, city='Jeddah', district='Al Rahmanyah', price_sar=1750000, rent_period=None, annual_rent_sar=None, bedrooms=7, bathrooms=None, area_sqm=300.0, lat=21.800367312963193, lon=39.20143952385561, amenities=[], published_at=datetime.datetime(2026, 1, 12, 11, 56, 2, 820000, tzinfo=<DstTzInfo 'Asia/Calcutta' IST+5:30:00 STD>), scraped_at=datetime.datetime(2026, 11, 18, 15, 30, 35, 661547, tzinfo=<DstTzInfo 'Asia/Calcutta' IST+5:30:00 STD>)), Listing(id='wasalt:5838874', source='wasalt', source_id='5838874', url='https://wasalt.sa/en/property/sale/villa-287-sqm-facing-north-on-25m-width-street-5838874', title='Villa 287 SQM Facing North on 25m Width Street', description='Villa for Sale in Alsahil, Jeddah Land Area: 287 SQM Villa is located on 1 street, North with 25 m width The property has 5 bedrooms Villa has electricity Connections Building year: 2026 Price: 870000 SAR', purpose=<Purpose.sale: 'sale'>, property_type=<PropertyType.villa: 'villa'>, property_type_raw=None, city='Jeddah', district='Alsahil', price_sar=870000, rent_period=None, annual_rent_sar=None, bedrooms=5, bathrooms=None, area_sqm=287.0, lat=21.317330084367356, lon=39.14107380453223, amenities=[], published_at=datetime.datetime(2026, 1, 19, 21, 32, 50, 954000, tzinfo=<DstTzInfo 'Asia/Calcutta' IST+5:30:00 STD>), scraped_at=datetime.datetime(2026, 11, 18, 15, 45, 20, 592919, tzinfo=<DstTzInfo 'Asia/Calcutta' IST+5:30:00 STD>)), Listing(id='wasalt:5838881', source='wasalt', source_id='5838881', url='https://wasalt.sa/en/property/sale/villa-287-sqm-facing-north-on-25m-width-street-5838881', title='Villa 287 SQM Facing North on 25m Width Street', description='فيلل دور منفصلة درج خارجي 5 غرف&nbsp; الموقع : حي الساحل&nbsp; المساحة : 300م&nbsp; تتكون من :&nbsp; - مدخلين - حوش امامي&nbsp; - مجلس رجال&nbsp; - غرفة طعام&nbsp; - غرفة نوم رئيسية&nbsp; - غرفتين نوم&nbsp; - صالة واسعة - مطبخ - 3 دورات مياه&nbsp; مميزات العقار :&nbsp; - موقع مميز بالقرب من البحر 6 دقائق - تأسيس مصعد - مؤسسة 3 ادوار - تطل على شارع 20م&nbsp; - واجهة شرقية&nbsp;', purpose=<Purpose.sale: 'sale'>, property_type=<PropertyType.villa: 'villa'>, property_type_raw=None, city='Jeddah', district='Alsahil', price_sar=870000, rent_period=None, annual_rent_sar=None, bedrooms=5, bathrooms=None, area_sqm=287.0, lat=21.317330084367356, lon=39.14107380453223, amenities=[], published_at=datetime.datetime(2026, 1, 19, 22, 18, 48, 849000, tzinfo=<DstTzInfo 'Asia/Calcutta' IST+5:30:00 STD>), scraped_at=datetime.datetime(2026, 11, 18, 15, 44, 16, 984973, tzinfo=<DstTzInfo 'Asia/Calcutta' IST+5:30:00 STD>))))",
+        "llm_runs": [
+          {
+            "answer": "The median price of villas for sale in Jeddah is **SAR 1,550,000**【4】.",
+            "grounding": {
+              "numbers_ok": false,
+              "entities_ok": true,
+              "citations_ok": true,
+              "failures": [
+                "number 4 not in sources"
+              ]
+            },
+            "entry_id": "groq:openai/gpt-oss-120b",
+            "ttft_ms": 625.0,
+            "total_ms": 657.0000000065193,
+            "finish_reason": "stop",
+            "prompt_tokens": 717,
+            "completion_tokens": 49,
+            "est_prompt_tokens": 790,
+            "attempts": [],
+            "skipped_budget": false,
+            "llm_unavailable": false,
+            "run_index": 0
+          },
+          {
+            "answer": "The median price of villas for sale in Jeddah is SAR 1,550,000 (based on 51 listings)【4】.",
+            "grounding": {
+              "numbers_ok": false,
+              "entities_ok": true,
+              "citations_ok": true,
+              "failures": [
+                "number 4 not in sources"
+              ]
+            },
+            "entry_id": "groq:openai/gpt-oss-120b",
+            "ttft_ms": 1531.0000000172295,
+            "total_ms": 1577.999999979511,
+            "finish_reason": "stop",
+            "prompt_tokens": 717,
+            "completion_tokens": 66,
+            "est_prompt_tokens": 790,
+            "attempts": [],
+            "skipped_budget": false,
+            "llm_unavailable": false,
+            "run_index": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "mt-004",
+      "set": "multiturn",
+      "split": "test",
+      "lang": "ar",
+      "turns": [
+        "شقق للبيع في جدة",
+        "ماذا عن الرياض؟"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "lookup",
+        "filters": {
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Riyadh"
+        },
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [],
+        "refuse": false,
+        "answer_numbers": [],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "mt-004",
+        "route": "lookup",
+        "filters": {
+          "kinds": [
+            "listing"
+          ],
+          "purpose": "sale",
+          "property_type": "apartment",
+          "city": "Riyadh"
+        },
+        "cards": [
+          {
+            "doc_id": "wasalt:5868589",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment 99 SQM with 3 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-99-sqm-with-3-bedrooms-5868589",
+            "scraped_at": "2026-11-18 10:43:37.984485+00:00",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Riyadh",
+            "district": "Al Janadriyah",
+            "price_sar": 570000,
+            "bedrooms": 3,
+            "area_sqm": 99.02,
+            "n": 1,
+            "score": 0.030679156908665108,
+            "snippet": "Apartment for sale in Al Janadriyah, Riyadh. 3 bedrooms, 99.0 sqm. Price SAR 570,000. شقة للبيع في حي الجنادرية٬ الرياض مسطحات البناء 99 متر مربع يحدها 1 شارع: مكونة من: 3 غرف واصل كهرباء واصل مياه سنة البناء: 2026 سعرها 570000 ر.س للبيع شقة الرياض حى الجنادرية &nbsp;مخطط الغصون&nbsp; مساحة 150 غرفتين نوم يخدمهم دورة مياة ومغاسل&nbsp; غرفة نوم ماستر&nbsp; شارع 20 مصعد"
+          },
+          {
+            "doc_id": "wasalt:5870090",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment with 4 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-with-4-bedrooms-5870090",
+            "scraped_at": "2026-11-18 10:41:31.676097+00:00",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Riyadh",
+            "district": "Al Arid",
+            "price_sar": 1990000,
+            "bedrooms": 4,
+            "bathrooms": 4,
+            "area_sqm": 264.0,
+            "n": 2,
+            "score": 0.02919863597612958,
+            "snippet": "Apartment for sale in Al Arid, Riyadh. 4 bedrooms, 4 bathrooms, 264 sqm. Price SAR 1,990,000. تاون هاوس للبيع في حي العارض٬ الرياض مسطحات البناء 264 متر مربع مكونة من: 4 غرف واصل كهرباء واصل مياه سنة البناء: 2026 سعرها 1990000 ر.س"
+          },
+          {
+            "doc_id": "wasalt:5869788",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment 105 SQM with 3 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-105-sqm-with-3-bedrooms-5869788",
+            "scraped_at": "2026-11-18 10:40:18.896195+00:00",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Riyadh",
+            "district": "Al Arid",
+            "price_sar": 1080000,
+            "bedrooms": 3,
+            "area_sqm": 105.0,
+            "n": 3,
+            "score": 0.028594771241830064,
+            "snippet": "Apartment for sale in Al Arid, Riyadh. 3 bedrooms, 105 sqm. Price SAR 1,080,000. للبيع شقة جديدة في شمال الرياض - حي العارض. المساحة 105.36 م² المكونات: - 3 غرف - دورة مياه مع غرفة النوم خاص - دورة مياه مع غرفة - دورة مياه - صالة - مطبخ - تراس المميزات: - يوجد صك للشقة - العمر 3 شهور (لم تسكن) - عداد كهرباء مستقل - ⁠درج + مصعد - ⁠كاميرات مراقبة - نظام مكافحة الحرائق - سلم طوارئ"
+          },
+          {
+            "doc_id": "wasalt:5840428",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment 131 SQM with 3 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-131-sqm-with-3-bedrooms-5840428",
+            "scraped_at": "2026-11-18 09:48:32.000812+00:00",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Riyadh",
+            "district": "Al Arid",
+            "price_sar": 1250000,
+            "bedrooms": 3,
+            "area_sqm": 131.0,
+            "n": 4,
+            "score": 0.02782608695652174,
+            "snippet": "Apartment for sale in Al Arid, Riyadh. 3 bedrooms, 131 sqm. Price SAR 1,250,000. شقة للبيع في حي العارض٬ الرياض قريبة من جميع الخدمات: الجوامع والأسواق وغيرها يحدها 1 شارع كبير مكونة من: 3 غرف واصل كهرباء واصل مياه سنة البناء: 2023 سعرها 1250000 ر.س"
+          },
+          {
+            "doc_id": "wasalt:5868778",
+            "kind": "listing",
+            "source": "wasalt",
+            "title": "Apartment 145 SQM with 4 Bedrooms",
+            "url": "https://wasalt.sa/en/property/sale/apartment-145-sqm-with-4-bedrooms-5868778",
+            "scraped_at": "2026-11-18 10:42:42.232922+00:00",
+            "purpose": "sale",
+            "property_type": "apartment",
+            "city": "Riyadh",
+            "district": "Al Malqa",
+            "price_sar": 1500000,
+            "bedrooms": 4,
+            "area_sqm": 145.0,
+            "n": 5,
+            "score": 0.02667140825035562,
+            "snippet": "Apartment for sale in Al Malqa, Riyadh. 4 bedrooms, 145 sqm. Price SAR 1,500,000. 🏡 شقة فاخرة للبيع مع سطح خاص | موقع مميز شمال الرياض 📐 تفاصيل العقار: المساحة: 145 م² (بدون السطح) سطح خاص (ارتداد): حوالي 50 م² الدور: الرابع 3 غرف نوم 1 مجلس صالة واسعة مطبخ 3 دورات مياه موقفين خاصة للشقة في البدروم ✨ المميزات: مطله على شارع واسع عرضه 36 م سطح خاص للشقة موقفين خاصة للشقة تصميم عملي مناسب"
+          }
+        ],
+        "refused": false,
+        "sql_value": null,
+        "answer": "- شقة في حي الجنادرية، الرياض – 3 غرف، مساحة 99 م²، السعر SAR 570,000 [1]  \n- شقة في حي العارض، الرياض – 4 غرف، 4 حمامات، مساحة 264 م²، السعر SAR 1,990,000 [2]  \n- شقة في حي العارض، الرياض – 3 غرف، مساحة 105 م²، السعر SAR 1,080,000 [3]  \n- شقة في حي العارض، الرياض – 3 غرف، مساحة 131 م²، السعر SAR 1,250,000 [4]  \n- شقة في حي الملقة، الرياض – 4 غرف، مساحة 145 م²، السعر SAR 1,500,000 [5]",
+        "grounding": {
+          "numbers_ok": true,
+          "entities_ok": true,
+          "citations_ok": true,
+          "failures": []
+        },
+        "_prices": [
+          570000,
+          1990000,
+          1080000,
+          1250000,
+          1500000
+        ],
+        "_areas": [
+          99.02,
+          264.0,
+          105.0,
+          131.0,
+          145.0
+        ],
+        "llm_runs": [
+          {
+            "answer": "- شقة في حي الجنادرية، الرياض – 3 غرف، مساحة 99 م²، السعر SAR 570,000 [1]  \n- شقة في حي العارض، الرياض – 4 غرف، 4 حمامات، مساحة 264 م²، السعر SAR 1,990,000 [2]  \n- شقة في حي العارض، الرياض – 3 غرف، مساحة 105 م²، السعر SAR 1,080,000 [3]  \n- شقة في حي العارض، الرياض – 3 غرف، مساحة 131 م²، السعر SAR 1,250,000 [4]  \n- شقة في حي الملقة، الرياض – 4 غرف، مساحة 145 م²، السعر SAR 1,500,000 [5]",
+            "grounding": {
+              "numbers_ok": true,
+              "entities_ok": true,
+              "citations_ok": true,
+              "failures": []
+            },
+            "entry_id": "groq:openai/gpt-oss-120b",
+            "ttft_ms": 593.9999999827705,
+            "total_ms": 1186.9999999762513,
+            "finish_reason": "stop",
+            "prompt_tokens": 1348,
+            "completion_tokens": 222,
+            "est_prompt_tokens": 1661,
+            "attempts": [],
+            "skipped_budget": false,
+            "llm_unavailable": false,
+            "run_index": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "pj-009",
+      "set": "projects",
+      "split": "test",
+      "lang": "en",
+      "turns": [
+        "When is the handover of Trump International Hotel and Tower Dubai?"
+      ],
+      "llm": true,
+      "expect": {
+        "route": "project_info",
+        "filters": {},
+        "op": null,
+        "sql_truth": null,
+        "tolerance_pct": 0.0,
+        "entity_ids": [
+          "darglobal:project:trump-international-hotel-and-tower-dubai",
+          "darglobal:project:Trump-International-Hotel-Tower-Dubai"
+        ],
+        "refuse": false,
+        "answer_numbers": [
+          "2031"
+        ],
+        "kind": null,
+        "canary": null
+      },
+      "predicted": {
+        "case_id": "pj-009",
+        "route": "project_info",
+        "filters": {
+          "kinds": [
+            "project",
+            "article"
+          ],
+          "project_id": "darglobal:project:aida-trump-international-hotel"
+        },
+        "cards": [
+          {
+            "doc_id": "darglobal:project:aida-trump-international-hotel",
+            "kind": "project",
+            "source": "darglobal",
+            "title": "Trump International Hotel Oman",
+            "url": "https://darglobal.co.uk/aida-trump-international-hotel",
+            "scraped_at": "2026-11-18 17:44:43.260168+00:00",
+            "city": "Muscat",
+            "country": "Oman",
+            "brand": "Trump",
+            "handover": "December 2028",
+            "n": 1,
+            "score": 0.03306010928961749,
+            "snippet": "Trump International Hotel Oman by DarGlobal (Trump brand) in Muscat, Oman. Handover December 2028. Unit types: rooms, junior suites, suites. Amenities: Trump International Golf Club, Trump Member Club, Cliff Night Club, AIDA Beach, hanging suites, sky bar, all-day dining, swimming pools, wellness and fitness centres, hiking and mountain bike trails."
+          }
+        ],
+        "refused": false,
+        "sql_value": null,
+        "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+        "grounding": {
+          "numbers_ok": null,
+          "entities_ok": null,
+          "citations_ok": null,
+          "failures": []
+        },
+        "_prices": [],
+        "_areas": [],
+        "llm_runs": [
+          {
+            "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+            "grounding": {
+              "numbers_ok": null,
+              "entities_ok": null,
+              "citations_ok": null,
+              "failures": []
+            },
+            "entry_id": "groq:openai/gpt-oss-120b",
+            "ttft_ms": 1108.9999999967404,
+            "total_ms": 1125.0,
+            "finish_reason": "stop",
+            "prompt_tokens": 545,
+            "completion_tokens": 49,
+            "est_prompt_tokens": 685,
+            "attempts": [],
+            "skipped_budget": false,
+            "llm_unavailable": false,
+            "run_index": 0
+          },
+          {
+            "answer": "I do not have information on that. I can help with property listings in Saudi Arabia and Dar Global projects.",
+            "grounding": {
+              "numbers_ok": null,
+              "entities_ok": null,
+              "citations_ok": null,
+              "failures": []
+            },
+            "entry_id": "groq:openai/gpt-oss-120b",
+            "ttft_ms": 391.00000000325963,
+            "total_ms": 500.0,
+            "finish_reason": "stop",
+            "prompt_tokens": 545,
+            "completion_tokens": 49,
+            "est_prompt_tokens": 685,
+            "attempts": [],
+            "skipped_budget": false,
+            "llm_unavailable": false,
+            "run_index": 1
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "The Trump Mansions",
+  "brand": "Trump",
+  "country": null,
+  "city": null,
+  "location": "Rayana, Wadi Safar",
+  "status": "Under Development",
+  "handover": null,
+  "unit_types": [
+    "Trump Branded Mansions"
+  ],
+  "bedrooms_min": null,
+  "bedrooms_max": null,
+  "area_sqm_min": 1250,
+  "area_sqm_max": 5400,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "members-only clubhouse",
+    "18-Hole Championship Golf Course",
+    "trump international golf club",
+    "trump international hotel",
+    "Fine Dining Restaurants",
+    "walking, running and cycling tracks",
+    "parks and activity areas",
+    "Kids Play Area",
+    "organic farming and community gardens",
+    "Organic and Wellness Stores",
+    "Private Gated Access"
+  ]
+}

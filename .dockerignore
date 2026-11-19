@@ -1,0 +1,50 @@
+# .dockerignore — runtime image (Dockerfile)
+# Excludes everything the runtime must not contain.
+
+# Offline-only modules (R10: app never imports collect or organize)
+collect/
+organize/
+
+# Test, eval, scripts, docs tooling
+tests/
+eval/
+scripts/
+docs/
+
+# Raw and processed data (only data/index/ ships)
+data/raw/
+data/processed/
+
+# Orchestration, CI, IDE, editor
+.orchestration/
+.git/
+.github/
+.claude/
+.vscode/
+.idea/
+
+# Virtual environment
+.venv/
+
+# Environment and secret files
+.env
+.env.*
+*.env
+
+# Python caches
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Docker files (not needed inside the image)
+Dockerfile
+Dockerfile.*
+docker-compose.yml
+.dockerignore

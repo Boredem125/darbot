@@ -1,0 +1,15 @@
+# Dockerfile.collect.dockerignore — scraper image context filter
+# Only common/, collect/, and pyproject.toml enter the build context.
+
+# Exclude everything by default
+*
+
+# Then allow only the needed directories and files
+!common/
+!collect/
+!pyproject.toml
+
+# Re-exclude caches inside allowed dirs
+**/__pycache__/
+**/*.pyc
+**/*.pyo

@@ -1,0 +1,29 @@
+{
+  "name": "Azure Oceanfront Villas",
+  "brand": "FENDI Casa",
+  "country": "Oman",
+  "city": null,
+  "location": "AIDA",
+  "status": null,
+  "handover": null,
+  "unit_types": [
+    "Villas"
+  ],
+  "bedrooms_min": 5,
+  "bedrooms_max": 5,
+  "area_sqm_min": null,
+  "area_sqm_max": null,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "Expansive terraces",
+    "Landscaped gardens",
+    "Infinity-edge swimming pools",
+    "Private outdoor spaces",
+    "Trump International Golf Club",
+    "Luxury hotels and resorts",
+    "Beaches and coastal access",
+    "Wellness and outdoor facilities"
+  ]
+}

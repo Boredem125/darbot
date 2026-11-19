@@ -1,0 +1,36 @@
+# docker-compose.yml — DarGlobal/Wasalt RAG chatbot
+# No top-level version: key (obsolete in Compose v2).
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: dg-rag-app:local
+    ports:
+      - "7860:7860"
+    env_file:
+      - path: .env
+        required: false
+    restart: "no"
+    # Feature-flag defaults live in app/config.py, not here.
+    # Available flags (uncomment to override):
+    # environment:
+    #   RERANK_ENABLED: "1"
+    #   SEMANTIC_CACHE_ENABLED: "1"
+    #   METRICS_ENABLED: "0"
+    #   JUDGE_ENABLED: "0"
+    #   ARABIC_MAX_TOKENS: "1024"
+    #   LLM_CHAIN: '[{"provider":"openrouter","model":"google/gemma-4-31b-it:free"}]'
+
+  collect:
+    build:
+      context: .
+      dockerfile: Dockerfile.collect
+    image: dg-rag-collect:local
+    profiles:
+      - collect
+    ipc: host
+    init: true
+    volumes:
+      - ./data/raw:/work/data/raw

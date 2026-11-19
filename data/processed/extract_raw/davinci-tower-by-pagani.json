@@ -1,0 +1,28 @@
+{
+  "name": "Da Vinci Tower",
+  "brand": "Pagani Automobili",
+  "country": null,
+  "city": "Dubai",
+  "location": "Downtown Dubai, directly on the Dubai Canal",
+  "status": null,
+  "handover": null,
+  "unit_types": [
+    "Residences",
+    "Apartment"
+  ],
+  "bedrooms_min": 2,
+  "bedrooms_max": 4,
+  "area_sqm_min": 77,
+  "area_sqm_max": 398,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "rooftop pool",
+    "gym",
+    "sauna",
+    "steam rooms",
+    "24/7 concierge",
+    "private access through discreet elevators"
+  ]
+}

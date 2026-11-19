@@ -1,0 +1,32 @@
+{
+  "name": "DarGlobal Mansions",
+  "brand": null,
+  "country": "Saudi Arabia",
+  "city": "Riyadh",
+  "location": "Wadi Safar",
+  "status": "Under Development",
+  "handover": null,
+  "unit_types": [
+    "Ultra-Luxury Mansions"
+  ],
+  "bedrooms_min": null,
+  "bedrooms_max": null,
+  "area_sqm_min": null,
+  "area_sqm_max": null,
+  "price_from_amount": null,
+  "price_from_currency": null,
+  "payment_plan": null,
+  "amenities": [
+    "members-only clubhouse",
+    "18-hole Championship Golf Course",
+    "Trump International Golf Club",
+    "Trump International Hotel",
+    "Fine Dining Restaurants",
+    "walking, running and cycling tracks",
+    "parks and activity areas",
+    "Kids Play Area",
+    "organic farming and community gardens",
+    "ORGANIC AND WELLNESS STORES",
+    "Private Gated Access"
+  ]
+}

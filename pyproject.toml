@@ -1,0 +1,46 @@
+[project]
+name = "dg-rag-chatbot"
+version = "0.1.0"
+description = "DarGlobal/Wasalt real-estate RAG chatbot"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "qdrant-client[fastembed]==1.20.0",
+  "fastembed==0.9.1",
+  "openai==3.55.0",
+  "duckdb==2.0.0",
+  "pyarrow==26.0.1",
+  "fastapi==0.163.2",
+  "uvicorn[standard]==0.54.0",
+  "sse-starlette==3.7.0",
+  "pydantic==2.14.3",
+  "pydantic-settings==2.16.3",
+  "cachetools==8.0.1",
+  "prometheus-client==0.26.0",
+  "slowapi==0.1.10",
+  "httpx==0.28.1",
+]
+
+[project.optional-dependencies]
+build = [
+  "llama-index-core==0.14.26",
+  "trafilatura==2.3.1",
+  "selectolax==1.0.2",
+]
+collect = ["playwright==1.65.2"]
+dev = ["pytest==9.2.0", "pytest-asyncio==1.5.0", "ruff==0.17.5"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["common*", "collect*", "organize*", "app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

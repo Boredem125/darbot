@@ -5,10 +5,12 @@ Implements retrieval.md sections 3.5-3.6. Imports only common.* and stdlib (R4).
 
 from __future__ import annotations
 
+import html
 import re
 import unicodedata
 
 from common.schemas import Card, ChunkPayload
+from common.text import strip_instructions
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -115,12 +117,22 @@ def dedup_docs(docs: list[DocHit], top_k: int = TOP_K_DOCS) -> list[DocHit]:
     return kept
 
 
+def _clean_snippet(text: str | None) -> str | None:
+    """Clean a card snippet: decode HTML entities, collapse whitespace, strip injections."""
+    if not text:
+        return text
+    s = html.unescape(text)
+    s = re.sub(r"\s+", " ", s).strip()
+    s = strip_instructions(s)
+    return s[:400] if s else None
+
+
 def to_cards(doc_hits: list[DocHit]) -> list[Card]:
     """Convert DocHits to numbered Cards (1..k)."""
     cards: list[Card] = []
     for i, dh in enumerate(doc_hits, start=1):
         payload = dh.best_chunk
-        snippet = payload.text[:400] if payload.text else None
+        snippet = _clean_snippet(payload.text[:400] if payload.text else None)
         card = Card(
             n=i,
             score=dh.best_score,

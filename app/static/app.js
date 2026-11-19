@@ -5,6 +5,7 @@
  */
 import { createSseParser, parseEvent } from "./sse.js";
 import { getAnswerModeLabel, sourceBadgeLabel } from "./labels.js";
+import { parseBlocks, renderBlocksToDOM } from "./markdown.js";
 
 // ---------------------------------------------------------------------------
 // DOM references
@@ -119,16 +120,15 @@ function renderCard(card) {
 
   var body = el("div", "card-body");
 
-  // Price (big)
+  // Price (big, single line)
   if (card.kind === "listing" && card.price_sar != null) {
     var priceStr = fmtPrice(card.price_sar);
-    if (card.rent_period) priceStr += " / " + card.rent_period;
-    var priceEl = el("div", "card-price", priceStr);
-    if (card.annual_rent_sar != null) {
-      var sub = el("span", "card-price-sub", " (" + fmtPrice(card.annual_rent_sar) + "/yr)");
-      priceEl.appendChild(sub);
+    if (card.rent_period) {
+      // Short period label: "SAR X /mo", "SAR X /yr", etc.
+      var periodShort = {daily:"/day",weekly:"/wk",monthly:"/mo",yearly:"/yr"};
+      priceStr += " " + (periodShort[card.rent_period] || "/ " + card.rent_period);
     }
-    body.appendChild(priceEl);
+    body.appendChild(el("div", "card-price", priceStr));
   } else if (card.kind === "project" && card.price_from_amount != null && card.price_from_currency) {
     body.appendChild(el("div", "card-price",
       "from " + card.price_from_currency + " " + fmtNum(card.price_from_amount)));
@@ -166,10 +166,7 @@ function renderCard(card) {
   }
   if (locParts.length) c.appendChild(el("div", "card-location", locParts.join(" · ")));
 
-  // Snippet (2-line clamp, no expand toggle for compactness)
-  if (card.snippet) {
-    c.appendChild(el("div", "card-desc", card.snippet));
-  }
+  // Snippet hidden for compact cards (shown only behind View link)
 
   // Footer: source badge + index + link
   var footer = el("div", "card-footer");
@@ -208,49 +205,11 @@ function renderCardStrip(sources) {
 }
 
 // ---------------------------------------------------------------------------
-// Citation post-processing
+// Markdown-aware answer rendering (safe: HTML escaped first)
 // ---------------------------------------------------------------------------
-function postProcessAnswer(raw, numCards) {
-  var norm = raw
-    .replace(/【(\d+)】/g, "[$1]")
-    .replace(/〔(\d+)〕/g, "[$1]")
-    .replace(/［(\d+)］/g, "[$1]");
-  var parts = norm.split(/(\[\d+\])/g);
-  var frag = document.createDocumentFragment();
-  var inList = false, currentUl = null;
-
-  for (var pi = 0; pi < parts.length; pi++) {
-    var part = parts[pi];
-    var citMatch = part.match(/^\[(\d+)\]$/);
-    if (citMatch) {
-      var n = parseInt(citMatch[1], 10);
-      if (n >= 1 && n <= numCards) {
-        var btn = el("button", "citation-link", "[" + n + "]");
-        btn.setAttribute("aria-label", "Go to source " + n);
-        btn.type = "button";
-        btn.dataset.card = n;
-        btn.addEventListener("click", onCitationClick);
-        if (inList && currentUl && currentUl.lastChild) currentUl.lastChild.appendChild(btn);
-        else frag.appendChild(btn);
-      } else {
-        frag.appendChild(txt(part));
-      }
-    } else {
-      var lines = part.split("\n");
-      for (var li = 0; li < lines.length; li++) {
-        var line = lines[li];
-        if (line.startsWith("- ")) {
-          if (!inList) { currentUl = document.createElement("ul"); frag.appendChild(currentUl); inList = true; }
-          var liE = document.createElement("li"); liE.textContent = line.slice(2); currentUl.appendChild(liE);
-        } else {
-          if (inList) { inList = false; currentUl = null; }
-          if (li > 0) frag.appendChild(txt("\n"));
-          frag.appendChild(txt(line));
-        }
-      }
-    }
-  }
-  return frag;
+function renderAnswer(raw, numCards) {
+  var blocks = parseBlocks(raw);
+  return renderBlocksToDOM(blocks, numCards, onCitationClick);
 }
 function onCitationClick(e) {
   var n = e.currentTarget.dataset.card;
@@ -322,7 +281,7 @@ function renderResponseDetails(endEvt) {
 // ---------------------------------------------------------------------------
 // Badges (outside details)
 // ---------------------------------------------------------------------------
-function renderBadges(endEvt, route) {
+function renderBadges(endEvt, route, hadDegradedNotice) {
   var frag = document.createDocumentFragment();
   if (endEvt.flags && endEvt.flags.unverified) {
     frag.appendChild(el("span", "badge badge-unverified", " Unverified figures"));
@@ -341,8 +300,11 @@ function renderBadges(endEvt, route) {
   if (endEvt.flags && endEvt.flags.truncated) {
     frag.appendChild(el("span", "badge badge-truncated", " Response cut off"));
   }
-  var label = getAnswerModeLabel(route, endEvt.answer_mode);
-  if (label) frag.appendChild(el("div", "mode-label mode-label-" + label.style, label.text));
+  // Skip mode label if a soft-error notice already conveyed the degradation
+  if (!hadDegradedNotice) {
+    var label = getAnswerModeLabel(route, endEvt.answer_mode);
+    if (label) frag.appendChild(el("div", "mode-label mode-label-" + label.style, label.text));
+  }
   return frag;
 }
 
@@ -375,6 +337,7 @@ async function sendMessage(message) {
   var startEvt = null, endEvt = null, hadFatalError = false;
   var typingEl = null, firstTokenReceived = false;
   var cardSources = null; // defer card rendering until after answer
+  var hadDegradedNotice = false; // suppresses duplicate mode label
 
   try {
     var response = await fetch("api/chat", {
@@ -429,7 +392,9 @@ async function sendMessage(message) {
         }
         if (!answerEl) { answerEl = el("div","answer-text streaming"); answerEl.setAttribute("dir","auto"); asstBubble.appendChild(answerEl); }
         rawAnswer += payload.delta;
-        answerEl.appendChild(txt(payload.delta));
+        // Re-render whole buffer with markdown on each token
+        while (answerEl.firstChild) answerEl.removeChild(answerEl.firstChild);
+        answerEl.appendChild(renderAnswer(rawAnswer, numCards));
 
       } else if (payload.event === "end") {
         endEvt = payload;
@@ -439,10 +404,10 @@ async function sendMessage(message) {
         // If no tokens arrived but answer text element was prepared, attach it
         if (answerEl && !answerEl.parentNode && rawAnswer) asstBubble.appendChild(answerEl);
 
-        // Post-process citations
-        if (answerEl && rawAnswer && numCards > 0) {
+        // Final render with markdown
+        if (answerEl && rawAnswer) {
           while (answerEl.firstChild) answerEl.removeChild(answerEl.firstChild);
-          answerEl.appendChild(postProcessAnswer(rawAnswer, numCards));
+          answerEl.appendChild(renderAnswer(rawAnswer, numCards));
         }
 
         // Cards BELOW the answer
@@ -451,7 +416,7 @@ async function sendMessage(message) {
 
         // Badges
         var route = startEvt ? startEvt.route : null;
-        var badgesNode = renderBadges(payload, route);
+        var badgesNode = renderBadges(payload, route, hadDegradedNotice);
         if (badgesNode.childNodes.length > 0) {
           var br = el("div", "badges-row"); br.appendChild(badgesNode); asstBubble.appendChild(br);
         }
@@ -474,8 +439,9 @@ async function sendMessage(message) {
           asstBubble.removeAttribute("aria-busy");
           announce("Error: " + (payload.message||"An unexpected error occurred."));
         } else {
-          var nc = payload.degraded_to ? "notice notice-warn" : "notice notice-info";
-          asstBubble.appendChild(el("div", nc, payload.message || "Switching to a fallback."));
+          // Soft error with degraded_to: show as neutral info, suppress duplicate mode label later
+          if (payload.degraded_to) hadDegradedNotice = true;
+          asstBubble.appendChild(el("div", "notice notice-info", payload.message || "Switching to a fallback."));
         }
       }
     });

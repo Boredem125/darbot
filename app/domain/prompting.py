@@ -92,6 +92,7 @@ def build_messages(
     history: tuple[ChatMessage, ...] = (),
     question: str,
     include_history: bool = False,
+    language: Language | None = None,
 ) -> PromptPlan:
     """Assemble the prompt messages within token budgets.
 
@@ -139,6 +140,12 @@ def build_messages(
         user_content = f"{context_text}\n\nQuestion: {question}"
     else:
         user_content = question
+
+    # Explicit language instruction (router's decision, not the system prompt)
+    if language == Language.ar:
+        user_content += "\nأجب باللغة العربية."
+    elif language == Language.en:
+        user_content += "\nAnswer in English."
 
     messages.append(ChatMessage(role="user", content=user_content))
 

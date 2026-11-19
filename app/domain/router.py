@@ -125,6 +125,79 @@ class EntityIndex:
         """All normalised aliases for the entity with the given canonical name."""
         return self._all_aliases.get(canonical, set())
 
+    def find_fuzzy(self, text: str) -> list[tuple[str, Entity]]:
+        """Fuzzy-match unmatched tokens against city/district aliases.
+
+        Distance threshold: <= 1 for 5-7 char tokens, <= 2 for 8+ chars.
+        Tokens < 5 chars are never fuzzy-matched.
+        Only city and district entities are candidates.
+        """
+        normed = normalise_alias(text)
+        # Exact matches first -- skip tokens that already matched
+        exact_results = self.find_all(text)
+        exact_spans: set[str] = set()
+        for alias, _ent in exact_results:
+            exact_spans.add(alias)
+
+        # Build candidate aliases for city/district only
+        candidates: list[tuple[str, Entity]] = [
+            (alias, ent)
+            for alias, ent in self._entries
+            if ent.kind in (EntityKind.city, EntityKind.district)
+        ]
+
+        tokens = re.findall(r"\b\w+\b", normed, re.UNICODE)
+        results: list[tuple[str, Entity]] = []
+        matched_tokens: set[str] = set()
+        for token in tokens:
+            tlen = len(token)
+            if tlen < 5:
+                continue
+            # Skip if this token is part of an exact match
+            if any(token in span for span in exact_spans):
+                continue
+            max_dist = 1 if tlen <= 7 else 2
+            best: tuple[str, Entity] | None = None
+            best_dist = max_dist + 1
+            for alias, ent in candidates:
+                d = _damerau_levenshtein(token, alias)
+                if d <= max_dist and d < best_dist:
+                    best = (alias, ent)
+                    best_dist = d
+            if best is not None and best[0] not in matched_tokens:
+                results.append(best)
+                matched_tokens.add(best[0])
+        return results
+
+
+def _damerau_levenshtein(s: str, t: str) -> int:
+    """Optimal string alignment distance (restricted Damerau-Levenshtein).
+
+    Pure Python, O(len(s)*len(t)) time and space. Sufficient for short
+    city/district names (< 20 chars).
+    """
+    ls, lt = len(s), len(t)
+    # Quick reject: if length diff > 2, distance is at least that
+    if abs(ls - lt) > 2:
+        return abs(ls - lt)
+    d = [[0] * (lt + 1) for _ in range(ls + 1)]
+    for i in range(ls + 1):
+        d[i][0] = i
+    for j in range(lt + 1):
+        d[0][j] = j
+    for i in range(1, ls + 1):
+        for j in range(1, lt + 1):
+            cost = 0 if s[i - 1] == t[j - 1] else 1
+            d[i][j] = min(
+                d[i - 1][j] + 1,       # deletion
+                d[i][j - 1] + 1,       # insertion
+                d[i - 1][j - 1] + cost,  # substitution
+            )
+            # Transposition
+            if i > 1 and j > 1 and s[i - 1] == t[j - 2] and s[i - 2] == t[j - 1]:
+                d[i][j] = min(d[i][j], d[i - 2][j - 2] + cost)
+    return d[ls][lt]
+
 
 # ---------------------------------------------------------------------------
 # Dictionaries (English and Arabic keywords -> filter values)
@@ -227,6 +300,16 @@ _AREA_UNITS = {
     "متر",  # متر
     "م٢",  # م2 (but after digit normalisation this is م2)
     "م2",  # م2 literal
+}
+
+# Price-intent cues (non-aggregate: set sort on lookup, not an aggregate op)
+_PRICE_LOW_INTENT = {
+    "cheap", "affordable", "budget", "low price", "inexpensive",
+    "رخيص", "رخيصة", "بسعر مناسب",
+}
+_PRICE_HIGH_INTENT = {
+    "expensive", "luxury", "high price",
+    "غالي", "غالية", "فاخر", "فاخرة",
 }
 
 # Aggregate cues
@@ -775,6 +858,16 @@ def route(
         elif entity.kind == EntityKind.brand:
             has_brand_entity = True
 
+    # Fuzzy match: if no city or district found by exact match, try fuzzy
+    if city is None and district is None and not has_project_entity:
+        for _alias, entity in entities.find_fuzzy(message):
+            if entity.kind == EntityKind.city and city is None:
+                city = entity.canonical
+            elif entity.kind == EntityKind.district and district is None:
+                district = entity.canonical
+                if entity.parent:
+                    city = entity.parent
+
     # B8b: when a project entity is matched, place filters are redundant
     # (the project id is the stricter constraint) and can cause 0-hit refusals.
     if project_id is not None:
@@ -784,6 +877,14 @@ def route(
 
     # Aggregate detection
     agg_op, example_limit, sort = _detect_aggregate(message)
+
+    # Price intent: "cheap"/"affordable" -> price_asc, "expensive"/"luxury" -> price_desc
+    # Only on lookup (agg_op is None); "cheapest" already routes to aggregate.
+    if agg_op is None:
+        if _cue_found(message, _PRICE_LOW_INTENT):
+            sort = SortKey.price_asc
+        elif _cue_found(message, _PRICE_HIGH_INTENT):
+            sort = SortKey.price_desc
 
     # Follow-up handling
     follow_up = _is_followup(message, session)

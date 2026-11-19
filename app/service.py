@@ -87,7 +87,7 @@ from common.schemas import (
     StageTimings,
     TokenUsage,
 )
-from common.text import normalise_for_embedding
+from common.text import arabic_ratio, normalise_for_embedding
 
 logger = logging.getLogger("app.service")
 
@@ -518,6 +518,7 @@ class ChatService:
                 history=history,
                 question=message,
                 include_history=include_history,
+                language=decision.language,
             )
 
             max_tok = max_tokens_for(decision.language)
@@ -643,7 +644,13 @@ class ChatService:
             yield end_event.to_sse()
 
             # 10. Cache put (caching.md section 5)
-            if is_cacheable(
+            # Also reject answers whose script contradicts the decision language
+            ar = arabic_ratio(answer_text)
+            script_ok = not (
+                (decision.language == Language.en and ar > 0.5)
+                or (decision.language == Language.ar and ar < 0.2)
+            )
+            if script_ok and is_cacheable(
                 standalone=standalone,
                 route=decision.route,
                 answer_mode=AnswerMode.llm,

@@ -1,5 +1,5 @@
 /**
- * app.js -- UI wiring for the Wasalt / DarGlobal RAG chatbot.
+ * app.js -- UI for the Dar Bot property assistant.
  * No framework, no build step. Uses only textContent and createElement.
  * Never uses innerHTML with untrusted strings.
  */
@@ -9,262 +9,215 @@ import { getAnswerModeLabel, sourceBadgeLabel } from "./labels.js";
 // ---------------------------------------------------------------------------
 // DOM references
 // ---------------------------------------------------------------------------
-const conversationEl = document.getElementById("conversation");
-const emptyStateEl = document.getElementById("empty-state");
-const inputEl = document.getElementById("message-input");
-const charCountEl = document.getElementById("char-count");
-const btnSend = document.getElementById("btn-send");
-const btnStop = document.getElementById("btn-stop");
-const srAnnounce = document.getElementById("sr-announce");
+var conversationEl = document.getElementById("conversation");
+var emptyStateEl   = document.getElementById("empty-state");
+var inputEl        = document.getElementById("message-input");
+var charCountEl    = document.getElementById("char-count");
+var btnSend        = document.getElementById("btn-send");
+var btnStop        = document.getElementById("btn-stop");
+var srAnnounce     = document.getElementById("sr-announce");
 
 // ---------------------------------------------------------------------------
 // State
 // ---------------------------------------------------------------------------
-let abortController = null;
-let streaming = false;
+var abortController = null;
+var streaming = false;
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
-
-/** Create a text node. */
-function txt(str) {
-  return document.createTextNode(str);
-}
-
-/** Create an element with optional className and textContent. */
-function el(tag, className, textContent) {
-  const e = document.createElement(tag);
-  if (className) e.className = className;
-  if (textContent !== undefined && textContent !== null) e.textContent = textContent;
+function txt(s) { return document.createTextNode(s); }
+function el(tag, cls, text) {
+  var e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text != null) e.textContent = text;
   return e;
 }
-
-/** Format a number with comma separators. */
-function fmtNum(n) {
-  if (n == null) return null;
-  return Number(n).toLocaleString("en-US");
-}
-
-/** Format price in SAR. */
-function fmtPrice(amount) {
-  if (amount == null) return null;
-  return "SAR " + fmtNum(amount);
-}
-
-/** Format an ISO date string as a short date. */
+function fmtNum(n) { return n == null ? null : Number(n).toLocaleString("en-US"); }
+function fmtPrice(a) { return a == null ? null : "SAR " + fmtNum(a); }
 function fmtDate(iso) {
   if (!iso) return null;
-  try {
-    return new Date(iso).toLocaleDateString("en-US", {
-      year: "numeric", month: "short", day: "numeric",
-    });
-  } catch { return iso; }
+  try { return new Date(iso).toLocaleDateString("en-US",{year:"numeric",month:"short",day:"numeric"}); }
+  catch(_) { return iso; }
 }
+function fmtMs(ms) { return ms == null ? null : Math.round(ms) + " ms"; }
+function isSafeUrl(u) { return typeof u === "string" && (u.startsWith("https://") || u.startsWith("http://")); }
 
-/** Format milliseconds. */
-function fmtMs(ms) {
-  if (ms == null) return null;
-  return Math.round(ms) + " ms";
+function setStreaming(on) {
+  streaming = on;
+  inputEl.disabled = on;
+  btnSend.disabled = on;
+  btnSend.hidden = on;
+  btnStop.hidden = !on;
+  if (!on) inputEl.focus();
 }
-
-/** Check if a URL is safe to link to. */
-function isSafeUrl(url) {
-  return typeof url === "string" && (url.startsWith("https://") || url.startsWith("http://"));
-}
-
-/** Set UI to streaming or idle state. */
-function setStreaming(isStreaming) {
-  streaming = isStreaming;
-  inputEl.disabled = isStreaming;
-  btnSend.disabled = isStreaming;
-  btnSend.hidden = isStreaming;
-  btnStop.hidden = !isStreaming;
-  if (!isStreaming) inputEl.focus();
-}
-
-/** Screen reader announcement. */
 function announce(text) {
   srAnnounce.textContent = "";
-  requestAnimationFrame(function () { srAnnounce.textContent = text; });
+  requestAnimationFrame(function() { srAnnounce.textContent = text; });
 }
-
-/** Update character counter. */
 function updateCharCount() {
   var len = inputEl.value.length;
   charCountEl.textContent = len + " / 500";
-  if (len > 500) {
-    charCountEl.classList.add("over-limit");
-  } else {
-    charCountEl.classList.remove("over-limit");
-  }
+  charCountEl.classList.toggle("over-limit", len > 500);
   btnSend.disabled = streaming || len === 0 || len > 500;
 }
+function hideEmptyState() { if (emptyStateEl) emptyStateEl.classList.add("hidden"); }
 
-/** Hide the empty state. */
-function hideEmptyState() {
-  if (emptyStateEl) emptyStateEl.classList.add("hidden");
+// Property-type SVG icons (inline, tiny)
+var ICON_SVG = {
+  villa:     '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg>',
+  apartment: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 22h20"/><path d="M6 22V4a2 2 0 012-2h8a2 2 0 012 2v18"/><path d="M10 6h4M10 10h4M10 14h4"/></svg>',
+  project:   '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>',
+  article:   '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z"/><path d="M8 2v4M16 2v4M2 10h20"/></svg>',
+  _default:  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18"/><path d="M9 21V13h6v8"/><path d="M5 21V7l7-4 7 4v14"/></svg>',
+};
+function getIconKey(card) {
+  if (card.kind === "project") return "project";
+  if (card.kind === "article") return "article";
+  if (card.property_type && ICON_SVG[card.property_type]) return card.property_type;
+  return "_default";
 }
 
 // ---------------------------------------------------------------------------
 // Typing indicator
 // ---------------------------------------------------------------------------
-
 function createTypingIndicator() {
-  var wrap = el("div", "typing-indicator");
-  wrap.setAttribute("aria-label", "Assistant is typing");
-  wrap.setAttribute("role", "status");
-  for (var i = 0; i < 3; i++) {
-    wrap.appendChild(el("span", "typing-dot"));
+  var w = el("div", "typing-indicator");
+  w.setAttribute("aria-label", "Assistant is typing");
+  w.setAttribute("role", "status");
+  for (var i = 0; i < 3; i++) w.appendChild(el("span", "typing-dot"));
+  return w;
+}
+
+// ---------------------------------------------------------------------------
+// Assistant header (avatar + label)
+// ---------------------------------------------------------------------------
+function createAsstHeader() {
+  var h = el("div", "asst-header");
+  var av = el("div", "asst-avatar", "D");
+  h.appendChild(av);
+  h.appendChild(el("span", "asst-name", "Dar Bot"));
+  return h;
+}
+
+// ---------------------------------------------------------------------------
+// Compact source card
+// ---------------------------------------------------------------------------
+function renderCard(card) {
+  var c = el("div", "source-card");
+  c.setAttribute("dir", "auto");
+  c.id = "card-" + card.n;
+
+  // Top row: icon tile + body
+  var top = el("div", "card-top");
+
+  // Icon tile
+  var iconTile = el("div", "card-icon-tile");
+  // We use a safe approach: set innerHTML only on our own static SVG strings
+  iconTile.innerHTML = ICON_SVG[getIconKey(card)];
+  top.appendChild(iconTile);
+
+  var body = el("div", "card-body");
+
+  // Price (big)
+  if (card.kind === "listing" && card.price_sar != null) {
+    var priceStr = fmtPrice(card.price_sar);
+    if (card.rent_period) priceStr += " / " + card.rent_period;
+    var priceEl = el("div", "card-price", priceStr);
+    if (card.annual_rent_sar != null) {
+      var sub = el("span", "card-price-sub", " (" + fmtPrice(card.annual_rent_sar) + "/yr)");
+      priceEl.appendChild(sub);
+    }
+    body.appendChild(priceEl);
+  } else if (card.kind === "project" && card.price_from_amount != null && card.price_from_currency) {
+    body.appendChild(el("div", "card-price",
+      "from " + card.price_from_currency + " " + fmtNum(card.price_from_amount)));
   }
+
+  // Title (one line, ellipsis)
+  body.appendChild(el("div", "card-title-line", card.title || ""));
+
+  top.appendChild(body);
+  c.appendChild(top);
+
+  // Chips
+  if (card.kind === "listing") {
+    var chips = el("div", "card-chips");
+    var hasChips = false;
+    if (card.bedrooms != null) { chips.appendChild(el("span","card-chip",card.bedrooms+" bed")); hasChips=true; }
+    if (card.bathrooms != null){ chips.appendChild(el("span","card-chip",card.bathrooms+" bath"));hasChips=true; }
+    if (card.area_sqm != null) { chips.appendChild(el("span","card-chip",fmtNum(card.area_sqm)+" sqm"));hasChips=true; }
+    if (hasChips) c.appendChild(chips);
+  }
+
+  // Location
+  var locParts = [];
+  if (card.kind === "listing") {
+    if (card.city) locParts.push(card.city);
+    if (card.district) locParts.push(card.district);
+  } else if (card.kind === "project") {
+    if (card.city) locParts.push(card.city);
+    if (card.country) locParts.push(card.country);
+    if (card.handover) locParts.push("Handover: " + card.handover);
+  } else if (card.kind === "article") {
+    if (card.article_kind) locParts.push(card.article_kind);
+    var pd = fmtDate(card.published_at);
+    if (pd) locParts.push(pd);
+  }
+  if (locParts.length) c.appendChild(el("div", "card-location", locParts.join(" · ")));
+
+  // Snippet (2-line clamp, no expand toggle for compactness)
+  if (card.snippet) {
+    c.appendChild(el("div", "card-desc", card.snippet));
+  }
+
+  // Footer: source badge + index + link
+  var footer = el("div", "card-footer");
+  footer.appendChild(el("span", "card-source-badge", sourceBadgeLabel(card.source)));
+  footer.appendChild(el("span", "card-index", String(card.n)));
+  if (isSafeUrl(card.url)) {
+    var lnk = el("a", "card-link", "View →");
+    lnk.href = card.url; lnk.target = "_blank"; lnk.rel = "noopener noreferrer";
+    footer.appendChild(lnk);
+  }
+  c.appendChild(footer);
+
+  return c;
+}
+
+function renderCardStrip(sources) {
+  if (!sources || sources.length === 0) return null;
+  var wrap = document.createDocumentFragment();
+
+  // Header
+  var hdr = el("div", "cards-header");
+  hdr.appendChild(txt("Sources (" + sources.length + ")"));
+  wrap.appendChild(hdr);
+
+  // Strip
+  var strip = el("div", "cards-strip");
+  strip.setAttribute("role", "list");
+  strip.setAttribute("aria-label", "Source cards");
+  for (var i = 0; i < sources.length; i++) {
+    var card = renderCard(sources[i]);
+    card.setAttribute("role", "listitem");
+    strip.appendChild(card);
+  }
+  wrap.appendChild(strip);
   return wrap;
 }
 
 // ---------------------------------------------------------------------------
-// Card rendering
+// Citation post-processing
 // ---------------------------------------------------------------------------
-
-function renderCard(card) {
-  var cardEl = el("div", "source-card");
-  cardEl.setAttribute("dir", "auto");
-  cardEl.id = "card-" + card.n;
-
-  // Header: index badge + title + source
-  var header = el("div", "card-header");
-  header.appendChild(el("span", "card-index", String(card.n)));
-
-  var titleWrap = el("div", "card-title-wrap");
-  if (isSafeUrl(card.url)) {
-    var titleLink = el("a", "card-title");
-    titleLink.textContent = card.title || "";
-    titleLink.href = card.url;
-    titleLink.target = "_blank";
-    titleLink.rel = "noopener noreferrer";
-    titleWrap.appendChild(titleLink);
-  } else {
-    titleWrap.appendChild(el("span", "card-title", card.title || ""));
-  }
-  titleWrap.appendChild(el("span", "card-source-badge", sourceBadgeLabel(card.source)));
-  header.appendChild(titleWrap);
-  cardEl.appendChild(header);
-
-  // Price
-  if (card.kind === "listing") {
-    if (card.price_sar != null) {
-      var priceStr = fmtPrice(card.price_sar);
-      if (card.rent_period) priceStr += " / " + card.rent_period;
-      cardEl.appendChild(el("div", "card-price", priceStr));
-      if (card.annual_rent_sar != null) {
-        cardEl.appendChild(el("div", "card-price-annual", fmtPrice(card.annual_rent_sar) + " / year"));
-      }
-    }
-  } else if (card.kind === "project") {
-    if (card.price_from_amount != null && card.price_from_currency) {
-      cardEl.appendChild(el("div", "card-price",
-        "from " + card.price_from_currency + " " + fmtNum(card.price_from_amount)));
-    }
-  }
-
-  // Chips (beds, baths, area)
-  if (card.kind === "listing") {
-    var chips = el("div", "card-chips");
-    var hasChips = false;
-    if (card.bedrooms != null) {
-      chips.appendChild(el("span", "card-chip", card.bedrooms + " bed"));
-      hasChips = true;
-    }
-    if (card.bathrooms != null) {
-      chips.appendChild(el("span", "card-chip", card.bathrooms + " bath"));
-      hasChips = true;
-    }
-    if (card.area_sqm != null) {
-      chips.appendChild(el("span", "card-chip", fmtNum(card.area_sqm) + " sqm"));
-      hasChips = true;
-    }
-    if (card.purpose) {
-      chips.appendChild(el("span", "card-chip", card.purpose));
-      hasChips = true;
-    }
-    if (card.property_type) {
-      chips.appendChild(el("span", "card-chip", card.property_type));
-      hasChips = true;
-    }
-    if (hasChips) cardEl.appendChild(chips);
-  }
-
-  // Location / project details
-  if (card.kind === "listing") {
-    var locParts = [];
-    if (card.city) locParts.push(card.city);
-    if (card.district) locParts.push(card.district);
-    if (locParts.length) {
-      cardEl.appendChild(el("div", "card-location", locParts.join(", ")));
-    }
-  } else if (card.kind === "project") {
-    var projParts = [];
-    if (card.city) projParts.push(card.city);
-    if (card.country) projParts.push(card.country);
-    if (card.brand) projParts.push(card.brand);
-    if (projParts.length) {
-      cardEl.appendChild(el("div", "card-location", projParts.join(" · ")));
-    }
-    if (card.handover) {
-      cardEl.appendChild(el("div", "card-location", "Handover: " + card.handover));
-    }
-  } else if (card.kind === "article") {
-    var artParts = [];
-    if (card.article_kind) artParts.push(card.article_kind);
-    var pubDate = fmtDate(card.published_at);
-    if (pubDate) artParts.push(pubDate);
-    if (artParts.length) {
-      cardEl.appendChild(el("div", "card-location", artParts.join(" · ")));
-    }
-  }
-
-  // Snippet
-  if (card.snippet) {
-    cardEl.appendChild(el("div", "card-snippet", card.snippet));
-  }
-
-  // Scraped at
-  if (card.kind === "listing") {
-    var scrapedDate = fmtDate(card.scraped_at);
-    if (scrapedDate) {
-      cardEl.appendChild(el("div", "card-scraped", "as of " + scrapedDate));
-    }
-  }
-
-  return cardEl;
-}
-
-function renderCards(sources) {
-  if (!sources || sources.length === 0) return null;
-  var row = el("div", "cards-row");
-  row.setAttribute("role", "list");
-  row.setAttribute("aria-label", "Source cards");
-  for (var i = 0; i < sources.length; i++) {
-    var c = renderCard(sources[i]);
-    c.setAttribute("role", "listitem");
-    row.appendChild(c);
-  }
-  return row;
-}
-
-// ---------------------------------------------------------------------------
-// Answer text: post-process [n] citations into clickable links
-// ---------------------------------------------------------------------------
-
-function postProcessAnswer(rawText, numCards) {
-  // Normalise fullwidth citation brackets to ASCII
-  var normalised = rawText
+function postProcessAnswer(raw, numCards) {
+  var norm = raw
     .replace(/【(\d+)】/g, "[$1]")
     .replace(/〔(\d+)〕/g, "[$1]")
     .replace(/［(\d+)］/g, "[$1]");
-
-  var parts = normalised.split(/(\[\d+\])/g);
+  var parts = norm.split(/(\[\d+\])/g);
   var frag = document.createDocumentFragment();
-  var inList = false;
-  var currentUl = null;
+  var inList = false, currentUl = null;
 
   for (var pi = 0; pi < parts.length; pi++) {
     var part = parts[pi];
@@ -277,11 +230,8 @@ function postProcessAnswer(rawText, numCards) {
         btn.type = "button";
         btn.dataset.card = n;
         btn.addEventListener("click", onCitationClick);
-        if (inList && currentUl && currentUl.lastChild) {
-          currentUl.lastChild.appendChild(btn);
-        } else {
-          frag.appendChild(btn);
-        }
+        if (inList && currentUl && currentUl.lastChild) currentUl.lastChild.appendChild(btn);
+        else frag.appendChild(btn);
       } else {
         frag.appendChild(txt(part));
       }
@@ -290,14 +240,8 @@ function postProcessAnswer(rawText, numCards) {
       for (var li = 0; li < lines.length; li++) {
         var line = lines[li];
         if (line.startsWith("- ")) {
-          if (!inList) {
-            currentUl = document.createElement("ul");
-            frag.appendChild(currentUl);
-            inList = true;
-          }
-          var liEl = document.createElement("li");
-          liEl.textContent = line.slice(2);
-          currentUl.appendChild(liEl);
+          if (!inList) { currentUl = document.createElement("ul"); frag.appendChild(currentUl); inList = true; }
+          var liE = document.createElement("li"); liE.textContent = line.slice(2); currentUl.appendChild(liE);
         } else {
           if (inList) { inList = false; currentUl = null; }
           if (li > 0) frag.appendChild(txt("\n"));
@@ -308,189 +252,129 @@ function postProcessAnswer(rawText, numCards) {
   }
   return frag;
 }
-
 function onCitationClick(e) {
   var n = e.currentTarget.dataset.card;
-  var target = document.getElementById("card-" + n);
-  if (target) {
-    target.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    target.classList.add("highlight");
-    setTimeout(function () { target.classList.remove("highlight"); }, 2000);
+  var t = document.getElementById("card-" + n);
+  if (t) {
+    t.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    t.classList.add("highlight");
+    setTimeout(function() { t.classList.remove("highlight"); }, 2000);
   }
 }
 
 // ---------------------------------------------------------------------------
-// Response details toggle
+// Response details toggle (small, grey)
 // ---------------------------------------------------------------------------
-
 function renderResponseDetails(endEvt) {
-  var details = document.createElement("details");
-  details.className = "response-details";
-
-  var summary = document.createElement("summary");
-
-  // Summary text
+  var det = document.createElement("details");
+  det.className = "response-details";
+  var sum = document.createElement("summary");
   var totalMs = endEvt.timings ? endEvt.timings.total_ms : null;
-  var summaryText = "Details";
-  if (totalMs != null) summaryText += " · " + fmtMs(totalMs);
-  summary.appendChild(txt(summaryText));
-
-  // Summary badges
-  var sbadges = el("span", "summary-badges");
+  var sumText = "Details";
+  if (totalMs != null) sumText += " · " + fmtMs(totalMs);
+  sum.appendChild(txt(sumText));
+  var sb = el("span", "summary-badges");
   if (endEvt.answer_mode === "cache" && endEvt.cache_tier && endEvt.cache_tier !== "miss") {
-    sbadges.appendChild(el("span", "summary-tag summary-tag-cached", "cached " + endEvt.cache_tier));
+    sb.appendChild(el("span", "summary-tag summary-tag-cached", "cached " + endEvt.cache_tier));
   }
   if (endEvt.grounding && endEvt.grounding.failures && endEvt.grounding.failures.length > 0) {
-    sbadges.appendChild(el("span", "summary-tag summary-tag-warn", "grounding warn"));
+    sb.appendChild(el("span", "summary-tag summary-tag-warn", "grounding warn"));
   }
-  if (sbadges.childNodes.length > 0) summary.appendChild(sbadges);
-  details.appendChild(summary);
+  if (sb.childNodes.length > 0) sum.appendChild(sb);
+  det.appendChild(sum);
 
-  // Content
   var content = el("div", "details-content");
-
-  var addDetail = function (label, value) {
-    if (value == null) return;
+  var addD = function(label, val) {
+    if (val == null) return;
     var item = el("span", "detail-item");
     item.appendChild(el("span", "detail-label", label + ": "));
-    item.appendChild(txt(String(value)));
+    item.appendChild(txt(String(val)));
     content.appendChild(item);
   };
-
-  // Timings
-  var t = endEvt.timings || {};
-  addDetail("total", fmtMs(t.total_ms));
-  addDetail("TTFT", fmtMs(t.llm_ttft_ms));
-  addDetail("LLM", fmtMs(t.llm_total_ms));
-  addDetail("embed", fmtMs(t.embed_ms));
-  addDetail("sparse", fmtMs(t.sparse_ms));
-  addDetail("retrieve", fmtMs(t.retrieve_ms));
-  addDetail("rerank", fmtMs(t.rerank_ms));
-  addDetail("SQL", fmtMs(t.sql_ms));
-  addDetail("grounding", fmtMs(t.grounding_ms));
-  addDetail("cache lookup", fmtMs(t.cache_lookup_ms));
-
-  // Cache
-  addDetail("cache tier", endEvt.cache_tier);
-  if (endEvt.cache_hits && endEvt.cache_hits.length > 0) {
-    addDetail("cache hits", endEvt.cache_hits.join(", "));
-  }
-
-  // Provider and model
+  var ti = endEvt.timings || {};
+  addD("total",fmtMs(ti.total_ms)); addD("TTFT",fmtMs(ti.llm_ttft_ms));
+  addD("LLM",fmtMs(ti.llm_total_ms)); addD("embed",fmtMs(ti.embed_ms));
+  addD("sparse",fmtMs(ti.sparse_ms)); addD("retrieve",fmtMs(ti.retrieve_ms));
+  addD("rerank",fmtMs(ti.rerank_ms)); addD("SQL",fmtMs(ti.sql_ms));
+  addD("grounding",fmtMs(ti.grounding_ms)); addD("cache lookup",fmtMs(ti.cache_lookup_ms));
+  addD("cache tier",endEvt.cache_tier);
+  if (endEvt.cache_hits && endEvt.cache_hits.length) addD("cache hits",endEvt.cache_hits.join(", "));
   if (endEvt.provider && endEvt.provider !== "none") {
-    var provStr = endEvt.provider.charAt(0).toUpperCase() + endEvt.provider.slice(1);
-    if (endEvt.model) provStr += " / " + endEvt.model;
-    addDetail("model", provStr);
-  } else if (endEvt.model) {
-    addDetail("model", endEvt.model);
+    var ps = endEvt.provider.charAt(0).toUpperCase()+endEvt.provider.slice(1);
+    if (endEvt.model) ps += " / " + endEvt.model;
+    addD("model", ps);
   }
-
-  // Tokens
   var tok = endEvt.tokens;
-  if (tok && (tok.prompt_tokens > 0 || tok.completion_tokens > 0)) {
-    addDetail("tokens", tok.prompt_tokens + " in / " + tok.completion_tokens + " out");
-  }
-
-  // Grounding
+  if (tok && (tok.prompt_tokens>0||tok.completion_tokens>0)) addD("tokens",tok.prompt_tokens+" in / "+tok.completion_tokens+" out");
   var g = endEvt.grounding;
   if (g) {
-    var parts = [];
-    if (g.numbers_ok != null) parts.push("numbers: " + (g.numbers_ok ? "ok" : "fail"));
-    if (g.entities_ok != null) parts.push("entities: " + (g.entities_ok ? "ok" : "fail"));
-    if (g.citations_ok != null) parts.push("citations: " + (g.citations_ok ? "ok" : "fail"));
-    if (parts.length > 0) addDetail("grounding", parts.join(", "));
+    var gp = [];
+    if (g.numbers_ok!=null) gp.push("numbers: "+(g.numbers_ok?"ok":"fail"));
+    if (g.entities_ok!=null) gp.push("entities: "+(g.entities_ok?"ok":"fail"));
+    if (g.citations_ok!=null) gp.push("citations: "+(g.citations_ok?"ok":"fail"));
+    if (gp.length) addD("grounding",gp.join(", "));
   }
-
-  // Answer mode
-  addDetail("answer mode", endEvt.answer_mode);
-  addDetail("finish", endEvt.finish_reason);
-
-  details.appendChild(content);
-  return details;
+  addD("answer mode",endEvt.answer_mode); addD("finish",endEvt.finish_reason);
+  det.appendChild(content);
+  return det;
 }
 
 // ---------------------------------------------------------------------------
-// Badges (outside the details toggle)
+// Badges (outside details)
 // ---------------------------------------------------------------------------
-
 function renderBadges(endEvt, route) {
   var frag = document.createDocumentFragment();
-
-  // Unverified badge
   if (endEvt.flags && endEvt.flags.unverified) {
-    var badge = el("span", "badge badge-unverified", " Unverified figures");
-    frag.appendChild(badge);
-
-    if (endEvt.grounding && endEvt.grounding.failures && endEvt.grounding.failures.length > 0) {
-      var deets = document.createElement("details");
-      deets.className = "badge-failures";
-      var sum = document.createElement("summary");
-      sum.textContent = "Grounding failures (" + endEvt.grounding.failures.length + ")";
-      deets.appendChild(sum);
+    frag.appendChild(el("span", "badge badge-unverified", " Unverified figures"));
+    if (endEvt.grounding && endEvt.grounding.failures && endEvt.grounding.failures.length) {
+      var d = document.createElement("details"); d.className = "badge-failures";
+      var s = document.createElement("summary");
+      s.textContent = "Grounding failures (" + endEvt.grounding.failures.length + ")";
+      d.appendChild(s);
       var ul = document.createElement("ul");
-      for (var fi = 0; fi < endEvt.grounding.failures.length; fi++) {
-        var liF = document.createElement("li");
-        liF.textContent = endEvt.grounding.failures[fi];
-        ul.appendChild(liF);
+      for (var i=0; i<endEvt.grounding.failures.length; i++) {
+        var li = document.createElement("li"); li.textContent = endEvt.grounding.failures[i]; ul.appendChild(li);
       }
-      deets.appendChild(ul);
-      frag.appendChild(deets);
+      d.appendChild(ul); frag.appendChild(d);
     }
   }
-
-  // Truncated badge
   if (endEvt.flags && endEvt.flags.truncated) {
     frag.appendChild(el("span", "badge badge-truncated", " Response cut off"));
   }
-
-  // Answer mode label
   var label = getAnswerModeLabel(route, endEvt.answer_mode);
-  if (label) {
-    frag.appendChild(el("div", "mode-label mode-label-" + label.style, label.text));
-  }
-
+  if (label) frag.appendChild(el("div", "mode-label mode-label-" + label.style, label.text));
   return frag;
 }
 
 // ---------------------------------------------------------------------------
 // Main send flow
 // ---------------------------------------------------------------------------
-
 async function sendMessage(message) {
   message = (message || inputEl.value).trim();
   if (!message || message.length > 500 || streaming) return;
-
   hideEmptyState();
+  inputEl.value = ""; updateCharCount();
 
-  // Clear input
-  inputEl.value = "";
-  updateCharCount();
-
-  // Create turn
   var turn = el("div", "turn");
   var userBubble = el("div", "bubble-user");
   userBubble.setAttribute("dir", "auto");
   userBubble.textContent = message;
   turn.appendChild(userBubble);
 
-  var assistantBubble = el("div", "bubble-assistant");
-  assistantBubble.setAttribute("aria-busy", "true");
-  turn.appendChild(assistantBubble);
-
+  var asstBubble = el("div", "bubble-assistant");
+  asstBubble.setAttribute("aria-busy", "true");
+  asstBubble.appendChild(createAsstHeader());
+  turn.appendChild(asstBubble);
   conversationEl.appendChild(turn);
   turn.scrollIntoView({ behavior: "smooth", block: "end" });
 
   setStreaming(true);
   abortController = new AbortController();
 
-  var answerEl = null;
-  var rawAnswer = "";
-  var numCards = 0;
-  var startEvt = null;
-  var endEvt = null;
-  var hadFatalError = false;
-  var typingEl = null;
-  var firstTokenReceived = false;
+  var answerEl = null, rawAnswer = "", numCards = 0;
+  var startEvt = null, endEvt = null, hadFatalError = false;
+  var typingEl = null, firstTokenReceived = false;
+  var cardSources = null; // defer card rendering until after answer
 
   try {
     var response = await fetch("api/chat", {
@@ -501,98 +385,59 @@ async function sendMessage(message) {
       signal: abortController.signal,
     });
 
-    // Non-200: JSON error
     if (!response.ok) {
       var errorMsg;
       try {
         var errBody = await response.json();
-        if (response.status === 429 && errBody.retry_after_s) {
-          errorMsg = "Too many requests. Try again in " + errBody.retry_after_s + " s.";
-        } else if (response.status === 503) {
-          errorMsg = "The service is warming up. Please try again shortly.";
-        } else if (response.status === 422) {
-          errorMsg = "Validation error: " + (errBody.detail || "Invalid request.");
-        } else {
-          errorMsg = errBody.detail || errBody.message || "An error occurred.";
-        }
-      } catch (_) {
-        errorMsg = "Request failed (HTTP " + response.status + ").";
-      }
-      assistantBubble.appendChild(el("div", "notice notice-error", errorMsg));
-      assistantBubble.removeAttribute("aria-busy");
-      setStreaming(false);
-      announce("Error: " + errorMsg);
-      return;
+        if (response.status === 429 && errBody.retry_after_s) errorMsg = "Too many requests. Try again in " + errBody.retry_after_s + " s.";
+        else if (response.status === 503) errorMsg = "The service is warming up. Please try again shortly.";
+        else if (response.status === 422) errorMsg = "Validation error: " + (errBody.detail || "Invalid request.");
+        else errorMsg = errBody.detail || errBody.message || "An error occurred.";
+      } catch(_) { errorMsg = "Request failed (HTTP " + response.status + ")."; }
+      asstBubble.appendChild(el("div", "notice notice-error", errorMsg));
+      asstBubble.removeAttribute("aria-busy");
+      setStreaming(false); announce("Error: " + errorMsg); return;
     }
 
-    // Stream SSE
     var reader = response.body.getReader();
     var decoder = new TextDecoder("utf-8", { fatal: false });
 
-    var parser = createSseParser(function (frame) {
+    var parser = createSseParser(function(frame) {
       var payload;
-      try {
-        payload = parseEvent(frame);
-      } catch (e) {
-        assistantBubble.appendChild(el("div", "notice notice-error", e.message));
-        hadFatalError = true;
-        abortController.abort();
-        return;
-      }
+      try { payload = parseEvent(frame); }
+      catch(e) { asstBubble.appendChild(el("div","notice notice-error",e.message)); hadFatalError=true; abortController.abort(); return; }
 
       if (payload.event === "start") {
         startEvt = payload;
         numCards = (payload.sources || []).length;
-
-        // Language
+        cardSources = payload.sources || [];
         if (payload.language) {
-          assistantBubble.setAttribute("lang", payload.language);
-          if (payload.language === "ar") {
-            assistantBubble.setAttribute("dir", "rtl");
-          }
+          asstBubble.setAttribute("lang", payload.language);
+          if (payload.language === "ar") asstBubble.setAttribute("dir", "rtl");
         }
-
-        // Cards
-        var cardsRow = renderCards(payload.sources);
-        if (cardsRow) assistantBubble.appendChild(cardsRow);
-
-        // Typing indicator
+        // Show typing indicator; answer + cards come later
         typingEl = createTypingIndicator();
-        assistantBubble.appendChild(typingEl);
-
-        // Prepare answer element
+        asstBubble.appendChild(typingEl);
         answerEl = el("div", "answer-text streaming");
         answerEl.setAttribute("dir", "auto");
 
       } else if (payload.event === "token") {
-        // Remove typing indicator on first token
         if (!firstTokenReceived) {
           firstTokenReceived = true;
-          if (typingEl && typingEl.parentNode) {
-            typingEl.parentNode.removeChild(typingEl);
-          }
-          if (answerEl) assistantBubble.appendChild(answerEl);
+          if (typingEl && typingEl.parentNode) typingEl.parentNode.removeChild(typingEl);
+          if (answerEl) asstBubble.appendChild(answerEl);
         }
-        if (!answerEl) {
-          answerEl = el("div", "answer-text streaming");
-          answerEl.setAttribute("dir", "auto");
-          assistantBubble.appendChild(answerEl);
-        }
+        if (!answerEl) { answerEl = el("div","answer-text streaming"); answerEl.setAttribute("dir","auto"); asstBubble.appendChild(answerEl); }
         rawAnswer += payload.delta;
         answerEl.appendChild(txt(payload.delta));
 
       } else if (payload.event === "end") {
         endEvt = payload;
+        if (typingEl && typingEl.parentNode) typingEl.parentNode.removeChild(typingEl);
+        if (answerEl) answerEl.classList.remove("streaming");
 
-        // Remove typing indicator if no tokens arrived
-        if (typingEl && typingEl.parentNode) {
-          typingEl.parentNode.removeChild(typingEl);
-        }
-
-        // Remove streaming cursor
-        if (answerEl) {
-          answerEl.classList.remove("streaming");
-        }
+        // If no tokens arrived but answer text element was prepared, attach it
+        if (answerEl && !answerEl.parentNode && rawAnswer) asstBubble.appendChild(answerEl);
 
         // Post-process citations
         if (answerEl && rawAnswer && numCards > 0) {
@@ -600,20 +445,20 @@ async function sendMessage(message) {
           answerEl.appendChild(postProcessAnswer(rawAnswer, numCards));
         }
 
-        // Badges (unverified, truncated, mode label)
+        // Cards BELOW the answer
+        var cardStrip = renderCardStrip(cardSources);
+        if (cardStrip) asstBubble.appendChild(cardStrip);
+
+        // Badges
         var route = startEvt ? startEvt.route : null;
         var badgesNode = renderBadges(payload, route);
         if (badgesNode.childNodes.length > 0) {
-          var badgeRow = el("div", "badges-row");
-          badgeRow.appendChild(badgesNode);
-          assistantBubble.appendChild(badgeRow);
+          var br = el("div", "badges-row"); br.appendChild(badgesNode); asstBubble.appendChild(br);
         }
 
-        // Response details toggle
-        var detailsEl = renderResponseDetails(payload);
-        assistantBubble.appendChild(detailsEl);
-
-        assistantBubble.removeAttribute("aria-busy");
+        // Details toggle
+        asstBubble.appendChild(renderResponseDetails(payload));
+        asstBubble.removeAttribute("aria-busy");
 
         var annText = "Answer complete.";
         if (payload.flags && payload.flags.unverified) annText += " Warning: unverified figures.";
@@ -623,31 +468,18 @@ async function sendMessage(message) {
       } else if (payload.event === "error") {
         if (payload.fatal) {
           hadFatalError = true;
-          // Remove typing indicator
-          if (typingEl && typingEl.parentNode) {
-            typingEl.parentNode.removeChild(typingEl);
-          }
+          if (typingEl && typingEl.parentNode) typingEl.parentNode.removeChild(typingEl);
           if (answerEl) answerEl.classList.remove("streaming");
-          assistantBubble.appendChild(
-            el("div", "notice notice-fatal", payload.message || "An unexpected error occurred.")
-          );
-          assistantBubble.removeAttribute("aria-busy");
-          announce("Error: " + (payload.message || "An unexpected error occurred."));
+          asstBubble.appendChild(el("div","notice notice-fatal",payload.message||"An unexpected error occurred."));
+          asstBubble.removeAttribute("aria-busy");
+          announce("Error: " + (payload.message||"An unexpected error occurred."));
         } else {
-          // Soft error: inline notice, stream continues
-          var noticeClass = "notice notice-info";
-          if (payload.degraded_to) {
-            noticeClass = "notice notice-warn";
-          }
-          assistantBubble.appendChild(
-            el("div", noticeClass, payload.message || "Switching to a fallback.")
-          );
+          var nc = payload.degraded_to ? "notice notice-warn" : "notice notice-info";
+          asstBubble.appendChild(el("div", nc, payload.message || "Switching to a fallback."));
         }
       }
-      // Unknown events silently ignored
     });
 
-    // Read chunks
     while (true) {
       var result = await reader.read();
       if (result.done) break;
@@ -656,57 +488,34 @@ async function sendMessage(message) {
     var remaining = decoder.decode();
     if (remaining) parser.feed(remaining);
 
-  } catch (e) {
+  } catch(e) {
     if (e.name === "AbortError") {
       if (!hadFatalError) {
-        assistantBubble.appendChild(el("div", "notice notice-stopped", "Stopped."));
-        assistantBubble.removeAttribute("aria-busy");
-        announce("Generation stopped.");
+        asstBubble.appendChild(el("div","notice notice-stopped","Stopped."));
+        asstBubble.removeAttribute("aria-busy"); announce("Generation stopped.");
       }
     } else {
-      assistantBubble.appendChild(
-        el("div", "notice notice-error", "Connection error. Please try again.")
-      );
-      assistantBubble.removeAttribute("aria-busy");
-      announce("Connection error.");
+      asstBubble.appendChild(el("div","notice notice-error","Connection error. Please try again."));
+      asstBubble.removeAttribute("aria-busy"); announce("Connection error.");
     }
   } finally {
     if (answerEl) answerEl.classList.remove("streaming");
     if (typingEl && typingEl.parentNode) typingEl.parentNode.removeChild(typingEl);
-    setStreaming(false);
-    abortController = null;
-    if (!endEvt && !hadFatalError) {
-      assistantBubble.removeAttribute("aria-busy");
-    }
+    setStreaming(false); abortController = null;
+    if (!endEvt && !hadFatalError) asstBubble.removeAttribute("aria-busy");
   }
 }
 
 // ---------------------------------------------------------------------------
 // Event listeners
 // ---------------------------------------------------------------------------
-
 inputEl.addEventListener("input", updateCharCount);
-
-inputEl.addEventListener("keydown", function (e) {
-  if (e.key === "Enter" && !e.shiftKey) {
-    e.preventDefault();
-    sendMessage();
-  }
+inputEl.addEventListener("keydown", function(e) {
+  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
 });
-
-btnSend.addEventListener("click", function () { sendMessage(); });
-
-btnStop.addEventListener("click", function () {
-  if (abortController) abortController.abort();
+btnSend.addEventListener("click", function() { sendMessage(); });
+btnStop.addEventListener("click", function() { if (abortController) abortController.abort(); });
+document.querySelectorAll(".example-card").forEach(function(btn) {
+  btn.addEventListener("click", function() { var q = btn.dataset.query; if (q) sendMessage(q); });
 });
-
-// Example query buttons
-document.querySelectorAll(".example-query").forEach(function (btn) {
-  btn.addEventListener("click", function () {
-    var query = btn.dataset.query;
-    if (query) sendMessage(query);
-  });
-});
-
-// Initial state
 updateCharCount();

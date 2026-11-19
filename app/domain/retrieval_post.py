@@ -5,6 +5,9 @@ Implements retrieval.md sections 3.5-3.6. Imports only common.* and stdlib (R4).
 
 from __future__ import annotations
 
+import re
+import unicodedata
+
 from common.schemas import Card, ChunkPayload
 
 # ---------------------------------------------------------------------------
@@ -76,6 +79,40 @@ def collapse_to_docs(
     # Sort by score descending, take top_k
     sorted_docs = sorted(docs.values(), key=lambda d: d.best_score, reverse=True)
     return sorted_docs[:top_k]
+
+
+def _dedup_key(dh: DocHit) -> tuple:
+    """Normalised (title, price, area, bedrooms, district) for near-duplicate detection."""
+    p = dh.best_chunk
+    title = re.sub(r"\s+", " ", unicodedata.normalize("NFKC", p.title)).strip().lower()
+    return (title, p.price_sar, p.area_sqm, p.bedrooms, (p.district or "").lower())
+
+
+def dedup_docs(docs: list[DocHit], top_k: int = TOP_K_DOCS) -> list[DocHit]:
+    """Drop near-duplicate hits and backfill to top_k from the tail.
+
+    A hit is a near-duplicate if its (normalised title, price, area, bedrooms,
+    district) equals a higher-ranked hit's.  The input list is in score-descending
+    order from collapse_to_docs.
+    """
+    seen: set[tuple] = set()
+    kept: list[DocHit] = []
+    deferred: list[DocHit] = []
+    for dh in docs:
+        key = _dedup_key(dh)
+        if key in seen:
+            continue
+        seen.add(key)
+        if len(kept) < top_k:
+            kept.append(dh)
+        else:
+            deferred.append(dh)
+    # Backfill if we dropped dups from the first top_k
+    for dh in deferred:
+        if len(kept) >= top_k:
+            break
+        kept.append(dh)
+    return kept
 
 
 def to_cards(doc_hits: list[DocHit]) -> list[Card]:

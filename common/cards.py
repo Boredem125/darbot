@@ -8,10 +8,19 @@ Imports only common.schemas and the stdlib.
 
 from __future__ import annotations
 
+import html
+import re
 from typing import Literal
 
 from common.schemas import DocFields, DocKind, Purpose
 from common.text import strip_instructions
+
+
+def _clean_text(text: str) -> str:
+    """Decode HTML entities and collapse whitespace."""
+    text = html.unescape(text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text
 
 
 def _fmt_area(area: float) -> str:
@@ -140,8 +149,12 @@ def render_card(
     else:
         card = doc.title
 
-    # Append snippet (strip injected instructions in context mode)
+    # Clean HTML entities and whitespace
+    card = _clean_text(card)
+
+    # Append snippet (clean, strip injected instructions in context mode, length cap)
     if snippet:
+        snippet = _clean_text(snippet)
         if mode == "context":
             snippet = strip_instructions(snippet)
         card += " " + snippet

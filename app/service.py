@@ -59,6 +59,7 @@ from app.domain.retrieval_post import (
     DocHit,
     below_floor,
     collapse_to_docs,
+    dedup_docs,
     to_cards,
 )
 from app.domain.router import EntityIndex, RouteDecision, SessionSlots, route
@@ -487,6 +488,7 @@ class ChatService:
                         for rh in reranked
                     ]
 
+                doc_hits = dedup_docs(doc_hits, top_k=TOP_K_DOCS)
                 cards = to_cards(doc_hits)
                 context_texts = [
                     render_card(card, mode="context", n=card.n, snippet=card.snippet)
@@ -1012,6 +1014,7 @@ class ChatService:
                         (hit.payload, hit.score) for hit in relaxed_result.hits
                     ]
                     doc_hits = collapse_to_docs(hits_for_collapse, top_k=TOP_K_DOCS)
+                    doc_hits = dedup_docs(doc_hits, top_k=TOP_K_DOCS)
                     cards = to_cards(doc_hits)
             except RetrievalError:
                 pass  # no cards is fine

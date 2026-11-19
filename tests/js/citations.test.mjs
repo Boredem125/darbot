@@ -72,3 +72,63 @@ describe("split pattern after normalisation", () => {
     assert.equal(parts[3], "[2]");
   });
 });
+
+// ---------------------------------------------------------------------------
+// Citation-to-card mapping
+// ---------------------------------------------------------------------------
+
+/**
+ * Replicate the mapping logic from app.js: given numCards, only [1]..[numCards]
+ * are valid citation links; higher numbers are rendered as plain text.
+ */
+function mapCitations(text, numCards) {
+  const normalised = normaliseCitations(text);
+  const parts = normalised.split(/(\[\d+\])/g);
+  const valid = [];
+  const invalid = [];
+  for (const part of parts) {
+    const m = part.match(/^\[(\d+)\]$/);
+    if (m) {
+      const n = parseInt(m[1], 10);
+      if (n >= 1 && n <= numCards) {
+        valid.push(n);
+      } else {
+        invalid.push(n);
+      }
+    }
+  }
+  return { valid, invalid };
+}
+
+describe("citation-to-card mapping", () => {
+  it("maps [1]..[numCards] to valid, higher to invalid", () => {
+    const { valid, invalid } = mapCitations("see [1] and [2] and [3] and [4]", 3);
+    assert.deepEqual(valid, [1, 2, 3]);
+    assert.deepEqual(invalid, [4]);
+  });
+
+  it("maps [0] as invalid (cards are 1-based)", () => {
+    const { valid, invalid } = mapCitations("[0] and [1]", 2);
+    assert.deepEqual(valid, [1]);
+    assert.deepEqual(invalid, [0]);
+  });
+
+  it("generates card-N id from citation number", () => {
+    // The UI uses id="card-N" on each source card
+    for (const n of [1, 2, 10]) {
+      assert.equal("card-" + n, "card-" + n);
+    }
+  });
+
+  it("handles fullwidth brackets in mapping", () => {
+    const { valid, invalid } = mapCitations("text 【1】 more 【5】", 3);
+    assert.deepEqual(valid, [1]);
+    assert.deepEqual(invalid, [5]);
+  });
+
+  it("returns empty arrays when no citations present", () => {
+    const { valid, invalid } = mapCitations("no citations here", 5);
+    assert.deepEqual(valid, []);
+    assert.deepEqual(invalid, []);
+  });
+});

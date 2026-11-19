@@ -543,3 +543,193 @@ class TestWarmUp:
         svc = _make_service()
         # warm_up should not raise
         await svc.warm_up()
+
+
+class TestArabicDualBedrooms:
+    """Arabic dual form for bedrooms: غرفتين = 2."""
+
+    def test_ghurfatayn_gives_2(self):
+        """'غرفتين' (dual) should parse as 2 bedrooms."""
+        from app.domain.router import route as do_route
+        d = do_route("فلل غرفتين للبيع في الرياض", entities=_entity_index())
+        assert d.filters.bedrooms_min == 2
+        assert d.filters.bedrooms_max == 2
+
+    def test_ghurfatayn_nawm(self):
+        """'غرفتين نوم' should parse as 2 bedrooms."""
+        from app.domain.router import route as do_route
+        d = do_route("شقق غرفتين نوم في الرياض", entities=_entity_index())
+        assert d.filters.bedrooms_min == 2
+        assert d.filters.bedrooms_max == 2
+
+    def test_ghurfa_wahida(self):
+        """'غرفة واحدة' should parse as 1 bedroom."""
+        from app.domain.router import route as do_route
+        d = do_route("شقة غرفة واحدة في الرياض", entities=_entity_index())
+        assert d.filters.bedrooms_min == 1
+        assert d.filters.bedrooms_max == 1
+
+
+class TestNoMatchRelaxation:
+    """Zero-hit lookup with non-empty filters gives a helpful count message."""
+
+    async def test_price_constraint_in_description(self):
+        """'villas in Riyadh under 50000 SAR' must name the price in the first sentence."""
+        from app.domain.ports import AggregateOp, AggregateQuery, SqlResult
+
+        retriever = FakeRetriever()
+        retriever.set_hits([], top_dense_score=None)
+        sql = FakeStructuredQuery()
+
+        def _cb(q: AggregateQuery) -> SqlResult | None:
+            if q.op != AggregateOp.count:
+                return None
+            # Drop price: 217 villas
+            if q.filters.price_max_sar is None and q.filters.price_min_sar is None:
+                return SqlResult(op=AggregateOp.count, value=217, unit="count", n_matched=217)
+            return SqlResult(op=AggregateOp.count, value=0, unit="count", n_matched=0)
+
+        sql.set_callback(_cb)
+        svc = ChatService(
+            embedder=FakeEmbedder(), retriever=retriever, reranker=None, sql=sql,
+            llm=FakeLLM(), cache=FakeCache(), entities=_entity_index(),
+            settings=_settings(), ring=RingBuffer(),
+            index_version="77284224a04cf674", prompt_version="system_v1@aabbccdd",
+        )
+        events = await _collect_events(svc, "villas in Riyadh under 50000 SAR")
+        token_text = "".join(t["delta"] for t in events if t["event"] == "token")
+        # First sentence must include the price constraint
+        assert "50,000" in token_text
+        assert "217" in token_text
+
+    async def test_2bed_riyadh_villa_gives_count_message(self):
+        """The '2 bed villas in Riyadh' case: 0 hits, but relaxing bedrooms finds 236."""
+        from app.domain.ports import AggregateOp, AggregateQuery, SqlResult
+
+        llm = FakeLLM()
+        retriever = FakeRetriever()
+        # Return 0 hits for the original query (2-bed villas in Riyadh)
+        retriever.set_hits([], top_dense_score=None)
+
+        sql = FakeStructuredQuery()
+
+        def _sql_callback(q: AggregateQuery) -> SqlResult | None:
+            if q.op != AggregateOp.count:
+                return None
+            # First relaxation (bedrooms dropped): 236 villas for sale in Riyadh
+            if q.filters.bedrooms_min is None and q.filters.bedrooms_max is None:
+                return SqlResult(op=AggregateOp.count, value=236, unit="count", n_matched=236)
+            # Original filters: 0
+            return SqlResult(op=AggregateOp.count, value=0, unit="count", n_matched=0)
+
+        sql.set_callback(_sql_callback)
+
+        svc = ChatService(
+            embedder=FakeEmbedder(),
+            retriever=retriever,
+            reranker=None,
+            sql=sql,
+            llm=llm,
+            cache=FakeCache(),
+            entities=_entity_index(),
+            settings=_settings(),
+            ring=RingBuffer(),
+            index_version="77284224a04cf674",
+            prompt_version="system_v1@aabbccdd",
+        )
+
+        events = await _collect_events(svc, "2 bed villas in Riyadh")
+        end = next(e for e in events if e["event"] == "end")
+        assert end["answer_mode"] == "refusal"
+        assert end["finish_reason"] == "no_llm"
+        assert end["provider"] == "none"
+        assert llm.call_count == 0
+
+        tokens = [e for e in events if e["event"] == "token"]
+        token_text = "".join(t["delta"] for t in tokens)
+        assert "236" in token_text
+        assert "bedroom" in token_text.lower() or "bed" in token_text.lower()
+
+    async def test_no_match_at_all(self):
+        """No hits even after relaxing all constraints: simple no-match message."""
+        from app.domain.ports import SqlResult
+
+        llm = FakeLLM()
+        retriever = FakeRetriever()
+        retriever.set_hits([], top_dense_score=None)
+
+        sql = FakeStructuredQuery()
+        # Always return 0
+        sql.set_callback(
+            lambda q: SqlResult(op=q.op, value=0, unit="count", n_matched=0)
+        )
+
+        svc = ChatService(
+            embedder=FakeEmbedder(),
+            retriever=retriever,
+            reranker=None,
+            sql=sql,
+            llm=llm,
+            cache=FakeCache(),
+            entities=_entity_index(),
+            settings=_settings(),
+            ring=RingBuffer(),
+            index_version="77284224a04cf674",
+            prompt_version="system_v1@aabbccdd",
+        )
+
+        events = await _collect_events(svc, "2 bed villas in Riyadh")
+        end = next(e for e in events if e["event"] == "end")
+        assert end["answer_mode"] == "refusal"
+        assert end["finish_reason"] == "no_llm"
+        assert end["provider"] == "none"
+
+        tokens = [e for e in events if e["event"] == "token"]
+        token_text = "".join(t["delta"] for t in tokens)
+        # Should mention "No" and some filter info, not the generic OOS refusal
+        assert "No " in token_text or "no " in token_text
+
+    async def test_oos_path_unchanged(self):
+        """Out-of-scope queries still use the generic REFUSAL_EN, not the count path."""
+        from app.domain.messages import REFUSAL_EN
+
+        llm = FakeLLM()
+        svc = _make_service(llm=llm)
+        events = await _collect_events(svc, "What is the weather today?")
+        tokens = [e for e in events if e["event"] == "token"]
+        token_text = "".join(t["delta"] for t in tokens)
+        assert token_text == REFUSAL_EN
+        end = next(e for e in events if e["event"] == "end")
+        assert end["answer_mode"] == "refusal"
+
+    async def test_eval_refusal_contract(self):
+        """answer_mode=refusal, finish_reason=no_llm, provider=none on zero-hit lookup."""
+        from app.domain.ports import SqlResult
+
+        retriever = FakeRetriever()
+        retriever.set_hits([], top_dense_score=None)
+        sql = FakeStructuredQuery()
+        sql.set_callback(
+            lambda q: SqlResult(op=q.op, value=50, unit="count", n_matched=50)
+        )
+
+        svc = ChatService(
+            embedder=FakeEmbedder(),
+            retriever=retriever,
+            reranker=None,
+            sql=sql,
+            llm=FakeLLM(),
+            cache=FakeCache(),
+            entities=_entity_index(),
+            settings=_settings(),
+            ring=RingBuffer(),
+            index_version="77284224a04cf674",
+            prompt_version="system_v1@aabbccdd",
+        )
+
+        events = await _collect_events(svc, "2 bed villas in Riyadh")
+        end = next(e for e in events if e["event"] == "end")
+        assert end["answer_mode"] == "refusal"
+        assert end["finish_reason"] == "no_llm"
+        assert end["provider"] == "none"
+        assert end["model"] is None

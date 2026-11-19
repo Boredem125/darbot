@@ -376,6 +376,13 @@ def _extract_bedrooms(text: str) -> tuple[int | None, int | None]:
             return (n, None)
         return (n, n)
 
+    # Arabic dual: "غرفتين" / "غرفتين نوم" / "غرفتي نوم" = 2 bedrooms
+    if re.search(r"غرفت[يى]ن(?:\s+نوم)?", lower):
+        return (2, 2)
+    # Arabic singular: "غرفة واحدة" = 1 bedroom
+    if re.search(r"غرفة\s+واحدة", lower):
+        return (1, 1)
+
     # Arabic word-based bedroom: "ثلاث غرف" etc.
     from common.text import _AR_NUMBER_WORDS
     for word, value in sorted(_AR_NUMBER_WORDS.items(), key=lambda x: len(x[0]), reverse=True):

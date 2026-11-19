@@ -144,11 +144,22 @@ class FakeStructuredQuery:
 
     def __init__(self) -> None:
         self._results: dict[AggregateOp, SqlResult] = {}
+        self._callback: object | None = None  # Callable[[AggregateQuery], SqlResult | None]
+        self._calls: list[AggregateQuery] = []
 
     def set_result(self, op: AggregateOp, result: SqlResult) -> None:
         self._results[op] = result
 
+    def set_callback(self, fn: object) -> None:
+        """Set a callback(query) -> SqlResult | None. Called before the op dict."""
+        self._callback = fn
+
     async def aggregate(self, query: AggregateQuery) -> SqlResult:
+        self._calls.append(query)
+        if self._callback is not None:
+            result = self._callback(query)  # type: ignore[operator]
+            if result is not None:
+                return result
         if query.op in self._results:
             return self._results[query.op]
         return SqlResult(

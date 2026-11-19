@@ -18,10 +18,22 @@ from app.config import Settings
 from app.domain.cache_keys import build_key, build_scope, parts_from
 from app.domain.grounding import check as grounding_check
 from app.domain.grounding import normalise_citations
-from app.domain.messages import BUSY_AR, BUSY_EN, REFUSAL_AR, REFUSAL_EN
+from app.domain.messages import (
+    BUSY_AR,
+    BUSY_EN,
+    REFUSAL_AR,
+    REFUSAL_EN,
+    describe_filters_ar,
+    describe_filters_en,
+    nomatch_none_ar,
+    nomatch_none_en,
+    nomatch_relaxed_ar,
+    nomatch_relaxed_en,
+)
 from app.domain.policy import degrade_text_retrieval_only, is_cacheable
 from app.domain.ports import (
     LLM,
+    AggregateOp,
     AggregateQuery,
     Cache,
     ChatMessage,
@@ -129,7 +141,6 @@ class ChatService:
         logger.info("Warming up embedder...")
         await self._embedder.embed_query("warm up")
         logger.info("Warming up DuckDB...")
-        from app.domain.ports import AggregateOp
         try:
             await self._sql.aggregate(
                 AggregateQuery(
@@ -414,13 +425,26 @@ class ChatService:
                         yield ev
                     return
 
-                # Score floor check
+                # Score floor / zero-hit check
                 if below_floor(
                     n_hits=len(retrieval_result.hits),
                     filters_is_empty=decision.filters.is_empty(),
                     top_dense_score=retrieval_result.top_dense_score,
                     floor=self._settings.SCORE_FLOOR,
                 ):
+                    # Zero hits with non-empty filters: try relaxation
+                    if (
+                        len(retrieval_result.hits) == 0
+                        and not decision.filters.is_empty()
+                    ):
+                        async for ev in self._serve_nomatch_relaxed(
+                            request_id, decision, cache_tier, cache_hits,
+                            t0, t_cache_lookup, t_embed, t_sparse, t_retrieve,
+                            qe=qe,
+                        ):
+                            yield ev
+                        return
+
                     async for ev in self._serve_refusal(
                         request_id, decision, cache_tier, cache_hits, t0,
                         t_cache_lookup, t_embed=t_embed, t_sparse=t_sparse,
@@ -498,11 +522,13 @@ class ChatService:
             if decision.language == Language.ar and self._settings.ARABIC_MAX_TOKENS:
                 max_tok = self._settings.ARABIC_MAX_TOKENS
 
-            # 7. LLM call
+            # 7. LLM call (service-side timing for disjoint stage spans)
             answer_text = ""
             done_info: LLMDone | None = None
             failovers: list[LLMFailover] = []
             llm_error_after_first_token = False
+            t_llm0 = time.perf_counter()
+            t_llm_ttft: float | None = None
 
             try:
                 async for item in self._llm.stream(
@@ -519,6 +545,8 @@ class ChatService:
                             degraded_to=DegradedTo.fallback_llm,
                         ).to_sse()
                     elif isinstance(item, LLMDelta):
+                        if t_llm_ttft is None:
+                            t_llm_ttft = (time.perf_counter() - t_llm0) * 1000
                         answer_text += item.text
                         yield ChatEventToken(
                             request_id=request_id,
@@ -550,6 +578,8 @@ class ChatService:
                 ):
                     yield ev
                 return
+
+            t_llm_total = (time.perf_counter() - t_llm0) * 1000
 
             if done_info is None:
                 # Shouldn't happen, but safety
@@ -588,8 +618,8 @@ class ChatService:
                 retrieve_ms=t_retrieve,
                 rerank_ms=t_rerank,
                 sql_ms=t_sql,
-                llm_ttft_ms=done_info.ttft_ms,
-                llm_total_ms=done_info.total_ms,
+                llm_ttft_ms=t_llm_ttft,
+                llm_total_ms=t_llm_total,
                 grounding_ms=t_grounding,
                 total_ms=total_ms,
             )
@@ -799,6 +829,211 @@ class ChatService:
             embed_ms=t_embed,
             sparse_ms=t_sparse,
             retrieve_ms=t_retrieve,
+            total_ms=total_ms,
+        )
+        grounding = GroundingReport()
+        yield ChatEventEnd(
+            request_id=request_id,
+            answer_mode=AnswerMode.refusal,
+            cache_tier=cache_tier,
+            cache_hits=list(cache_hits),
+            provider=Provider.none,
+            model=None,
+            tokens=TokenUsage(),
+            finish_reason=FinishReason.no_llm,
+            timings=timings,
+            grounding=grounding,
+            flags=AnswerFlags(truncated=False, unverified=False),
+            prompt_version=self._prompt_version,
+            index_version=self._index_version,
+        ).to_sse()
+
+        record = RequestRecord(
+            request_id=request_id,
+            route=decision.route,
+            cache_tier=cache_tier,
+            cache_hits=tuple(cache_hits),
+            provider=Provider.none,
+            model=None,
+            prompt_tokens=0,
+            completion_tokens=0,
+            timings=timings,
+            ts=time.time(),
+        )
+        self._ring.push(record)
+        log_request(record)
+
+    async def _serve_nomatch_relaxed(
+        self,
+        request_id: str,
+        decision: RouteDecision,
+        cache_tier: AnswerCacheTier,
+        cache_hits: list[InnerCacheTier],
+        t0: float,
+        t_cache_lookup: float | None,
+        t_embed: float | None,
+        t_sparse: float | None,
+        t_retrieve: float | None,
+        qe: QueryEmbedding | None = None,
+    ) -> AsyncIterator[dict[str, str]]:
+        """Zero-hit lookup with non-empty filters: relax constraints and give a count."""
+        f = decision.filters
+        is_en = decision.language == Language.en
+        _describe = describe_filters_en if is_en else describe_filters_ar
+
+        # Build kwargs for the full original description
+        desc_kw: dict = {
+            "property_type": f.property_type.value if f.property_type else None,
+            "purpose": f.purpose.value if f.purpose else None,
+            "city": f.city,
+            "district": f.district,
+            "bedrooms": (
+                str(f.bedrooms_min)
+                if f.bedrooms_min is not None and f.bedrooms_min == f.bedrooms_max
+                else None
+            ),
+            "price_min": f.price_min_sar,
+            "price_max": f.price_max_sar,
+            "area_min": f.area_min_sqm,
+            "area_max": f.area_max_sqm,
+        }
+        orig_desc = _describe(**desc_kw)
+
+        # Try relaxing one constraint at a time: bedrooms, price, area, district
+        relaxation_steps: list[tuple[str, SearchFilters, dict]] = []
+
+        if f.bedrooms_min is not None or f.bedrooms_max is not None:
+            relaxation_steps.append((
+                "bedrooms",
+                SearchFilters(
+                    kinds=f.kinds, source=f.source, purpose=f.purpose,
+                    property_type=f.property_type, city=f.city, district=f.district,
+                    country=f.country, project_id=f.project_id,
+                    price_min_sar=f.price_min_sar, price_max_sar=f.price_max_sar,
+                    area_min_sqm=f.area_min_sqm, area_max_sqm=f.area_max_sqm,
+                ),
+                {**desc_kw, "bedrooms": None},
+            ))
+
+        if f.price_min_sar is not None or f.price_max_sar is not None:
+            relaxation_steps.append((
+                "price",
+                SearchFilters(
+                    kinds=f.kinds, source=f.source, purpose=f.purpose,
+                    property_type=f.property_type, city=f.city, district=f.district,
+                    country=f.country, project_id=f.project_id,
+                    bedrooms_min=f.bedrooms_min, bedrooms_max=f.bedrooms_max,
+                    area_min_sqm=f.area_min_sqm, area_max_sqm=f.area_max_sqm,
+                ),
+                {**desc_kw, "price_min": None, "price_max": None},
+            ))
+
+        if f.area_min_sqm is not None or f.area_max_sqm is not None:
+            relaxation_steps.append((
+                "area",
+                SearchFilters(
+                    kinds=f.kinds, source=f.source, purpose=f.purpose,
+                    property_type=f.property_type, city=f.city, district=f.district,
+                    country=f.country, project_id=f.project_id,
+                    bedrooms_min=f.bedrooms_min, bedrooms_max=f.bedrooms_max,
+                    price_min_sar=f.price_min_sar, price_max_sar=f.price_max_sar,
+                ),
+                {**desc_kw, "area_min": None, "area_max": None},
+            ))
+
+        if f.district is not None:
+            relaxation_steps.append((
+                "district",
+                SearchFilters(
+                    kinds=f.kinds, source=f.source, purpose=f.purpose,
+                    property_type=f.property_type, city=f.city,
+                    country=f.country, project_id=f.project_id,
+                    bedrooms_min=f.bedrooms_min, bedrooms_max=f.bedrooms_max,
+                    price_min_sar=f.price_min_sar, price_max_sar=f.price_max_sar,
+                    area_min_sqm=f.area_min_sqm, area_max_sqm=f.area_max_sqm,
+                ),
+                {**desc_kw, "district": None},
+            ))
+
+        # Try each relaxation (at most 4 DuckDB calls)
+        relaxed_text: str | None = None
+        relaxed_filters: SearchFilters | None = None
+        t_sql_relax: float = 0.0
+
+        for field_name, trial_filters, trial_desc_kw in relaxation_steps:
+            t_sq0 = time.perf_counter()
+            try:
+                result = await self._sql.aggregate(
+                    AggregateQuery(op=AggregateOp.count, filters=trial_filters, example_limit=0)
+                )
+            except StructuredQueryError:
+                continue
+            finally:
+                t_sql_relax += (time.perf_counter() - t_sq0) * 1000
+
+            if result.n_matched > 0:
+                relaxed_desc = (
+                    describe_filters_en(**trial_desc_kw)
+                    if is_en
+                    else describe_filters_ar(**trial_desc_kw)
+                )
+                if is_en:
+                    relaxed_text = nomatch_relaxed_en(
+                        description=orig_desc,
+                        relaxed_field=field_name,
+                        relaxed_count=result.n_matched,
+                        relaxed_description=relaxed_desc,
+                    )
+                else:
+                    relaxed_text = nomatch_relaxed_ar(
+                        description=orig_desc,
+                        relaxed_field=field_name,
+                        relaxed_count=result.n_matched,
+                        relaxed_description=relaxed_desc,
+                    )
+                relaxed_filters = trial_filters
+                break
+
+        if relaxed_text is None:
+            relaxed_text = nomatch_none_en(orig_desc) if is_en else nomatch_none_ar(orig_desc)
+
+        # Try retrieval with relaxed filters for cards (reuse existing embedding)
+        cards: list[Card] = []
+        t_retrieve_relax: float | None = None
+        if relaxed_filters is not None and qe is not None:
+            try:
+                t_rr0 = time.perf_counter()
+                relaxed_result = await self._retriever.search(
+                    qe, relaxed_filters, limit=self._settings.PREFETCH_LIMIT,
+                )
+                t_retrieve_relax = (time.perf_counter() - t_rr0) * 1000
+                if relaxed_result.hits:
+                    hits_for_collapse = [
+                        (hit.payload, hit.score) for hit in relaxed_result.hits
+                    ]
+                    doc_hits = collapse_to_docs(hits_for_collapse, top_k=TOP_K_DOCS)
+                    cards = to_cards(doc_hits)
+            except RetrievalError:
+                pass  # no cards is fine
+
+        yield ChatEventStart(
+            request_id=request_id,
+            route=decision.route,
+            language=decision.language,
+            filters=decision.filters,
+            cache_tier=cache_tier,
+            sources=cards,
+        ).to_sse()
+
+        yield ChatEventToken(request_id=request_id, delta=relaxed_text).to_sse()
+
+        total_ms = (time.perf_counter() - t0) * 1000
+        timings = StageTimings(
+            cache_lookup_ms=t_cache_lookup,
+            embed_ms=t_embed,
+            sparse_ms=t_sparse,
+            retrieve_ms=(t_retrieve or 0) + (t_retrieve_relax or 0) if t_retrieve is not None or t_retrieve_relax is not None else None,
+            sql_ms=t_sql_relax if t_sql_relax > 0 else None,
             total_ms=total_ms,
         )
         grounding = GroundingReport()

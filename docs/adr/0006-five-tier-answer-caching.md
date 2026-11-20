@@ -19,7 +19,7 @@ A cache in a RAG system can also do harm. A wrong cached answer gets served agai
    |---|---|---|---|---|
    | L0 | `data/index/warm_cache.jsonl`, loaded at startup, read-only | Whole answers | Exact key | `start.cache_tier`, `end.cache_tier` |
    | L1 | In-memory `TTLCache` | Whole answers | Exact key; TTL 24 h, at most 2,000 entries | same |
-   | L2 | Qdrant collection `qa_cache` (in memory) | Whole answers with their query embedding | Cosine at least τ, within the same `scope`, standalone turns only | same, plus `CacheHit.similarity` |
+   | L2 | In-process numpy matrix per `scope` (`app/adapters/caches.py`; ADR-0002 amendment 1) | Whole answers with their query embedding | Cosine at least τ, within the same `scope`, standalone turns only | same, plus `CacheHit.similarity` |
    | L3 | LRU | Query embeddings (dense + sparse) | Exact normalised query | `end.cache_hits` contains `L3` |
    | L4 | LRU | Retrieval results | Exact (query, filters) | `end.cache_hits` contains `L4` |
 

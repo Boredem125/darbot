@@ -25,12 +25,14 @@ Cookie: sid=<opaque>            (optional; HttpOnly, set by the server on first 
 | `message` | string, 1..500 chars after trimming | yes | |
 | `lang` | `"en"` \| `"ar"` \| null | no | A client hint only. The router decides the language. |
 
-Responses that happen **before the stream opens** are plain HTTP JSON, not SSE:
+Responses that happen **before the stream opens** are plain HTTP JSON, not SSE. Check order in `app/api.py`: rate limit (429), origin (403), content type (415), readiness (503), body (422):
 
 | Status | When | Body |
 |---|---|---|
-| 422 | `ChatRequest` validation failed | FastAPI default |
-| 429 | Per-IP rate limit (10/min, 40/day, keyed on the first `X-Forwarded-For` hop) | `{"detail": "rate_limited", "retry_after_s": int}` |
+| 403 | An `Origin` header is present and its host differs from the `Host` header and from `ALLOWED_ORIGINS` (comma-separated hostnames, default empty). Requests without `Origin` pass. Added 20 Nov 2026 (WP-5 S2) | `{"detail": "cross_origin"}` or `{"detail": "bad_origin"}` |
+| 415 | `Content-Type` does not start with `application/json`. Added 20 Nov 2026 (WP-5 S2) | `{"detail": "Content-Type must be application/json"}` |
+| 422 | Body is not valid JSON or fails `ChatRequest` validation | `{"detail": "Invalid request body"}` |
+| 429 | Per-IP rate limit (10/min, 40/day, keyed on the `X-Forwarded-For` hop chosen by `RATE_LIMIT_XFF_HOP`, default `last`: HF appends the real client IP last) | `{"detail": "rate_limited", "retry_after_s": int}` |
 | 503 | `/ready` would fail (index not loaded or manifest invalid) | `{"detail": "not_ready"}` |
 
 When the stream opens, the status is 200 with `Content-Type: text/event-stream` and

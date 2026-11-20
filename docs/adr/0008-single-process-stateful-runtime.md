@@ -8,7 +8,7 @@
 ## Context
 
 The Space has 2 vCPU and 16 GB of RAM, one container, an ephemeral disk, and sleeps after about 48 hours idle. The runtime holds several kinds of state:
-- the in-memory Qdrant index and the DuckDB view of `listings.parquet` (ADR-0003);
+- the in-process numpy index (ADR-0002 amendment 1) and the DuckDB view of `listings.parquet` (ADR-0003);
 - the L1 and L2 answer caches and the L3 and L4 inner caches (ADR-0006);
 - sessions with the last two turns and merged slots, for follow-ups (ADR-0004);
 - the per-IP rate limiter;
@@ -21,7 +21,7 @@ The heavy work is CPU-bound ONNX inference (dense embed, bm25 sparse, rerank). T
 
 ## Decision
 
-1. **One uvicorn worker.** The image starts `uvicorn app.api:app --workers 1 --proxy-headers --forwarded-allow-ips="*" --port 7860`. All state lives in that process's memory.
+1. **One uvicorn worker.** (On the HF Space the process is started by the Gradio-SDK wrapper, see ADR-0009; it is still one process and one event loop.) The image starts `uvicorn app.api:app --workers 1 --proxy-headers --forwarded-allow-ips="*" --port 7860`. All state lives in that process's memory.
 
 2. **CPU work runs on a dedicated `ThreadPoolExecutor(max_workers=2)`,** not the default executor (which allows about 40 threads). Each ONNX session runs with `threads=1`, so 2 workers × 1 thread match the 2 vCPU with no oversubscription. The event loop never runs ONNX directly.
 
@@ -33,13 +33,13 @@ The heavy work is CPU-bound ONNX inference (dense embed, bm25 sparse, rerank). T
    |---|---|---|
    | Sessions | `TTLCache`, keyed by an HttpOnly cookie `sid` | 30 min TTL, 1,000 sessions, last 2 turns plus slots |
    | L1 answers | `TTLCache` | 24 h TTL, 2,000 entries |
-   | L2 answers | Qdrant `qa_cache` collection, in memory | Size limit set in `docs/specs/caching.md` |
+   | L2 answers | In-process numpy matrix per scope (`app/adapters/caches.py`) | Size limit set in `docs/specs/caching.md` |
    | L3, L4 | LRU | Size limits set in `docs/specs/caching.md` |
    | Rate limits | slowapi, memory storage | 10/min and 40/day per client IP |
    | Quota and cooldowns | `LLMRouter` fields | Refreshed by the poll every 5 min |
    | Telemetry | Ring buffer | Size set by the backend worker |
 
-5. **Client identity comes from the proxy header.** HF Spaces sits behind a proxy, so the socket peer is the proxy. uvicorn runs with `--proxy-headers`, and the rate limiter keys on the **first** `X-Forwarded-For` hop. Without that, every user would share one bucket.
+5. **Client identity comes from the proxy header.** HF Spaces sits behind a proxy, so the socket peer is the proxy. uvicorn runs with `--proxy-headers`, and the rate limiter keys on the **last** `X-Forwarded-For` hop (`RATE_LIMIT_XFF_HOP`, default `last` since 20 Nov 2026). HF appends the real client IP last; the first hop is client-controlled, so keying on it would let a client rotate buckets. Without the header, every user would share one bucket.
 
 6. **Health is split.** `/health` is liveness and does nothing expensive. `/ready` turns green only after the manifest checks pass, the index is loaded, and the models are warm. A keep-alive workflow requests `/ready` every 6 hours so the Space does not sleep.
 

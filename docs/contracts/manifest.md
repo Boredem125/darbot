@@ -23,7 +23,10 @@ data/index/
 ```
 
 All file names are flat, with no subdirectories. Every file except `manifest.json` and
-`warm_cache.jsonl` must be listed in `manifest.files`.
+`warm_cache.jsonl` must be listed in `manifest.files`. `warm_cache.jsonl` is deliberately
+not listed: it is written after the index is built, and listing it would change
+`index_version` and every cache key. It gets no size or sha check; it is guarded by
+rule 3 and by the per-record checks in rule 5.
 
 ## `manifest.json` (`Manifest`, `schema_version` 1)
 
@@ -85,8 +88,11 @@ Startup **aborts** (the process exits non-zero, and `/ready` never turns green) 
 1. `manifest.json` is missing, is not valid JSON, or fails `Manifest` validation. That covers a missing key, a wrong type, a bad hash format, an `index_version` that does not match `files`, a file ≥ 10 MB, or a required file missing from the list.
 2. The configured `embed_model`, `dim` or `sparse_model` differs from the manifest. `ManifestMismatchError` lists every reason.
 3. `warm_cache.jsonl` exists and `manifest.prompt_version` differs from the current prompt version. This includes the case where `manifest.prompt_version` is null.
-4. A file listed in `files` is missing on disk, or its sha256 or size differs. The loader checks this; the model has no I/O.
-5. Any `WarmCacheRecord.entry.index_version` differs from `manifest.index_version`, or any record fails validation.
+4. A file listed in `files` is missing on disk, or its size differs. The loader (`app/adapters/index_loader.py`) checks existence and size only; sha256 is not recomputed at startup (as built, 20 Nov 2026). The model has no I/O.
+
+Not an abort (as built, 20 Nov 2026; `app/adapters/caches.py`):
+
+5. A `WarmCacheRecord` that fails validation, or whose `entry.index_version` or `entry.prompt_version` differs from the running versions, is **skipped** with a log line and counted in the L0 skipped total. The rest of L0 loads. Earlier text made this an abort; the code's skip behaviour is now the contract.
 
 If `warm_cache.jsonl` is absent, startup proceeds with an empty L0. That is not an error.
 

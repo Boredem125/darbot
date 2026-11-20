@@ -1,6 +1,6 @@
 # ADR-0005: LLMRouter with an OpenRouter-first chain, Groq fallback, circuit breaker and quota ledger
 
-- Status: Accepted
+- Status: Accepted; chain order superseded by ADR-0009 (20 Nov 2026). Breaker, failover before the first token and the quota ledger still hold.
 - Date: 18 Nov 2026
 - Owner: dg-lead-architect
 - Related: ADR-0002, ADR-0004, ADR-0008, `docs/contracts/sse-v1.md`, `app/domain/ports.py` (`LLM`), `docs/specs/llm-router.md` (dg-ml-lead)

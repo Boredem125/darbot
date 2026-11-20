@@ -17,7 +17,7 @@
   "scraped_at_min": "2026-11-18T09:40:36.074551Z",
   "scraped_at_max": "2026-11-18T18:21:15.686673Z",
   "git_sha": "unknown",
-  "prompt_version": null,
+  "prompt_version": "system_v1@fb85fafe",
   "files": [
     {
       "path": "listings.parquet",

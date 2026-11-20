@@ -249,14 +249,42 @@ async def _run_warm(args: argparse.Namespace) -> int:
                     elif isinstance(item, LLMDone):
                         done = item
                     elif isinstance(item, LLMFailover):
-                        # Check for 429 and stop if requested
+                        # Log the failed attempt
                         code_val = item.code.value if hasattr(item.code, "value") else str(item.code)
+                        if quota_logger and code_val != "provider_skipped":
+                            prov = item.provider.value if hasattr(item.provider, "value") else str(item.provider)
+                            quota_logger.log(
+                                provider=prov, model=item.model,
+                                purpose="warm_cache", wp=args.wp,
+                                ok=False, prompt_tokens=0, completion_tokens=0,
+                            )
+                        # Check for 429 and stop if requested
                         if "rate_limited" in code_val and not args.continue_on_429:
                             print(f"  429 at query {i}, stopping (use --continue-on-429 to override)")
                             attempts = args.budget  # stop loop
                             break
-        except LLMUnavailableError:
-            print(f"  All providers unavailable at query {i}")
+        except LLMUnavailableError as exc:
+            # Log each failed attempt to quota
+            is_429 = False
+            for fa in exc.attempts:
+                code_val = fa.code.value if hasattr(fa.code, "value") else str(fa.code)
+                if "rate_limited" in code_val:
+                    is_429 = True
+                if quota_logger and code_val != "provider_skipped":
+                    prov = fa.provider.value if hasattr(fa.provider, "value") else str(fa.provider)
+                    quota_logger.log(
+                        provider=prov,
+                        model=fa.model,
+                        purpose="warm_cache",
+                        wp=args.wp,
+                        ok=False,
+                        prompt_tokens=0,
+                        completion_tokens=0,
+                    )
+            if is_429 and not args.continue_on_429:
+                print(f"  429 at query {i}, stopping (use --continue-on-429 to override)")
+                break
+            print(f"  All providers unavailable at query {i}: {[a.code.value for a in exc.attempts]}")
             continue
 
         answer = "".join(answer_parts)
@@ -280,6 +308,9 @@ async def _run_warm(args: argparse.Namespace) -> int:
         finish_str = done.finish_reason.value if hasattr(done.finish_reason, "value") else str(done.finish_reason)
         if finish_str != "stop":
             continue
+
+        # Normalise fullwidth citations (Groq writes 【n】) before grounding
+        answer = grounding_mod.normalise_citations(answer)
 
         # Grounding check
         grounding_report = grounding_mod.check(

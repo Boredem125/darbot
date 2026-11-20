@@ -82,8 +82,10 @@ export function parseInline(line) {
  * @returns {Array<{type: string, items: Array<Array<{type:string,text:string}>>}>}
  */
 export function parseBlocks(raw) {
-  var escaped = escapeHtml(raw);
-  var normalised = normaliseCitations(escaped);
+  // NOTE: escapeHtml was removed here (S4 fix). All text is inserted via
+  // createTextNode in renderBlocksToDOM, which is inherently XSS-safe.
+  // Pre-escaping caused double-encoding: users saw &amp; instead of &.
+  var normalised = normaliseCitations(raw);
   var lines = normalised.split("\n");
   var blocks = [];
   var currentList = null;

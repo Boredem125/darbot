@@ -308,8 +308,10 @@ _PRICE_LOW_INTENT = {
     "رخيص", "رخيصة", "بسعر مناسب",
 }
 _PRICE_HIGH_INTENT = {
-    "expensive", "luxury", "high price",
-    "غالي", "غالية", "فاخر", "فاخرة",
+    "expensive", "luxury", "luxurious", "high price",
+    # Synonyms seen in live queries ("rich properties in riyadh" fell back to relevance)
+    "rich", "high-end", "high end", "premium", "upscale", "fancy", "prestigious",
+    "غالي", "غالية", "فاخر", "فاخرة", "راقي", "راقية",
 }
 
 # Aggregate cues

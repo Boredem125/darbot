@@ -132,6 +132,24 @@ class TestPriceIntent:
         d = route("luxury apartments in Jeddah", entities=_entity_index())
         assert d.filters.sort == SortKey.price_desc
 
+    def test_high_end_synonyms_set_price_desc(self):
+        for q in (
+            "rich properties in riyadh",
+            "high-end villas in Riyadh",
+            "premium apartments in Jeddah",
+            "upscale homes in Riyadh",
+            "fancy villas in Jeddah",
+            "فلل راقية في الرياض",
+        ):
+            d = route(q, entities=_entity_index())
+            assert d.filters.sort == SortKey.price_desc, q
+            assert d.route == Route.lookup, q
+
+    def test_rich_defaults_sale(self):
+        d = route("rich properties in riyadh", entities=_entity_index())
+        assert d.filters.purpose == Purpose.sale
+        assert d.filters.city == "Riyadh"
+
     def test_arabic_rakhis(self):
         d = route("فلل رخيصة في الرياض", entities=_entity_index())
         assert d.filters.sort == SortKey.price_asc

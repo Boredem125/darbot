@@ -122,6 +122,29 @@ class TestCitationNormalisation:
                 f"Record {i} contains fullwidth citation brackets"
             )
 
+    def test_no_wrong_script_answers(self):
+        """Every record's answer script matches its language (en/ar)."""
+        from common.schemas import WarmCacheRecord
+        from common.text import arabic_ratio
+
+        wc = Path(__file__).resolve().parents[2] / "data" / "index" / "warm_cache.jsonl"
+        if not wc.exists():
+            pytest.skip("warm_cache.jsonl not present")
+        for i, line in enumerate(wc.read_text(encoding="utf-8").splitlines()):
+            if not line.strip():
+                continue
+            rec = WarmCacheRecord.model_validate_json(line)
+            ar = arabic_ratio(rec.entry.answer)
+            lang = rec.entry.language.value
+            if lang == "en":
+                assert ar <= 0.5, (
+                    f"Record {i} language=en but arabic_ratio={ar:.2f}"
+                )
+            elif lang == "ar":
+                assert ar >= 0.2, (
+                    f"Record {i} language=ar but arabic_ratio={ar:.2f}"
+                )
+
 
 class TestQuotaLoggingOn429:
     """Prove that a 429 from the LLM logs a row to quota_log.csv.

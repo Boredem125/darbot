@@ -325,6 +325,17 @@ async def _run_warm(args: argparse.Namespace) -> int:
             print(f"  Query {i} not grounded: {grounding_report.failures[:3]}")
             continue
 
+        # Reject answers whose script contradicts the language (same as service.py)
+        from common.text import arabic_ratio
+        ar = arabic_ratio(answer)
+        script_ok = not (
+            (language.value == "en" and ar > 0.5)
+            or (language.value == "ar" and ar < 0.2)
+        )
+        if not script_ok:
+            print(f"  Query {i} wrong script: lang={language.value} arabic_ratio={ar:.2f}")
+            continue
+
         # Build the record
         provider_enum = done.provider if isinstance(done.provider, Provider) else Provider(done.provider)
         source_cards_data = [c.model_dump(mode="json") for c in cards]

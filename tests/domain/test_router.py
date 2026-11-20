@@ -434,3 +434,42 @@ class TestLiveProbeRegressions:
         d = route(q, entities=probe_index)
         assert d.filters.purpose == Purpose.rent
         assert d.filters.city == "Riyadh"
+
+
+class TestNoWordlistFallback:
+    """Off-wordlist phrasing must reach search, not a router refusal."""
+
+    @pytest.mark.parametrize("q", [
+        "show me something spacious with a garden",
+        "anything with a pool and a balcony?",
+        "مكان واسع مع حديقة",
+    ])
+    def test_listing_features_search_listings(self, probe_index, q):
+        d = route(q, entities=probe_index)
+        assert d.route == Route.lookup
+        assert d.filters.kinds == (DocKind.listing,)
+
+    @pytest.mark.parametrize("q", ["a place near the sea", "hello", "tell me a story about dragons"])
+    def test_no_signal_goes_to_search_with_empty_filters(self, probe_index, q):
+        # Empty filters: the service's dense score floor decides refusal.
+        d = route(q, entities=probe_index)
+        assert d.route == Route.lookup
+        assert d.filters.is_empty()
+
+    def test_topic_cue_still_refused_by_router(self, probe_index):
+        d = route("what is the weather in riyadh", entities=probe_index)
+        assert d.route == Route.out_of_scope
+
+    def test_budget_per_year_is_rent_cap(self, probe_index):
+        d = route("I need a place for my family of 5 in Jeddah, budget 80k a year", entities=probe_index)
+        assert d.filters.purpose == Purpose.rent
+        assert d.filters.price_max_sar == 80_000
+        assert d.filters.city == "Jeddah"
+
+    def test_ordinary_phrase_district_not_matched(self):
+        idx = EntityIndex(Entities(entities=[
+            Entity(kind=EntityKind.district, canonical="The Beach", parent="Jazan"),
+        ]))
+        d = route("any penthouses by the beach?", entities=idx)
+        assert d.filters.district is None
+        assert d.filters.city is None

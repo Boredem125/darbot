@@ -70,6 +70,8 @@ class RouteDecision:
 # hijacked every question containing the word "projects".
 _GENERIC_ENTITY_NAMES = frozenset({
     "project", "projects", "property", "properties", "home", "homes",
+    # District names that are ordinary phrases ("penthouses by the beach")
+    "the beach", "the light", "the districts",
 })
 
 
@@ -290,13 +292,17 @@ _MONTHLY_RENT_CUES = {
 }
 
 _YEARLY_RENT_CUES = {
-    "per year", "yearly", "annual",
+    "per year", "yearly", "annual", "annually", "a year", "per annum", "/year",
     "سنوي",  # سنوي
+    "سنويا",  # سنويا
 }
 
 # Price bound keywords
 _PRICE_MAX_CUES = {
     "under", "below", "less than", "max", "up to",
+    "budget", "budget is", "budget of",
+    "ميزانية",  # ميزانية
+    "ميزانيتي",  # ميزانيتي
     "أقل من",  # أقل من
     "تحت",  # تحت
 }
@@ -365,7 +371,26 @@ _DOMAIN_CUES = {
     "بيت",  # بيت
     "listing", "listings", "apartment", "villa", "townhouse", "land",
     "rent", "sale", "buy", "bedroom", "bedrooms", "price",
-    "sqm", "area",
+    "sqm", "area", "invest", "investment", "investing",
+}
+
+# Listing features: a message that only describes what the user wants
+# ("something spacious with a garden") is a listings search, not off-topic.
+_LISTING_FEATURE_CUES = {
+    "spacious", "garden", "pool", "swimming pool", "balcony", "terrace",
+    "sea view", "view", "views", "furnished", "parking", "maid room",
+    "penthouse", "penthouses", "studio", "duplex", "family", "families",
+    "place to live", "somewhere to live", "place to stay", "accommodation",
+    "move to", "relocate",
+    "حديقة",  # حديقة
+    "مسبح",  # مسبح
+    "واسع", "واسعة",  # واسع
+    "شرفة",  # شرفة
+    "مفروش", "مفروشة",  # مفروش
+    "إطلالة", "اطلالة",  # إطلالة
+    "عائلة", "عائلتي",  # عائلة
+    "سكن",  # سكن
+    "استثمار",  # استثمار
 }
 
 # B7: OOS topic cues -- presence of a topic cue + no real-estate slots -> out_of_scope
@@ -1066,23 +1091,9 @@ def route(
         )
 
     # 3. Out of scope check
-    has_entity = len(entity_matches) > 0
-    has_filter = (
-        property_type is not None
-        or purpose is not None
-        or bed_min is not None
-        or bed_max is not None
-        or price_min is not None
-        or price_max is not None
-        or area_min is not None
-        or area_max is not None
-        or city is not None
-        or district is not None
-        or country is not None
-        or project_id is not None
-    )
     has_domain_cue = _cue_found(message, _DOMAIN_CUES)
     has_project_cue = _cue_found(message, _PROJECT_CUES)
+    has_feature_cue = _cue_found(message, _LISTING_FEATURE_CUES)
 
     # B7: topic-cue OOS -- a topic cue forces OOS unless a real-estate slot,
     # an aggregate op, a domain cue, or a project cue is present.  A city or
@@ -1104,6 +1115,7 @@ def route(
         and agg_op is None
         and not has_domain_cue
         and not has_project_cue
+        and not has_feature_cue
     ):
         return RouteDecision(
             language=language,
@@ -1112,13 +1124,11 @@ def route(
             negated=negated,
         )
 
-    if not has_entity and not has_filter and not has_domain_cue and not has_project_cue and not follow_up:
-        return RouteDecision(
-            language=language,
-            route=Route.out_of_scope,
-            numbers=canonical_nums,
-            negated=negated,
-        )
+    # No entity, filter or cue: do not refuse here. Fall through to a lookup
+    # with empty filters; the service applies the dense score floor
+    # (SCORE_FLOOR) to empty-filter searches, so off-topic text is still
+    # refused, while paraphrased property questions ("a place near the sea")
+    # get searched instead of refused on wording alone.
 
     # 4. Lookup
     # kinds=(listing,) if any listing-only slot is set
@@ -1135,6 +1145,11 @@ def route(
     elif has_country_entity:
         # A country entity sets kinds=(project,) per the brief
         kinds = (DocKind.project,)
+    elif has_feature_cue and not has_project_cue:
+        # "something spacious with a garden": search listings. A non-empty
+        # kinds filter also skips the empty-filter score floor, which vague
+        # but in-domain wording often scores under.
+        kinds = (DocKind.listing,)
 
     filters = SearchFilters(
         kinds=kinds,

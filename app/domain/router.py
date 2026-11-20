@@ -65,6 +65,14 @@ class RouteDecision:
 # ---------------------------------------------------------------------------
 
 
+# Generic words that must never resolve to an entity on their own. The scraper
+# stored DarGlobal's /projects index page as a project named "Projects", which
+# hijacked every question containing the word "projects".
+_GENERIC_ENTITY_NAMES = frozenset({
+    "project", "projects", "property", "properties", "home", "homes",
+})
+
+
 class EntityIndex:
     """An index of entity aliases for fast lookup.
 
@@ -79,6 +87,8 @@ class EntityIndex:
         for entity in entities.entities:
             for name in [entity.canonical] + list(entity.aliases):
                 normed = normalise_alias(name)
+                if normed in _GENERIC_ENTITY_NAMES:
+                    continue
                 if normed and normed not in seen:
                     seen[normed] = entity
         # Sort by length descending for longest-match-first
@@ -260,6 +270,9 @@ _PURPOSE_RENT_CUES = {
     "إيجار",  # إيجار
     "للإيجار",  # للإيجار
     "ايجار",  # ايجار
+    "للايجار",  # للايجار (no hamza, common spelling)
+    "الإيجار",  # الإيجار
+    "الايجار",  # الايجار
 }
 
 _PURPOSE_SALE_CUES = {
@@ -799,6 +812,25 @@ def _apply_comparatives(
 # ---------------------------------------------------------------------------
 
 
+def _mask_digit_entities(message: str, matches: list[tuple[str, Entity]]) -> str:
+    """Blank out matched entity names that contain digits (e.g. "DG1")."""
+    # Aliases are normalised (e.g. "Nº149" -> "no149"), so compare per token
+    # after normalising each raw token rather than searching the raw text.
+    digit_tokens = {
+        tok
+        for alias, _entity in matches
+        for tok in alias.split()
+        if any(ch.isdigit() for ch in tok)
+    }
+    if not digit_tokens:
+        return message
+    return re.sub(
+        r"\S+",
+        lambda m: " " if normalise_alias(m.group(0)) in digit_tokens else m.group(0),
+        message,
+    )
+
+
 def route(
     message: str,
     *,
@@ -817,16 +849,21 @@ def route(
     # Extract entities
     entity_matches = entities.find_all(message)
 
+    # Digits inside an entity name ("DG1") are part of the name, not a price,
+    # bedroom count or area. Mask those names before number-based extraction.
+    num_message = _mask_digit_entities(message, entity_matches)
+    num_numbers = parse_numbers(num_message) if num_message != message else raw_numbers
+
     # Extract filters
     property_type = _extract_property_type(message)
     purpose = _extract_purpose(message)
-    bed_min, bed_max = _extract_bedrooms(message)
+    bed_min, bed_max = _extract_bedrooms(num_message)
 
     # Price extraction using canonical numbers
     # We need numbers as strings of their integer/decimal values
-    num_strs = [canonical_number(n) for n in raw_numbers]
-    price_min, price_max = _extract_price_bounds(message, num_strs)
-    area_min, area_max = _extract_area_bounds(message, num_strs)
+    num_strs = [canonical_number(n) for n in num_numbers]
+    price_min, price_max = _extract_price_bounds(num_message, num_strs)
+    area_min, area_max = _extract_area_bounds(num_message, num_strs)
 
     # Rent period multiplier
     if _is_monthly_context(message) or _is_yearly_context(message):

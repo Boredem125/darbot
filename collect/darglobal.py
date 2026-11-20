@@ -51,7 +51,7 @@ _NON_CONTENT_SLUGS: set[str] = {
     "success", "terms-conditions", "terms-of-uses", "thank-you",
     "tokenization", "why-invest", "win-a-trip-to-dubai", "sohar-islamic",
     "live-all-in", "luxury-golf-communities", "insignia", "internship-application",
-    "internships",
+    "internships", "projects",
 }
 
 # Patterns for multi-segment paths that are sub-projects (project children)

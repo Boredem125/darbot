@@ -371,3 +371,66 @@ class TestPlanSection12Probes:
         d = route("cheaper ones?", session=session, entities=entity_index)
         assert d.follow_up is True
         assert d.filters.price_max_sar == 1_949_999
+
+
+# ---------------------------------------------------------------------------
+# Live-probe regressions (2026-11-20)
+# ---------------------------------------------------------------------------
+
+
+@pytest.fixture
+def probe_index() -> EntityIndex:
+    ents = _make_entities()
+    return EntityIndex(Entities(entities=[
+        *ents.entities,
+        Entity(kind=EntityKind.city, canonical="Dubai"),
+        # The scraper stored DarGlobal's /projects index page as a project.
+        Entity(kind=EntityKind.project, canonical="Projects", doc_id="darglobal:project:projects"),
+        Entity(kind=EntityKind.project, canonical="DG1", parent="Dubai", doc_id="darglobal:project:dg1"),
+        Entity(
+            kind=EntityKind.project,
+            canonical="Nº149 Old Park Lane",
+            doc_id="darglobal:project:the-mulliner",
+        ),
+    ]))
+
+
+class TestLiveProbeRegressions:
+    def test_generic_projects_word_is_not_an_entity(self, probe_index):
+        d = route("tell me about Dar Global projects in Dubai", entities=probe_index)
+        assert d.route == Route.project_info
+        assert d.filters.project_id is None
+        assert d.filters.city == "Dubai"
+
+    def test_what_projects_does_dar_global_have(self, probe_index):
+        d = route("what projects does Dar Global have?", entities=probe_index)
+        assert d.filters.project_id is None
+
+    @pytest.mark.parametrize("q", ["tell me about DG1", "tell me about DG1?", "DG1 details"])
+    def test_digit_in_project_name_is_not_a_price(self, probe_index, q):
+        d = route(q, entities=probe_index)
+        assert d.filters.project_id == "darglobal:project:dg1"
+        assert d.filters.price_min_sar is None
+        assert d.filters.price_max_sar is None
+        assert d.filters.purpose is None
+
+    def test_digit_project_name_keeps_real_price(self, probe_index):
+        d = route("DG1 apartments under 3 million", entities=probe_index)
+        assert d.filters.project_id == "darglobal:project:dg1"
+        assert d.filters.price_max_sar == 3_000_000
+
+    def test_normalised_digit_project_name_is_not_a_price(self, probe_index):
+        d = route("tell me about Nº149 Old Park Lane", entities=probe_index)
+        assert d.filters.project_id == "darglobal:project:the-mulliner"
+        assert d.filters.price_min_sar is None
+        assert d.filters.price_max_sar is None
+
+    @pytest.mark.parametrize("q", [
+        "شقق للايجار في الرياض غرفتين",  # no hamza
+        "شقق للإيجار في الرياض غرفتين",
+        "فلل الايجار في الرياض",
+    ])
+    def test_arabic_rent_spellings(self, probe_index, q):
+        d = route(q, entities=probe_index)
+        assert d.filters.purpose == Purpose.rent
+        assert d.filters.city == "Riyadh"

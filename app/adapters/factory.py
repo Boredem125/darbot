@@ -123,6 +123,7 @@ def build_read_side(
 
 def build_llm(
     chain_ids: list[str] | None = None,
+    max_concurrency: int = 4,
 ) -> object:
     """Build the LLMRouter from LLM_CHAIN env or the default chain.
 
@@ -188,4 +189,4 @@ def build_llm(
     if chain_ids:
         chain = [e for e in chain if e["id"] in chain_ids]
 
-    return LLMRouter(chain)
+    return LLMRouter(chain, max_concurrency=max_concurrency)

@@ -952,6 +952,18 @@ def route(
     ):
         purpose = Purpose.sale
 
+    # CR-1: price aggregates (avg, median, min, max of price) default to sale
+    _PRICE_AGG_OPS = {
+        AggregateOp.avg_price, AggregateOp.median_price,
+        AggregateOp.min_price, AggregateOp.max_price,
+    }
+    if (
+        agg_op in _PRICE_AGG_OPS
+        and purpose is None
+        and not (follow_up and "purpose" in carried_slots)
+    ):
+        purpose = Purpose.sale
+
     # Determine kinds for route
     kinds: tuple[DocKind, ...] | None = None
 

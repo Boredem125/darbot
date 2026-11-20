@@ -86,7 +86,7 @@ def _build_app(settings: Settings, ring: RingBuffer) -> tuple[ChatService, str]:
     )
 
     # Build LLM (adapters layer)
-    llm = build_llm()
+    llm = build_llm(max_concurrency=settings.LLM_MAX_CONCURRENCY)
 
     # Load entities JSON (api layer loads data, service builds domain objects)
     entities_path = index_dir / "entities.json"
@@ -281,10 +281,48 @@ async def metrics():
 # ---------------------------------------------------------------------------
 
 
+def _check_origin(request: Request) -> str | None:
+    """S2: return an error message if the origin is cross-origin, else None."""
+    origin = request.headers.get("origin")
+    if not origin:
+        return None  # no Origin header (curl, bench) is allowed
+    # Parse origin host
+    from urllib.parse import urlparse
+    try:
+        origin_host = urlparse(origin).hostname or ""
+    except (ValueError, AttributeError):
+        return "bad_origin"
+    # Compare with request Host header
+    request_host = request.headers.get("host", "")
+    # Strip port from host
+    if ":" in request_host:
+        request_host = request_host.rsplit(":", 1)[0]
+    if origin_host == request_host:
+        return None  # same origin
+    # Check ALLOWED_ORIGINS setting
+    s = _settings or get_settings()
+    allowed = getattr(s, "ALLOWED_ORIGINS", "")
+    if allowed:
+        allowed_list = [h.strip() for h in allowed.split(",") if h.strip()]
+        if origin_host in allowed_list:
+            return None
+    return "cross_origin"
+
+
 @app.post("/api/chat")
 @limiter.limit(lambda: f"{(_settings or get_settings()).RATE_LIMIT_PER_MIN}/minute")
 @limiter.limit(lambda: f"{(_settings or get_settings()).RATE_LIMIT_PER_DAY}/day")
 async def chat(request: Request):
+    # S2: reject cross-origin requests
+    origin_err = _check_origin(request)
+    if origin_err:
+        return JSONResponse(status_code=403, content={"detail": origin_err})
+
+    # S2: require Content-Type: application/json
+    ct = request.headers.get("content-type", "")
+    if not ct.startswith("application/json"):
+        return JSONResponse(status_code=415, content={"detail": "Content-Type must be application/json"})
+
     if not _ready or _chat_service is None:
         return JSONResponse(status_code=503, content={"detail": "not_ready"})
 

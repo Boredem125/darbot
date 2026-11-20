@@ -82,6 +82,7 @@ from common.schemas import (
     InnerCacheTier,
     Language,
     Provider,
+    Purpose,
     Route,
     SearchFilters,
     SortKey,
@@ -224,6 +225,20 @@ class ChatService:
                 lang_hint=lang_hint,
             ):
                 yield ev
+        except asyncio.CancelledError:
+            raise  # client disconnect: propagate
+        except Exception:
+            # MN-1: last-resort catch -- emit a fatal error event, never silent drop
+            logger.exception("Unhandled exception in handle()")
+            try:
+                yield ChatEventError(
+                    request_id=request_id,
+                    code=ErrorCode.internal,
+                    message="An unexpected error occurred. Please try again.",
+                    fatal=True,
+                ).to_sse()
+            except Exception:
+                logger.exception("Failed to emit error event")
         finally:
             self._inflight -= 1
 
@@ -277,7 +292,9 @@ class ChatService:
                     if result is not None:
                         cached_answer = result
                         cache_tier = AnswerCacheTier.L1
-                except (TimeoutError, asyncio.CancelledError, OSError):
+                except asyncio.CancelledError:
+                    raise  # client disconnect: re-raise, do not proceed
+                except (TimeoutError, OSError):
                     logger.debug("Single-flight wait failed, proceeding on own")
 
             if cached_answer is None:
@@ -330,6 +347,12 @@ class ChatService:
                     cache_hits, t0, t_cache_lookup, t_embed, t_sparse,
                 ):
                     yield ev
+                # V-2: save session on cache hit so follow-ups work
+                if session_id:
+                    self._save_session(
+                        session_id, session, message,
+                        cached_answer.answer, cached_answer.sources, decision,
+                    )
                 return
 
             # 4. Route-specific handling
@@ -346,6 +369,15 @@ class ChatService:
                     request_id, decision, cache_tier, cache_hits, t0, t_cache_lookup,
                 ):
                     yield ev
+                # V-2: save session on refusal too
+                if session_id:
+                    refusal_text = (
+                        REFUSAL_AR if decision.language == Language.ar else REFUSAL_EN
+                    )
+                    self._save_session(
+                        session_id, session, message,
+                        refusal_text, [], decision,
+                    )
                 return
 
             if decision.route == Route.aggregate:
@@ -582,6 +614,30 @@ class ChatService:
             )
             yield start_event.to_sse()
 
+            # MJ-4: mixed sale/rent note when purpose is None
+            mixed_note = ""
+            if (
+                decision.route == Route.lookup
+                and decision.filters.purpose is None
+                and cards
+            ):
+                purposes_in_cards = {c.purpose for c in cards if c.purpose is not None}
+                if Purpose.sale in purposes_in_cards and Purpose.rent in purposes_in_cards:
+                    if decision.language == Language.ar:
+                        mixed_note = (
+                            "عرض نتائج البيع والإيجار معا؛ "
+                            "قل 'للبيع' أو 'للإيجار' للتحديد.\n\n"
+                        )
+                    else:
+                        mixed_note = (
+                            "Showing both sale and rent listings; "
+                            "say 'for sale' or 'for rent' to narrow.\n\n"
+                        )
+                    yield ChatEventToken(
+                        request_id=request_id,
+                        delta=mixed_note,
+                    ).to_sse()
+
             # 6. Prompt
             system_prompt = self._load_system_prompt()
             cards_context = context_texts
@@ -666,6 +722,9 @@ class ChatService:
 
             # Normalise fullwidth citation brackets (Groq gpt-oss writes 【n】)
             answer_text = normalise_citations(answer_text)
+            # MJ-4: prepend mixed note to answer text for session/cache
+            if mixed_note:
+                answer_text = mixed_note + answer_text
 
             # 8. Grounding
             t_g0 = time.perf_counter()
@@ -778,23 +837,9 @@ class ChatService:
 
             # Update session
             if session_id:
-                new_history = ()
-                if session is not None and session.history:
-                    new_history = session.history
-                new_history = new_history + (
-                    ChatMessage(role="user", content=message),
-                    ChatMessage(role="assistant", content=answer_text),
-                )
-                # Keep last 2 turns (4 messages)
-                if len(new_history) > 4:
-                    new_history = new_history[-4:]
-                prices = tuple(c.price_sar for c in cards if c.price_sar is not None)
-                areas = tuple(c.area_sqm for c in cards if c.area_sqm is not None)
-                self._sessions[session_id] = SessionSlots(
-                    filters=decision.filters,
-                    last_prices=prices,
-                    last_areas=areas,
-                    history=new_history,
+                self._save_session(
+                    session_id, session, message,
+                    answer_text, cards, decision,
                 )
 
         finally:
@@ -807,6 +852,34 @@ class ChatService:
     # ------------------------------------------------------------------
     # Helpers for specific answer modes
     # ------------------------------------------------------------------
+
+    def _save_session(
+        self,
+        session_id: str,
+        session: SessionSlots | None,
+        message: str,
+        answer_text: str,
+        cards: list[Card],
+        decision: RouteDecision,
+    ) -> None:
+        """Update session slots with the latest turn's data."""
+        new_history: tuple[ChatMessage, ...] = ()
+        if session is not None and session.history:
+            new_history = session.history
+        new_history = new_history + (
+            ChatMessage(role="user", content=message),
+            ChatMessage(role="assistant", content=answer_text),
+        )
+        if len(new_history) > 4:
+            new_history = new_history[-4:]
+        prices = tuple(c.price_sar for c in cards if c.price_sar is not None)
+        areas = tuple(c.area_sqm for c in cards if c.area_sqm is not None)
+        self._sessions[session_id] = SessionSlots(
+            filters=decision.filters,
+            last_prices=prices,
+            last_areas=areas,
+            history=new_history,
+        )
 
     def _load_system_prompt(self) -> str:
         """Return the system prompt text. Cached after first load."""

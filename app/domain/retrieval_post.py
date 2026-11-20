@@ -9,8 +9,12 @@ import html
 import re
 import unicodedata
 
+from common.cards import is_area_unreliable
 from common.schemas import Card, ChunkPayload
 from common.text import strip_instructions
+
+# Pattern to strip area measurements like "3183 sqm", "1,666 sqm", "120.5 sqm"
+_AREA_SQM_RE = re.compile(r"\b\d[\d,]*(?:\.\d+)?\s*sqm\b", re.IGNORECASE)
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -118,21 +122,52 @@ def dedup_docs(docs: list[DocHit], top_k: int = TOP_K_DOCS) -> list[DocHit]:
 
 
 def _clean_snippet(text: str | None) -> str | None:
-    """Clean a card snippet: decode HTML entities, collapse whitespace, strip injections."""
+    """Clean a card snippet: decode HTML entities, strip angle brackets, collapse whitespace, strip injections."""
     if not text:
         return text
     s = html.unescape(text)
+    # S3: strip < and > after unescape to prevent </source> injection
+    s = s.replace("<", "").replace(">", "")
     s = re.sub(r"\s+", " ", s).strip()
     s = strip_instructions(s)
     return s[:400] if s else None
 
 
 def to_cards(doc_hits: list[DocHit]) -> list[Card]:
-    """Convert DocHits to numbered Cards (1..k)."""
+    """Convert DocHits to numbered Cards (1..k).
+
+    Applies display-time transformations:
+    - MJ-5: nulls area_sqm on apartments when unreliable, strips from snippet
+    - MN-4: replaces pipe with space in district for display
+    """
     cards: list[Card] = []
     for i, dh in enumerate(doc_hits, start=1):
         payload = dh.best_chunk
         snippet = _clean_snippet(payload.text[:400] if payload.text else None)
+
+        # MJ-5: null unreliable area on card and strip from snippet
+        area = payload.area_sqm
+        area_hide = is_area_unreliable(
+            property_type=payload.property_type,
+            area_sqm=payload.area_sqm,
+            purpose=payload.purpose,
+            price_sar=payload.price_sar,
+        )
+        if area_hide:
+            area = None
+            if snippet:
+                snippet = _AREA_SQM_RE.sub("", snippet)
+                snippet = re.sub(r",\s*,", ",", snippet)  # collapse double commas
+                snippet = re.sub(r"\s+", " ", snippet).strip()
+                snippet = snippet or None
+
+        # MN-4: display-clean district (pipe -> space)
+        district = payload.district
+        if district and "|" in district:
+            district = district.replace("|", " ")
+            if snippet:
+                snippet = snippet.replace("|", " ")
+
         card = Card(
             n=i,
             score=dh.best_score,
@@ -146,13 +181,13 @@ def to_cards(doc_hits: list[DocHit]) -> list[Card]:
             purpose=payload.purpose,
             property_type=payload.property_type,
             city=payload.city,
-            district=payload.district,
+            district=district,
             price_sar=payload.price_sar,
             rent_period=payload.rent_period,
             annual_rent_sar=payload.annual_rent_sar,
             bedrooms=payload.bedrooms,
             bathrooms=payload.bathrooms,
-            area_sqm=payload.area_sqm,
+            area_sqm=area,
             country=payload.country,
             brand=payload.brand,
             handover=payload.handover,

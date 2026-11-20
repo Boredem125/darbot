@@ -13,7 +13,7 @@ import math
 import os
 import time
 from collections.abc import AsyncIterator, Sequence
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 import httpx
 import openai
@@ -205,13 +205,14 @@ class LLMRouter:
         self,
         chain: list[dict],
         *,
+        max_concurrency: int = LLM_MAX_CONCURRENCY,
         _transport_map: dict[str, httpx.MockTransport] | None = None,
     ) -> None:
         self._chain: list[dict] = []
         self._clients: dict[str, AsyncOpenAI] = {}
         self._breaker = CircuitBreaker()
         self._ledger = QuotaLedger()
-        self._semaphore = asyncio.Semaphore(LLM_MAX_CONCURRENCY)
+        self._semaphore = asyncio.Semaphore(max_concurrency)
         self._ttft_timeout_s = TTFT_TIMEOUT_S
         self._chain_budget_s = CHAIN_FIRST_TOKEN_BUDGET_S
         self._or_free_entries: list[str] = []
@@ -333,7 +334,9 @@ class LLMRouter:
                     client.chat.completions.create(**create_kwargs),
                     timeout=budget,
                 )
-            except (TimeoutError, asyncio.CancelledError):
+            except asyncio.CancelledError:
+                raise  # client disconnect: do not trip breaker or failover
+            except TimeoutError:
                 self._breaker.fail(entry_id, ErrorCode.provider_timeout)
                 fo = LLMFailover(provider=provider, model=model, code=ErrorCode.provider_timeout, detail="ttft timeout")
                 attempts.append(fo)
@@ -545,6 +548,6 @@ class LLMRouter:
 
 def _seconds_to_midnight() -> float:
     now = datetime.now(UTC)
-    midnight = now.replace(hour=0, minute=0, second=0, microsecond=0)
-    midnight = midnight.replace(day=now.day + 1) if now.hour > 0 or now.minute > 0 else midnight
+    tomorrow = now + timedelta(days=1)
+    midnight = tomorrow.replace(hour=0, minute=0, second=0, microsecond=0)
     return max(60.0, (midnight - now).total_seconds())

@@ -46,7 +46,8 @@ class Settings(BaseSettings):
     # --- Rate limiting ---
     RATE_LIMIT_PER_MIN: int = 10
     RATE_LIMIT_PER_DAY: int = 40
-    RATE_LIMIT_XFF_HOP: str = "first"  # "first" or "last"
+    RATE_LIMIT_XFF_HOP: str = "last"  # "first" or "last"
+    ALLOWED_ORIGINS: str = ""  # comma-separated hostnames for CORS override
 
     # --- API key env names (not the keys themselves) ---
     OPENROUTER_API_KEY: str = ""

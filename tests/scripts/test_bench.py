@@ -61,8 +61,9 @@ class TestBuildQueryMix:
 
     def test_part_b_returns_probes(self):
         mix = build_query_mix("B", 100)
-        assert len(mix) == 6
+        assert len(mix) == 10  # 6 probes + 4 L0 warm queries
         assert any("Trump" in q["message"] for q in mix)
+        assert sum(1 for q in mix if q["tag"] == "L0") == 4
 
 
 class TestPercentile:
